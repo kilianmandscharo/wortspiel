@@ -1,6 +1,6 @@
 .guesses {
-    margin: 3em auto;
-    background-color: #6a5d7b;
+    margin: 2em 1em;
+    /*background-color: #6a5d7b;*/
 }
 
 .row {
@@ -10,11 +10,15 @@
 
 .letter {
     display: inline-block;
+    font-size: clamp(2em, 15vw, 5em);
+    min-width: 1em;
     background-color: grey;
-    font-size: 30px;
     color: white;
-    padding: 0.5em;
     margin: 5px;
+    border-radius: 5px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
 }
 
 .correctLetter {
@@ -27,4 +31,8 @@
 
 .false {
     background-color: black;
+}
+
+.empty {
+    color: grey;
 }

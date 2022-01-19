@@ -10,8 +10,31 @@
 .letter {
     padding: 0.3em;
     margin: 0.1em;
-    font-size: 20px;
+    min-width: 1.4em;
+    font-size: clamp(1.3em, 5vw, 3em);
     display: inline-block;
     color: white;
     background-color: black;
+    border-style: none;
+    border-radius: 0.5em;
+}
+
+.button {
+    border-style: none;
+    margin: 1em;
+    font-size: clamp(20px, 5vw, 30px);
+    border-radius: 1em;
+    padding: 0.5em;
+    color: white;
+    background-color: black;
+}
+
+.button:disabled {
+    opacity: 0.2;
+}
+
+.buttonSection {
+    display: flex;
+    justify-content: center;
+    margin: 1em;
 }

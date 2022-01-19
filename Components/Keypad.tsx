@@ -12,12 +12,14 @@ interface KeypadProps {
     handleLetterPress: (letter: string) => void;
     handleBackPress: () => void;
     handleSubmit: () => void;
+    letterPosition: number;
 }
 
 const Keypad = ({
     handleLetterPress,
     handleBackPress,
     handleSubmit,
+    letterPosition,
 }: KeypadProps) => {
     const [keys, setKeys] = useState(
         ALPHABET.map((row) => row.map((letter) => LetterCell(letter)))
@@ -38,12 +40,18 @@ const Keypad = ({
                     ))}
                 </div>
             ))}
-            <button className={styles.submit} onClick={handleSubmit}>
-                Submit
-            </button>
-            <button className={styles.back} onClick={handleBackPress}>
-                {"<-"}
-            </button>
+            <div className={styles.buttonSection}>
+                <button
+                    disabled={letterPosition < 5}
+                    className={styles.button}
+                    onClick={handleSubmit}
+                >
+                    Submit
+                </button>
+                <button className={styles.button} onClick={handleBackPress}>
+                    Delete
+                </button>
+            </div>
         </div>
     );
 };

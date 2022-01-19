@@ -28,6 +28,14 @@ const WordGame = () => {
         };
     }, []);
 
+    useEffect(() => {
+        console.log(guesses);
+    }, [guesses]);
+
+    useEffect(() => {
+        console.log(currentLetter);
+    }, [currentLetter]);
+
     const handleKeyDown = (event: any) => {
         const val = event.keyCode;
         if (
@@ -51,7 +59,7 @@ const WordGame = () => {
                 )
             )
         );
-        if (currentLetter < 4) {
+        if (currentLetter < 5) {
             setCurrentLetter((prevLetterCount) => prevLetterCount + 1);
         }
     };
@@ -104,6 +112,9 @@ const WordGame = () => {
     };
 
     const determineClassName = (letterCell: LetterCell) => {
+        if (letterCell.letter === "0") {
+            return `${styles.letter} ${styles.empty}`;
+        }
         if (letterCell.status === Status.correctPositon) {
             return `${styles.letter} ${styles.correctPosition}`;
         }
@@ -138,6 +149,7 @@ const WordGame = () => {
                 handleLetterPress={handleLetterPress}
                 handleBackPress={handleBackPress}
                 handleSubmit={handleSubmit}
+                letterPosition={currentLetter}
             />
         </div>
     );
