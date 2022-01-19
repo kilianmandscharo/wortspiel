@@ -1,0 +1,17 @@
+.keypad {
+    margin: 0 auto;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+}
+
+.letter {
+    padding: 0.3em;
+    margin: 0.1em;
+    font-size: 20px;
+    display: inline-block;
+    color: white;
+    background-color: black;
+}

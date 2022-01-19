@@ -1,0 +1,30 @@
+.guesses {
+    margin: 3em auto;
+    background-color: #6a5d7b;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+}
+
+.letter {
+    display: inline-block;
+    background-color: grey;
+    font-size: 30px;
+    color: white;
+    padding: 0.5em;
+    margin: 5px;
+}
+
+.correctLetter {
+    background-color: orange;
+}
+
+.correctPosition {
+    background-color: green;
+}
+
+.false {
+    background-color: black;
+}
