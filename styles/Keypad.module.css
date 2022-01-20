@@ -14,15 +14,27 @@
     font-size: clamp(1.3em, 5vw, 3em);
     display: inline-block;
     color: white;
-    background-color: black;
+    background-color: grey;
     border-style: none;
     border-radius: 0.5em;
 }
 
+.correctPosition {
+    background-color: green;
+}
+
+.correctLetter {
+    background-color: orange;
+}
+
+.false {
+    background-color: black;
+}
+
 .button {
     border-style: none;
-    margin: 1em;
-    font-size: clamp(20px, 5vw, 30px);
+    margin: 0.1em;
+    /*font-size: clamp(20px, 5vw, 30px);*/
     border-radius: 1em;
     padding: 0.5em;
     color: white;
@@ -30,7 +42,7 @@
 }
 
 .button:disabled {
-    opacity: 0.2;
+    opacity: 0.3;
 }
 
 .buttonSection {

@@ -23,16 +23,51 @@
 
 .correctLetter {
     background-color: orange;
+    animation-name: reveal;
+    animation-duration: 1.5s;
 }
 
 .correctPosition {
     background-color: green;
+    animation-name: reveal;
+    animation-duration: 1.5s;
 }
 
 .false {
     background-color: black;
+    animation-name: reveal;
+    animation-duration: 1.5s;
+}
+
+@keyframes reveal {
+    0% {
+        opacity: 0.1;
+        transform: rotateY(90deg);
+    }
+    100% {
+        opacity: 1;
+        transform: rotateY(0deg);
+    }
 }
 
 .empty {
     color: grey;
+}
+
+.neutral {
+    background-color: purple;
+    animation-name: letterEntered;
+    animation-duration: 0.5s;
+}
+
+@keyframes letterEntered {
+    0% {
+        scale: 0.9;
+    }
+    50% {
+        scale: 1.1;
+    }
+    100% {
+        scale: 1;
+    }
 }
