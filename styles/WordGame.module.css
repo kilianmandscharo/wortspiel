@@ -1,6 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&display=swap");
+
+.wordGame {
+    width: 95vw;
+    min-width: 375px;
+    max-width: 600px;
+}
+
 .guesses {
-    margin: 2em 1em;
-    /*background-color: #6a5d7b;*/
+    margin: 0em 0.5em 2em 0.5em;
+    border: 1px solid rgb(230, 160, 29);
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.won {
+    border: 2px solid rgb(27, 108, 27);
+}
+
+.lost {
+    border: 2px solid rgb(176, 1, 1);
 }
 
 .row {
@@ -10,31 +28,33 @@
 
 .letter {
     display: inline-block;
-    font-size: clamp(2em, 15vw, 5em);
-    min-width: 1em;
-    background-color: grey;
-    color: white;
+    background-color: #262626;
+    width: 100%;
+    min-width: 1.4em;
+    max-width: 2.5em;
     margin: 5px;
+    padding: 5px 5px 10px 5px;
     border-radius: 5px;
-    padding: 5px;
-    display: flex;
-    justify-content: center;
+    font-family: "Exo 2", sans-serif;
+    font-size: 42px;
+    color: white;
+    text-align: center;
 }
 
 .correctLetter {
-    background-color: orange;
+    background-color: rgb(230, 160, 29);
     animation-name: reveal;
     animation-duration: 1.5s;
 }
 
 .correctPosition {
-    background-color: green;
+    background-color: rgb(27, 108, 27);
     animation-name: reveal;
     animation-duration: 1.5s;
 }
 
 .false {
-    background-color: black;
+    background-color: #1c1c1c;
     animation-name: reveal;
     animation-duration: 1.5s;
 }
@@ -51,11 +71,10 @@
 }
 
 .empty {
-    color: grey;
+    color: #262626;
 }
 
 .neutral {
-    background-color: purple;
     animation-name: letterEntered;
     animation-duration: 0.5s;
 }

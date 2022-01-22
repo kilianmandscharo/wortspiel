@@ -78,15 +78,15 @@ const Keypad = ({
 
     const determineClassName = (letterCell: LetterCell) => {
         if (letterCell.status === Status.correctPositon) {
-            return `${styles.letter} ${styles.correctPosition}`;
+            return `${styles.key} ${styles.correctPosition}`;
         }
         if (letterCell.status === Status.correctLetter) {
-            return `${styles.letter} ${styles.correctLetter}`;
+            return `${styles.key} ${styles.correctLetter}`;
         }
         if (letterCell.status === Status.false) {
-            return `${styles.letter} ${styles.false}`;
+            return `${styles.key} ${styles.false}`;
         }
-        return `${styles.letter}`;
+        return `${styles.key}`;
     };
 
     return (
@@ -132,14 +132,14 @@ const Keypad = ({
                 ))}
                 <button className={styles.button} onClick={handleBackPress}>
                     <svg
-                        width="57"
-                        height="30"
-                        viewBox="0 0 57 30"
+                        width="44"
+                        height="16"
+                        viewBox="0 0 44 16"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
                     >
                         <path
-                            d="M0.585786 13.5858C-0.195262 14.3668 -0.195262 15.6332 0.585786 16.4142L13.3137 29.1421C14.0948 29.9232 15.3611 29.9232 16.1421 29.1421C16.9232 28.3611 16.9232 27.0948 16.1421 26.3137L4.82843 15L16.1421 3.68629C16.9232 2.90524 16.9232 1.63891 16.1421 0.857864C15.3611 0.0768158 14.0948 0.0768158 13.3137 0.857864L0.585786 13.5858ZM57 13L2 13V17L57 17V13Z"
+                            d="M0.292893 7.29289C-0.0976311 7.68342 -0.0976311 8.31658 0.292893 8.70711L6.65685 15.0711C7.04738 15.4616 7.68054 15.4616 8.07107 15.0711C8.46159 14.6805 8.46159 14.0474 8.07107 13.6569L2.41421 8L8.07107 2.34315C8.46159 1.95262 8.46159 1.31946 8.07107 0.928932C7.68054 0.538408 7.04738 0.538408 6.65685 0.928932L0.292893 7.29289ZM44 7L1 7L1 9L44 9L44 7Z"
                             fill="white"
                         />
                     </svg>

@@ -11,51 +11,37 @@ export enum Status {
 
 const WORD = "HELLO";
 
-interface StateProps {
-    currentWord: number;
-    currentLetter: number;
-    finished: boolean;
-    won: boolean;
-    falseLetters: string[];
-    correctPositions: string[];
-    correctLetters: string[];
-    guesses: LetterCell[][];
-}
+const WordGame = () => {
+    const [guesses, setGuesses] = useState(
+        new Array(6)
+            .fill(0)
+            .map((row) => new Array(5).fill(0).map((entry) => LetterCell("0")))
+    );
+    const [currentWord, setCurrentWord] = useState(0);
+    const [currentLetter, setCurrentLetter] = useState(0);
+    const [finished, setFinished] = useState(false);
+    const [falseLetters, setFalseLetters] = useState<string[]>([]);
+    const [correctPositions, setCorrectPositions] = useState<string[]>([]);
+    const [correctLetters, setCorrectLetters] = useState<string[]>([]);
 
-class WordGame extends React.Component<any, StateProps> {
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            currentWord: 0,
-            currentLetter: 0,
-            won: false,
-            finished: false,
-            falseLetters: [],
-            correctPositions: [],
-            correctLetters: [],
-            guesses: new Array(6)
-                .fill(0)
-                .map((row) =>
-                    new Array(5).fill(0).map((entry) => LetterCell("0"))
-                ),
+    useEffect(() => {
+        window.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
         };
-    }
+    }, []);
 
-    componentDidMount() {
-        window.addEventListener("keydown", this.handleKeyDown);
-    }
+    useEffect(() => {
+        updateGuesses();
+        checkForWin();
+        updateLetterStates();
+    }, [currentWord]);
 
-    componentWillUnmount() {
-        window.removeEventListener("keydown", this.handleKeyDown);
-    }
-
-    handleKeyDown = (event: any) => {
+    const handleKeyDown = (event: any) => {
         const val = event.keyCode;
         if (val === 8) {
-            this.handleBackPress();
-        }
-        if (val === 13) {
-            this.handleSubmit();
+            handleBackPress();
         }
         if (
             (val >= 65 && val <= 90) ||
@@ -64,127 +50,102 @@ class WordGame extends React.Component<any, StateProps> {
             val === 219 ||
             val === 222
         ) {
-            this.handleLetterPress(event.key.toUpperCase());
+            handleLetterPress(event.key.toUpperCase());
         }
     };
 
-    handleLetterPress = (letter: string) => {
-        if (this.state.finished) {
+    const handleLetterPress = (letter: string) => {
+        if (finished) {
             return;
         }
-        this.setState((state) => ({
-            guesses: state.guesses.map((word, i) =>
+        setGuesses((guesses) =>
+            guesses.map((word, i) =>
                 word.map((letterCell, j) =>
-                    i === state.currentWord && j === state.currentLetter
+                    i === currentWord && j === currentLetter
                         ? { ...letterCell, letter }
                         : { ...letterCell }
                 )
-            ),
-        }));
-        if (this.state.currentLetter < 5) {
-            this.setState((state) => ({
-                currentLetter: state.currentLetter + 1,
-            }));
+            )
+        );
+        if (currentLetter < 5) {
+            setCurrentLetter((prevLetterCount) => prevLetterCount + 1);
         }
     };
 
-    handleBackPress = () => {
-        this.setState((state) => ({
-            guesses: state.guesses.map((word, i) =>
+    const handleBackPress = () => {
+        setGuesses(
+            guesses.map((word, i) =>
                 word.map((letterCell, j) =>
-                    i === state.currentWord && j === state.currentLetter - 1
+                    i === currentWord && j === currentLetter - 1
                         ? { ...letterCell, letter: "0" }
                         : { ...letterCell }
                 )
-            ),
-            currentLetter:
-                state.currentLetter > 0
-                    ? state.currentLetter - 1
-                    : state.currentLetter,
-        }));
+            )
+        );
+        if (currentLetter > 0) {
+            setCurrentLetter((prevLetterCount) => prevLetterCount - 1);
+        }
     };
 
-    handleSubmit = () => {
-        if (this.state.currentLetter < 5) {
+    const handleSubmit = () => {
+        if (currentLetter < 5) {
             return;
         }
-        this.setState((state) => ({
-            currentLetter: 0,
-            currentWord: state.currentWord + 1,
-        }));
-        this.updateGuesses();
-        this.checkForEndOfGame();
-        this.updateLetterStates();
+        setCurrentLetter(0);
+        setCurrentWord((prevWordCount) => prevWordCount + 1);
     };
 
-    checkForEndOfGame = () => {
-        let word = "";
-        for (const letterCell of this.state.guesses[
-            this.state.currentWord - 1
-        ]) {
-            word += letterCell.letter;
-        }
-        if (word === WORD) {
-            this.setState({ finished: true, won: true });
-        }
-        if (this.state.currentWord === 6) {
-            this.setState({ finished: true });
+    const checkForWin = () => {
+        for (const guess of guesses) {
+            let word = "";
+            for (const letterCell of guess) {
+                word += letterCell.letter;
+            }
+            if (word === WORD) {
+                setFinished(true);
+            }
         }
     };
 
-    updateLetterStates = () => {
-        if (this.state.currentWord === 0) {
+    const updateLetterStates = () => {
+        if (currentWord === 0) {
             return;
         }
-        for (const letterCell of this.state.guesses[
-            this.state.currentWord - 1
-        ]) {
+        for (const letterCell of guesses[currentWord - 1]) {
             if (
                 letterCell.status === Status.correctPositon &&
-                !this.state.correctPositions.includes(letterCell.letter)
+                !correctPositions.includes(letterCell.letter)
             ) {
-                this.setState((state) => ({
-                    correctPositions: [
-                        ...state.correctPositions,
-                        letterCell.letter,
-                    ],
-                }));
+                setCorrectPositions((prev) => [...prev, letterCell.letter]);
             }
             if (
                 letterCell.status === Status.correctLetter &&
-                !this.state.correctLetters.includes(letterCell.letter)
+                !correctLetters.includes(letterCell.letter)
             ) {
-                this.setState((state) => ({
-                    correctLetters: [
-                        ...state.correctLetters,
-                        letterCell.letter,
-                    ],
-                }));
+                setCorrectLetters((prev) => [...prev, letterCell.letter]);
             }
             if (
                 letterCell.status === Status.false &&
-                !this.state.falseLetters.includes(letterCell.letter)
+                !falseLetters.includes(letterCell.letter)
             ) {
-                this.setState((state) => ({
-                    falseLetters: [...state.falseLetters, letterCell.letter],
-                }));
+                setFalseLetters((prev) => [...prev, letterCell.letter]);
             }
         }
     };
 
-    updateGuesses = () => {
-        if (this.state.currentWord === 0) {
+    const updateGuesses = () => {
+        if (currentWord === 0) {
             return;
         }
         const wordToGuess = WORD.split("");
-        const wordLevel = this.state.currentWord - 1;
+        const wordLevel = currentWord - 1;
 
-        const letterCounts = this.countLettersInWord(WORD);
+        const letterCounts = countLettersInWord(WORD);
 
         const updatedGuesses: LetterCell[][] = [];
 
         for (let i = 0; i < 6; i++) {
-            const oldGuess = this.state.guesses[i];
+            const oldGuess = guesses[i];
             const updatedGuess: LetterCell[] = [];
 
             // These objects are needed later to limit the number of
@@ -196,10 +157,9 @@ class WordGame extends React.Component<any, StateProps> {
             // word; in the same vein, if the guess is LLXXL, only the first
             // two Ls should be marked as correctLetter, the third L in
             // the fifth position as false
-            const lettersGuessed =
-                this.getLettersInGuessWithoutDuplicates(oldGuess);
+            const lettersGuessed = getLettersInGuessWithoutDuplicates(oldGuess);
             const correctlyPositionedLetters =
-                this.getCorrectlyPositionedLetters(oldGuess);
+                getCorrectlyPositionedLetters(oldGuess);
 
             for (let j = 0; j < 5; j++) {
                 const letterCell = oldGuess[j];
@@ -242,10 +202,10 @@ class WordGame extends React.Component<any, StateProps> {
             }
             updatedGuesses.push(updatedGuess);
         }
-        this.setState({ guesses: updatedGuesses });
+        setGuesses(updatedGuesses);
     };
 
-    getCorrectlyPositionedLetters = (guess: LetterCell[]) => {
+    const getCorrectlyPositionedLetters = (guess: LetterCell[]) => {
         const letters: any = {};
         for (let i = 0; i < 5; i++) {
             const letter = guess[i].letter;
@@ -264,7 +224,7 @@ class WordGame extends React.Component<any, StateProps> {
         return letters;
     };
 
-    getLettersInGuessWithoutDuplicates = (guess: LetterCell[]) => {
+    const getLettersInGuessWithoutDuplicates = (guess: LetterCell[]) => {
         const letters: any = {};
         for (const letterCell of guess) {
             const letter = letterCell.letter;
@@ -275,7 +235,7 @@ class WordGame extends React.Component<any, StateProps> {
         return letters;
     };
 
-    countLettersInWord = (word: string) => {
+    const countLettersInWord = (word: string) => {
         const letters = word.split("");
         const letterCounts: any = {};
         for (const letter of letters) {
@@ -287,7 +247,7 @@ class WordGame extends React.Component<any, StateProps> {
         return letterCounts;
     };
 
-    determineClassName = (letterCell: LetterCell) => {
+    const determineClassName = (letterCell: LetterCell) => {
         if (letterCell.letter === "0") {
             return `${styles.letter} ${styles.empty}`;
         }
@@ -308,48 +268,34 @@ class WordGame extends React.Component<any, StateProps> {
         }
     };
 
-    determineBorderColor = () => {
-        if (this.state.finished && this.state.won) {
-            return `${styles.guesses} ${styles.won}`;
-        }
-        if (this.state.finished && !this.state.won) {
-            return `${styles.guesses} ${styles.lost}`;
-        }
-        return `${styles.guesses}`;
-    };
-
-    render() {
-        return (
-            <div className={styles.wordGame}>
-                <div className={this.determineBorderColor()}>
-                    {this.state.guesses.map((guess, i) => (
-                        <div key={i} className={styles.row}>
-                            {guess.map((letterCell, j) => (
-                                <div
-                                    key={`${i}${j}`}
-                                    className={this.determineClassName(
-                                        letterCell
-                                    )}
-                                >
-                                    {letterCell.letter}
-                                </div>
-                            ))}
-                        </div>
-                    ))}
-                </div>
-                <Keypad
-                    handleLetterPress={this.handleLetterPress}
-                    handleBackPress={this.handleBackPress}
-                    handleSubmit={this.handleSubmit}
-                    letterPosition={this.state.currentLetter}
-                    correctPositions={this.state.correctPositions}
-                    correctLetters={this.state.correctLetters}
-                    falseLetters={this.state.falseLetters}
-                />
+    return (
+        <div>
+            <div className={styles.guesses}>
+                {guesses.map((guess, i) => (
+                    <div key={i} className={styles.row}>
+                        {guess.map((letterCell, j) => (
+                            <div
+                                key={`${i}${j}`}
+                                className={determineClassName(letterCell)}
+                            >
+                                {letterCell.letter}
+                            </div>
+                        ))}
+                    </div>
+                ))}
             </div>
-        );
-    }
-}
+            <Keypad
+                handleLetterPress={handleLetterPress}
+                handleBackPress={handleBackPress}
+                handleSubmit={handleSubmit}
+                letterPosition={currentLetter}
+                correctPositions={correctPositions}
+                correctLetters={correctLetters}
+                falseLetters={falseLetters}
+            />
+        </div>
+    );
+};
 
 export interface LetterCell {
     letter: string;

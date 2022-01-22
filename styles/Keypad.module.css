@@ -1,52 +1,51 @@
-.keypad {
-    margin: 0 auto;
-}
+@import url("https://fonts.googleapis.com/css2?family=Exo+2&display=swap");
 
 .row {
     display: flex;
     justify-content: center;
 }
 
-.letter {
-    padding: 0.3em;
-    margin: 0.1em;
-    min-width: 1.4em;
-    font-size: clamp(1.3em, 5vw, 3em);
+.key {
     display: inline-block;
-    color: white;
-    background-color: grey;
+    background-color: #393939;
+    width: 100%;
+    min-width: 1em;
+    max-width: 2.4em;
+    padding: 0.2em;
+    margin: 0.1em;
     border-style: none;
     border-radius: 0.5em;
+    font-family: "Exo 2", sans-serif;
+    font-size: 22px;
+    text-align: center;
+    color: white;
 }
 
 .correctPosition {
-    background-color: green;
+    background-color: rgb(27, 108, 27);
 }
 
 .correctLetter {
-    background-color: orange;
+    background-color: rgb(230, 160, 29);
 }
 
 .false {
-    background-color: black;
+    background-color: #1c1c1c;
 }
 
 .button {
-    border-style: none;
+    background-color: #393939;
+    width: 100%;
+    max-width: 7em;
     margin: 0.1em;
-    /*font-size: clamp(20px, 5vw, 30px);*/
     border-radius: 1em;
     padding: 0.5em;
+    border-style: none;
+    font-family: "Exo 2", sans-serif;
+    font-size: 15px;
     color: white;
-    background-color: black;
 }
 
 .button:disabled {
     opacity: 0.3;
-}
-
-.buttonSection {
-    display: flex;
-    justify-content: center;
-    margin: 1em;
 }
