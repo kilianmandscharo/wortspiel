@@ -152,7 +152,8 @@ class WordGame extends React.Component<any, StateProps> {
             }
             if (
                 letterCell.status === Status.correctLetter &&
-                !this.state.correctLetters.includes(letterCell.letter)
+                !this.state.correctLetters.includes(letterCell.letter) &&
+                !this.state.correctPositions.includes(letterCell.letter)
             ) {
                 this.setState((state) => ({
                     correctLetters: [
@@ -163,7 +164,9 @@ class WordGame extends React.Component<any, StateProps> {
             }
             if (
                 letterCell.status === Status.false &&
-                !this.state.falseLetters.includes(letterCell.letter)
+                !this.state.falseLetters.includes(letterCell.letter) &&
+                !this.state.correctPositions.includes(letterCell.letter) &&
+                !this.state.correctLetters.includes(letterCell.letter)
             ) {
                 this.setState((state) => ({
                     falseLetters: [...state.falseLetters, letterCell.letter],
