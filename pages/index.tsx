@@ -4,11 +4,9 @@ import Instructions from "../Components/Instructions";
 import ScoreButton from "../Components/ScoreButton";
 import WordGame from "../Components/WordGame";
 import styles from "../styles/Home.module.css";
-import { useCookies } from "react-cookie";
 
 const Home = () => {
     const [instructionsActive, setInstructionsActive] = useState(false);
-    const [cookies, setCookie] = useCookies(["game"]);
 
     return (
         <div className={styles.home}>
