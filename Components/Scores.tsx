@@ -37,7 +37,9 @@ const Scores = ({
                             <div
                                 key={key}
                                 className={styles.bar}
-                                style={{ width: `${20 + value * ratio}px` }}
+                                style={{
+                                    width: `${20 + value * ratio}px`,
+                                }}
                             >
                                 <div className={styles.number}>{key}</div>
                                 <div className={styles.guess}>{value}</div>
