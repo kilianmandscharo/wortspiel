@@ -41,6 +41,7 @@ const Home = () => {
                     content="Deutsche Version des Spiels WORDLE. Errate das gesuchte Wort in sechs Versuchen."
                 />
                 <meta name="keywords" content="wordle, deutsch, wortspiel" />
+                <link rel="shortcut icon" href="favicon.ico" />
             </Head>
             <div className={styles.home}>
                 <div className={styles.headerSection}>
