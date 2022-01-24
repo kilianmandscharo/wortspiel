@@ -24,12 +24,12 @@
     width: 100%;
     min-width: 1em;
     max-width: 2.4em;
-    padding: 0.2em;
+    padding: 0.5em 0.2em;
     margin: 0.1em;
     border: 1px solid var(--level5);
     border-radius: 0.5em;
     font-family: "Exo 2", sans-serif;
-    font-size: 22px;
+    font-size: 20px;
     text-align: center;
     color: rgba(255, 255, 255, 0.9);
 }
