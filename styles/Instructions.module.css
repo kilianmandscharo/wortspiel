@@ -1,39 +1,50 @@
 @import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&display=swap");
 
 .instructions {
-    background-color: #262626;
+    --level0: #121212;
+    --level1: #1c1c1c;
+    --level2: #262626;
+    --level3: #303030;
+    --level4: #3a3a3a;
+    --level5: #434343;
+    --red: rgb(176, 1, 1);
+    --green: rgb(27, 108, 27);
+    --orange: rgb(230, 160, 29);
+    --white: rgba(255, 255, 255, 0.9);
+
+    background-color: var(--level3);
     position: absolute;
     width: 100%;
     height: 100%;
     padding: 1em;
     font-family: "Exo 2", sans-serif;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--white);
 }
 
 .text {
     margin: 1.5em 0;
     padding-bottom: 1em;
     line-height: 1.5;
-    border-bottom: 1px solid #393939;
+    border-bottom: 1px solid var(--level4);
 }
 
 .letter {
     display: inline-block;
-    background-color: #1c1c1c;
+    background-color: var(--level1);
     width: 1.5em;
     margin: 5px;
     padding: 5px 5px 10px 5px;
     border-radius: 5px;
     font-family: "Exo 2", sans-serif;
     font-size: 30px;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--white);
     text-align: center;
 }
 
 .correctPosition {
-    background-color: rgb(27, 108, 27);
+    background-color: var(--green);
 }
 
 .correctLetter {
-    background-color: rgb(230, 160, 29);
+    background-color: var(--orange);
 }

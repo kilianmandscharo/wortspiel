@@ -21,7 +21,7 @@ const Instructions = ({ handleClick }: InstructionProps) => {
                     x2="18.3241"
                     y2="1.11091"
                     stroke="white"
-                    stroke-opacity="0.9"
+                    strokeOpacity="0.9"
                 />
                 <line
                     x1="1.35355"
@@ -29,7 +29,7 @@ const Instructions = ({ handleClick }: InstructionProps) => {
                     x2="19.0312"
                     y2="18.3241"
                     stroke="white"
-                    stroke-opacity="0.9"
+                    strokeOpacity="0.9"
                 />
             </svg>
 

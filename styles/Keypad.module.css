@@ -1,5 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Exo+2&display=swap");
 
+.keypad {
+    --level0: #121212;
+    --level1: #1c1c1c;
+    --level2: #262626;
+    --level3: #303030;
+    --level4: #3a3a3a;
+    --level5: #434343;
+    --red: rgb(176, 1, 1);
+    --green: rgb(27, 108, 27);
+    --orange: rgb(230, 160, 29);
+    --white: rgba(255, 255, 255, 0.9);
+}
+
 .row {
     display: flex;
     justify-content: center;
@@ -7,13 +20,13 @@
 
 .key {
     display: inline-block;
-    background-color: #393939;
+    background-color: var(--level4);
     width: 100%;
     min-width: 1em;
     max-width: 2.4em;
     padding: 0.2em;
     margin: 0.1em;
-    border-style: none;
+    border: 1px solid var(--level5);
     border-radius: 0.5em;
     font-family: "Exo 2", sans-serif;
     font-size: 22px;
@@ -22,25 +35,26 @@
 }
 
 .correctPosition {
-    background-color: rgb(27, 108, 27);
+    background-color: var(--green);
 }
 
 .correctLetter {
-    background-color: rgb(230, 160, 29);
+    background-color: var(--orange);
 }
 
 .false {
-    background-color: #1c1c1c;
+    background-color: var(--level0);
 }
 
 .button {
-    background-color: #393939;
+    background-color: var(--level4);
     width: 100%;
     max-width: 7em;
     margin: 0.1em;
     border-radius: 1em;
     padding: 0.5em;
     border-style: none;
+    outline: 1px solid var(--level5);
     font-family: "Exo 2", sans-serif;
     font-size: 15px;
     color: rgba(255, 255, 255, 0.9);
