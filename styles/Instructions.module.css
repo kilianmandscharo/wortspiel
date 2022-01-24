@@ -21,6 +21,12 @@
     color: var(--white);
 }
 
+.header {
+    margin: 1em 0;
+    padding-bottom: 0.5em;
+    border-bottom: 2px solid var(--orange);
+}
+
 .text {
     margin: 1.5em 0;
     padding-bottom: 1em;
