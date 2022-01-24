@@ -19,17 +19,41 @@
 
 .guesses {
     margin: 0em 0.5em 2em 0.5em;
-    border: 1px solid var(--orange);
+    border: 2px solid var(--orange);
     border-radius: 8px;
     padding: 10px;
 }
 
 .won {
     border: 2px solid var(--green);
+    animation-name: borderTransitionOnWin;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+}
+
+@keyframes borderTransitionOnWin {
+    from {
+        border: 2px solid var(--orange);
+    }
+    to {
+        border: 2px solid var(--green);
+    }
 }
 
 .lost {
     border: 2px solid var(--red);
+    animation-name: borderTransitionOnLoss;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+}
+
+@keyframes borderTransitionOnLoss {
+    from {
+        border: 2px solid var(--orange);
+    }
+    to {
+        border: 2px solid var(--red);
+    }
 }
 
 .row {
@@ -56,33 +80,38 @@
 
 .correctLetter {
     background-color: var(--orange);
-    animation-name: reveal;
-    animation-duration: 1.5s;
+    animation-name: changeColorOrange;
+    animation-duration: 3s;
     outline: none;
+}
+
+@keyframes changeColorOrange {
+    from {
+        background-color: var(--level1);
+    }
+    to {
+        background-color: var(--orange);
+    }
 }
 
 .correctPosition {
     background-color: var(--green);
-    animation-name: reveal;
-    animation-duration: 1.5s;
+    animation-name: changeColorGreen;
+    animation-duration: 3s;
     outline: none;
+}
+
+@keyframes changeColorGreen {
+    from {
+        background-color: var(--level1);
+    }
+    to {
+        background-color: var(--green);
+    }
 }
 
 .false {
-    animation-name: reveal;
-    animation-duration: 1.5s;
     outline: none;
-}
-
-@keyframes reveal {
-    0% {
-        opacity: 0.1;
-        transform: rotateY(100deg);
-    }
-    100% {
-        opacity: 1;
-        transform: rotateY(0deg);
-    }
 }
 
 .empty {
