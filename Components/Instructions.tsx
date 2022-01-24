@@ -32,7 +32,6 @@ const Instructions = ({ handleClick }: InstructionProps) => {
                     strokeOpacity="0.9"
                 />
             </svg>
-
             <div className={styles.text}>
                 Das gesuchte Wort besteht aus fünf Buchstaben. Errate es in
                 sechs Versuchen. Jeder Rateversuch bringt neue Hinweise,
