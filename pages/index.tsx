@@ -8,13 +8,6 @@ import Cookies from "universal-cookie";
 import Head from "next/head";
 import Scores from "../Components/Scores";
 
-interface Game {
-    totalGuesses: number;
-    guesses: LetterCell[][];
-    word: string;
-    won: boolean;
-}
-
 const Home = () => {
     const [instructionsActive, setInstructionsActive] = useState(false);
     const [scoresActive, setScoresActive] = useState(false);
@@ -26,24 +19,76 @@ const Home = () => {
         5: 0,
         6: 0,
     });
+    const [highestStreak, setHighestStreak] = useState(0);
+    const [currentStreak, setCurrentStreak] = useState(0);
+    const [winPercentage, setWinPercentage] = useState(0);
     const cookies = new Cookies();
 
     useEffect(() => {
         const games = cookies.getAll();
         const keys = Object.keys(games);
-        if (keys.length === 0) {
+        if (!keys.length) {
             return;
         }
-        const lastRound = games[keys[keys.length - 1]];
-        const totalGuessesPerGame = Object.entries(games).map(
-            ([_, game]: [string, any]) => game.totalGuesses
-        );
+        setGuesses(getNumberOfGuessesForEachNumber(games));
+        setHighestStreak(getHighestWinStreak(games));
+        setCurrentStreak(getCurrentWinStreak(games));
+        setWinPercentage(getWinPercentage(games));
+    }, []);
+
+    const getNumberOfGuessesForEachNumber = (games: any) => {
+        const totalGuessesPerGame: any = [];
+        for (const key of Object.keys(games)) {
+            if (games[key].won) {
+                totalGuessesPerGame.push(games[key].totalGuesses);
+            }
+        }
         const guessesForEachNumber: any = { ...guesses };
         for (const numberOfGuesses of totalGuessesPerGame) {
             guessesForEachNumber[numberOfGuesses] += 1;
         }
-        setGuesses(guessesForEachNumber);
-    }, []);
+        return guessesForEachNumber;
+    };
+
+    const getWinPercentage = (games: any) => {
+        let wins = 0;
+        let numberOfGames = 0;
+        for (const key of Object.keys(games)) {
+            numberOfGames += 1;
+            if (games[key].won) {
+                wins += 1;
+            }
+        }
+        return Math.round((wins / numberOfGames) * 100);
+    };
+
+    const getCurrentWinStreak = (games: any) => {
+        let currentStreak = 0;
+        const keys = Object.keys(games);
+        let gameNumber = parseInt(keys[keys.length - 1]);
+        while (gameNumber > 0) {
+            if (!games[gameNumber].won) {
+                break;
+            }
+            currentStreak += 1;
+            gameNumber -= 1;
+        }
+        return currentStreak;
+    };
+
+    const getHighestWinStreak = (games: any) => {
+        let streak = 0;
+        const winStreaks: number[] = [];
+        for (const key of Object.keys(games)) {
+            if (games[key].won) {
+                streak += 1;
+            } else {
+                winStreaks.push(streak);
+                streak = 0;
+            }
+        }
+        return Math.max(...winStreaks);
+    };
 
     const saveRound = (
         totalGuesses: number,
@@ -53,8 +98,6 @@ const Home = () => {
     ) => {
         const gameStats = {
             totalGuesses,
-            guesses,
-            word,
             won,
         };
 
@@ -110,6 +153,9 @@ const Home = () => {
                     <Scores
                         guessesForEachNumber={guesses}
                         handleClick={() => setScoresActive(false)}
+                        highestStreak={highestStreak}
+                        currentStreak={currentStreak}
+                        winPercentage={winPercentage}
                     />
                 )}
             </div>

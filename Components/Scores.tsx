@@ -4,14 +4,23 @@ import BackButton from "./BackButton";
 interface ScoreProps {
     guessesForEachNumber: any;
     handleClick: () => void;
+    highestStreak: number;
+    currentStreak: number;
+    winPercentage: number;
 }
 
-const Scores = ({ guessesForEachNumber, handleClick }: ScoreProps) => {
+const Scores = ({
+    guessesForEachNumber,
+    handleClick,
+    highestStreak,
+    currentStreak,
+    winPercentage,
+}: ScoreProps) => {
     const highestNumberOfGuesses = Math.max(
         ...Object.values(guessesForEachNumber).map((num: any) => parseInt(num))
     );
 
-    const ratio = 250 / highestNumberOfGuesses;
+    const ratio = highestNumberOfGuesses ? 250 / highestNumberOfGuesses : 250;
 
     return (
         <div className={styles.backDrop} onClick={handleClick}>
@@ -33,6 +42,17 @@ const Scores = ({ guessesForEachNumber, handleClick }: ScoreProps) => {
                             </div>
                         )
                     )}
+                </div>
+                <div className={styles.stats}>
+                    <div className={styles.statEntry}>
+                        Höchste Gewinnserie: {highestStreak}
+                    </div>
+                    <div className={styles.statEntry}>
+                        Aktuell Gewinnserie: {currentStreak}
+                    </div>
+                    <div className={styles.statEntry}>
+                        Gewinnanteil: {winPercentage}
+                    </div>
                 </div>
             </div>
         </div>
