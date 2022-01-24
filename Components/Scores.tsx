@@ -7,6 +7,7 @@ interface ScoreProps {
     highestStreak: number;
     currentStreak: number;
     winPercentage: number;
+    gamesPlayed: number;
 }
 
 const Scores = ({
@@ -15,6 +16,7 @@ const Scores = ({
     highestStreak,
     currentStreak,
     winPercentage,
+    gamesPlayed,
 }: ScoreProps) => {
     const highestNumberOfGuesses = Math.max(
         ...Object.values(guessesForEachNumber).map((num: any) => parseInt(num))
@@ -48,10 +50,13 @@ const Scores = ({
                         Höchste Gewinnserie: {highestStreak}
                     </div>
                     <div className={styles.statEntry}>
-                        Aktuell Gewinnserie: {currentStreak}
+                        Aktuelle Gewinnserie: {currentStreak}
                     </div>
                     <div className={styles.statEntry}>
-                        Gewinnanteil: {winPercentage}
+                        Gewinnanteil: {winPercentage}%
+                    </div>
+                    <div className={styles.statEntry}>
+                        Spiele: {gamesPlayed}
                     </div>
                 </div>
             </div>

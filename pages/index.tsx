@@ -22,6 +22,7 @@ const Home = () => {
     const [highestStreak, setHighestStreak] = useState(0);
     const [currentStreak, setCurrentStreak] = useState(0);
     const [winPercentage, setWinPercentage] = useState(0);
+    const [gamesPlayed, setGamesPlayed] = useState(0);
     const cookies = new Cookies();
 
     useEffect(() => {
@@ -30,11 +31,20 @@ const Home = () => {
         if (!keys.length) {
             return;
         }
+        updateStats(games);
+    }, []);
+
+    const updateStats = (games: any) => {
         setGuesses(getNumberOfGuessesForEachNumber(games));
         setHighestStreak(getHighestWinStreak(games));
         setCurrentStreak(getCurrentWinStreak(games));
         setWinPercentage(getWinPercentage(games));
-    }, []);
+        setGamesPlayed(getGamesPlayed(games));
+    };
+
+    const getGamesPlayed = (games: any) => {
+        return Object.keys(games).length;
+    };
 
     const getNumberOfGuessesForEachNumber = (games: any) => {
         const totalGuessesPerGame: any = [];
@@ -87,6 +97,7 @@ const Home = () => {
                 streak = 0;
             }
         }
+        winStreaks.push(streak);
         return Math.max(...winStreaks);
     };
 
@@ -112,6 +123,11 @@ const Home = () => {
         }
 
         cookies.set(`${gameNumber}`, JSON.stringify(gameStats), { path: "/" });
+        const games = cookies.getAll();
+        updateStats(games);
+        setTimeout(() => {
+            setScoresActive(true);
+        }, 1500);
     };
 
     return (
@@ -156,6 +172,7 @@ const Home = () => {
                         highestStreak={highestStreak}
                         currentStreak={currentStreak}
                         winPercentage={winPercentage}
+                        gamesPlayed={gamesPlayed}
                     />
                 )}
             </div>
