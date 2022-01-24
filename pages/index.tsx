@@ -53,7 +53,14 @@ const Home = () => {
                 totalGuessesPerGame.push(games[key].totalGuesses);
             }
         }
-        const guessesForEachNumber: any = { ...guesses };
+        const guessesForEachNumber: any = {
+            1: 0,
+            2: 0,
+            3: 0,
+            4: 0,
+            5: 0,
+            6: 0,
+        };
         for (const numberOfGuesses of totalGuessesPerGame) {
             guessesForEachNumber[numberOfGuesses] += 1;
         }
