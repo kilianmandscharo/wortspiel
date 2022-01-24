@@ -2,11 +2,32 @@ import { useEffect, useState } from "react";
 import InstructionButton from "../Components/InstructionButton";
 import Instructions from "../Components/Instructions";
 import ScoreButton from "../Components/ScoreButton";
-import WordGame from "../Components/WordGame";
+import WordGame, { LetterCell } from "../Components/WordGame";
 import styles from "../styles/Home.module.css";
+import Cookies from "universal-cookie";
 
 const Home = () => {
     const [instructionsActive, setInstructionsActive] = useState(false);
+    const cookies = new Cookies();
+
+    useEffect(() => {
+        console.log(cookies.getAll());
+    }, []);
+
+    const saveRound = (
+        totalGuesses: number,
+        guesses: LetterCell[][],
+        word: string,
+        won: boolean
+    ) => {
+        const gameStats = {
+            totalGuesses,
+            guesses,
+            word,
+            won,
+        };
+        cookies.set("game", JSON.stringify(gameStats), { path: "/" });
+    };
 
     return (
         <div className={styles.home}>
@@ -22,7 +43,7 @@ const Home = () => {
                     <ScoreButton />
                 </div>
             </div>
-            <WordGame />
+            <WordGame saveRound={saveRound} />
             {instructionsActive && (
                 <Instructions
                     handleClick={() => setInstructionsActive(false)}

@@ -11,7 +11,7 @@ export enum Status {
 
 const WORD = "HELLO";
 
-interface StateProps {
+interface WordGameState {
     currentWord: number;
     currentLetter: number;
     finished: boolean;
@@ -22,7 +22,16 @@ interface StateProps {
     guesses: LetterCell[][];
 }
 
-class WordGame extends React.Component<any, StateProps> {
+interface WordGameProps {
+    saveRound: (
+        totalGuesses: number,
+        guesses: LetterCell[][],
+        word: string,
+        won: boolean
+    ) => void;
+}
+
+class WordGame extends React.Component<WordGameProps, WordGameState> {
     constructor(props: any) {
         super(props);
         this.state = {
@@ -126,9 +135,21 @@ class WordGame extends React.Component<any, StateProps> {
         }
         if (word === WORD) {
             this.setState({ finished: true, won: true });
+            this.props.saveRound(
+                this.state.currentWord,
+                this.state.guesses,
+                WORD,
+                true
+            );
         }
-        if (this.state.currentWord === 6) {
+        if (this.state.currentWord === 6 && !this.state.won) {
             this.setState({ finished: true });
+            this.props.saveRound(
+                this.state.currentWord,
+                this.state.guesses,
+                WORD,
+                false
+            );
         }
     };
 
