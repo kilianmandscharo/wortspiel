@@ -19,3 +19,10 @@
     font-family: "Racing Sans One", sans-serif;
     font-size: 45px;
 }
+
+.menuButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+}
