@@ -49,6 +49,9 @@ const Scores = ({
                 </div>
                 <div className={styles.stats}>
                     <div className={styles.statEntry}>
+                        Spiele: {gamesPlayed}
+                    </div>
+                    <div className={styles.statEntry}>
                         Höchste Gewinnserie: {highestStreak}
                     </div>
                     <div className={styles.statEntry}>
@@ -56,9 +59,6 @@ const Scores = ({
                     </div>
                     <div className={styles.statEntry}>
                         Gewinnanteil: {winPercentage}%
-                    </div>
-                    <div className={styles.statEntry}>
-                        Spiele: {gamesPlayed}
                     </div>
                 </div>
             </div>
