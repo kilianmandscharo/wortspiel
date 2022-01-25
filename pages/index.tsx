@@ -8,6 +8,12 @@ import Cookies from "universal-cookie";
 import Head from "next/head";
 import Scores from "../Components/Scores";
 
+interface Game {
+    round: number;
+    totalGuesses: number;
+    won: boolean;
+}
+
 const Home = () => {
     const [instructionsActive, setInstructionsActive] = useState(false);
     const [scoresActive, setScoresActive] = useState(false);
@@ -26,33 +32,26 @@ const Home = () => {
     const cookies = new Cookies();
 
     useEffect(() => {
-        const games = cookies.getAll();
-        const keys = Object.keys(games);
-        if (!keys.length) {
+        const games = getGamesFromStorage();
+        console.log(games);
+        if (!games.length) {
             return;
         }
-        // updateStats(games);
+        updateStats(games);
     }, []);
 
-    const updateStats = (games: any) => {
+    const updateStats = (games: Game[]) => {
         setGuesses(getNumberOfGuessesForEachNumber(games));
         setHighestStreak(getHighestWinStreak(games));
         setCurrentStreak(getCurrentWinStreak(games));
         setWinPercentage(getWinPercentage(games));
-        setGamesPlayed(getGamesPlayed(games));
+        setGamesPlayed(games.length);
     };
 
-    const getGamesPlayed = (games: any) => {
-        return Object.keys(games).length;
-    };
-
-    const getNumberOfGuessesForEachNumber = (games: any) => {
-        const totalGuessesPerGame: any = [];
-        for (const key of Object.keys(games)) {
-            if (games[key].won) {
-                totalGuessesPerGame.push(games[key].totalGuesses);
-            }
-        }
+    const getNumberOfGuessesForEachNumber = (games: Game[]) => {
+        const totalGuessesForAllGames = games
+            .filter((game) => game.won)
+            .map((game) => game.totalGuesses);
         const guessesForEachNumber: any = {
             1: 0,
             2: 0,
@@ -61,43 +60,35 @@ const Home = () => {
             5: 0,
             6: 0,
         };
-        for (const numberOfGuesses of totalGuessesPerGame) {
-            guessesForEachNumber[numberOfGuesses] += 1;
+        for (const totalGuesses of totalGuessesForAllGames) {
+            guessesForEachNumber[totalGuesses] += 1;
         }
         return guessesForEachNumber;
     };
 
-    const getWinPercentage = (games: any) => {
-        let wins = 0;
-        let numberOfGames = 0;
-        for (const key of Object.keys(games)) {
-            numberOfGames += 1;
-            if (games[key].won) {
-                wins += 1;
-            }
-        }
-        return Math.round((wins / numberOfGames) * 100);
+    const getWinPercentage = (games: Game[]) => {
+        const wins = games.filter((game) => game.won).length;
+        return Math.round((wins / games.length) * 100);
     };
 
-    const getCurrentWinStreak = (games: any) => {
+    const getCurrentWinStreak = (games: Game[]) => {
         let currentStreak = 0;
-        const keys = Object.keys(games);
-        let gameNumber = parseInt(keys[keys.length - 1]);
+        let gameNumber = games.length - 1;
         while (gameNumber > 0) {
             if (!games[gameNumber].won) {
                 break;
             }
-            currentStreak += 1;
-            gameNumber -= 1;
+            currentStreak++;
+            gameNumber--;
         }
         return currentStreak;
     };
 
-    const getHighestWinStreak = (games: any) => {
+    const getHighestWinStreak = (games: Game[]) => {
         let streak = 0;
         const winStreaks: number[] = [];
-        for (const key of Object.keys(games)) {
-            if (games[key].won) {
+        for (const game of games) {
+            if (game.won) {
                 streak += 1;
             } else {
                 winStreaks.push(streak);
@@ -133,12 +124,6 @@ const Home = () => {
             setScoresActive(true);
         }, 1500);
     };
-
-    interface Game {
-        round: number;
-        totalGuesses: number;
-        won: boolean;
-    }
 
     const getSortedStorageKeys = () => {
         return Object.keys(localStorage)
