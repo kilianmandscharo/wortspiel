@@ -31,7 +31,7 @@ const Home = () => {
         if (!keys.length) {
             return;
         }
-        updateStats(games);
+        // updateStats(games);
     }, []);
 
     const updateStats = (games: any) => {
@@ -114,27 +114,42 @@ const Home = () => {
         word: string,
         won: boolean
     ) => {
-        const gameStats = {
-            totalGuesses,
-            won,
-        };
-
-        const allCookies = cookies.getAll();
-        const keys = Object.keys(allCookies);
+        const keys = getSortedStorageKeys();
         let gameNumber;
-        if (keys.length === 0) {
-            gameNumber = 1;
-        } else {
-            gameNumber =
-                Math.max(...keys.map((number) => parseInt(number))) + 1;
-        }
-
-        cookies.set(`${gameNumber}`, JSON.stringify(gameStats), { path: "/" });
-        const games = cookies.getAll();
+        gameNumber = !keys.length
+            ? 1
+            : Math.max(...keys.map((number) => parseInt(number))) + 1;
+        localStorage.setItem(
+            `${gameNumber}`,
+            JSON.stringify({
+                round: gameNumber,
+                totalGuesses,
+                won,
+            })
+        );
+        const games = getGamesFromStorage();
         updateStats(games);
         setTimeout(() => {
             setScoresActive(true);
         }, 1500);
+    };
+
+    interface Game {
+        round: number;
+        totalGuesses: number;
+        won: boolean;
+    }
+
+    const getSortedStorageKeys = () => {
+        return Object.keys(localStorage)
+            .filter((key) => Number.isInteger(parseInt(key)))
+            .sort((a: string, b: string) => parseInt(a) - parseInt(b));
+    };
+
+    const getGamesFromStorage = () => {
+        const keys = getSortedStorageKeys();
+        const games: Game[] = keys.map((key) => JSON.parse(localStorage[key]));
+        return games;
     };
 
     return (
