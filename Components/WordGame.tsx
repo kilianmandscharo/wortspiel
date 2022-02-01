@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "../styles/WordGame.module.css";
 import Keypad from "./Keypad";
+import * as wordDict from "../core/words.json";
 
 export enum Status {
     neutral,
@@ -9,7 +10,14 @@ export enum Status {
     correctPositon,
 }
 
-const WORD = "HELLO";
+const getRandomWordFromDict = () => {
+    const keys = Object.keys(wordDict).slice(0, 29);
+    const randomKey = keys[Math.floor(Math.random() * keys.length)];
+    const randomWords = wordDict[randomKey as keyof typeof wordDict];
+    return randomWords[Math.floor(Math.random() * randomWords.length)];
+};
+
+const WORD = getRandomWordFromDict();
 
 interface WordGameState {
     currentWord: number;
@@ -20,6 +28,7 @@ interface WordGameState {
     correctPositions: string[];
     correctLetters: string[];
     guesses: LetterCell[][];
+    wordNotInList: boolean;
 }
 
 interface WordGameProps {
@@ -47,6 +56,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                 .map((row) =>
                     new Array(5).fill(0).map((entry) => LetterCell("0"))
                 ),
+            wordNotInList: false,
         };
     }
 
@@ -117,13 +127,29 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
         if (this.state.currentLetter < 5) {
             return;
         }
-        this.setState((state) => ({
-            currentLetter: 0,
-            currentWord: state.currentWord + 1,
-        }));
-        this.updateGuesses();
-        this.checkForEndOfGame();
-        this.updateLetterStates();
+        const guess = this.state.guesses[this.state.currentWord]
+            .map((letterCell) => letterCell.letter)
+            .join("");
+        if (this.checkIfWordInDict(guess)) {
+            this.setState((state) => ({
+                currentLetter: 0,
+                currentWord: state.currentWord + 1,
+            }));
+            this.updateGuesses();
+            this.checkForEndOfGame();
+            this.updateLetterStates();
+        } else {
+            this.setState({ wordNotInList: true });
+            setTimeout(() => {
+                this.setState({ wordNotInList: false });
+            }, 1000);
+        }
+    };
+
+    checkIfWordInDict = (word: string) => {
+        const firstLetter = word.split("")[0];
+        const possibleWords = wordDict[firstLetter as keyof typeof wordDict];
+        return possibleWords.includes(word) ? true : false;
     };
 
     checkForEndOfGame = () => {
@@ -370,6 +396,11 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                     correctLetters={this.state.correctLetters}
                     falseLetters={this.state.falseLetters}
                 />
+                {this.state.wordNotInList && (
+                    <div className={styles.notInList}>
+                        Wort nicht in der Liste enthalten
+                    </div>
+                )}
             </div>
         );
     }

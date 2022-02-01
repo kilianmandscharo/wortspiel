@@ -34,7 +34,6 @@ const Home = () => {
         if (!games.length) {
             return;
         }
-        console.log(games);
         updateStats(games);
     }, []);
 

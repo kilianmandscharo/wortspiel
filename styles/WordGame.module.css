@@ -134,3 +134,35 @@
         scale: 1;
     }
 }
+
+.notInList {
+    display: flex;
+    align-items: center;
+    background-color: var(--level3);
+    position: absolute;
+    width: 50%;
+    height: 20%;
+    top: 25%;
+    left: 25%;
+    font-family: "Exo 2", sans-serif;
+    font-size: 1.5em;
+    color: var(--white);
+    text-align: center;
+    padding: 1em;
+    box-shadow: 2px 8px 10px 5px var(--level0);
+    animation-name: animateError;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+}
+
+@keyframes animateError {
+    0% {
+        scale: 90%;
+    }
+    50% {
+        scale: 100%;
+    }
+    100% {
+        scale: 90%;
+    }
+}
