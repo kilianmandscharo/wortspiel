@@ -4,7 +4,6 @@ import Instructions from "../Components/Instructions";
 import ScoreButton from "../Components/ScoreButton";
 import WordGame, { LetterCell } from "../Components/WordGame";
 import styles from "../styles/Home.module.css";
-import Cookies from "universal-cookie";
 import Head from "next/head";
 import Scores from "../Components/Scores";
 
@@ -29,14 +28,13 @@ const Home = () => {
     const [currentStreak, setCurrentStreak] = useState(0);
     const [winPercentage, setWinPercentage] = useState(0);
     const [gamesPlayed, setGamesPlayed] = useState(0);
-    const cookies = new Cookies();
 
     useEffect(() => {
         const games = getGamesFromStorage();
-        console.log(games);
         if (!games.length) {
             return;
         }
+        console.log(games);
         updateStats(games);
     }, []);
 
@@ -107,9 +105,7 @@ const Home = () => {
     ) => {
         const keys = getSortedStorageKeys();
         let gameNumber;
-        gameNumber = !keys.length
-            ? 1
-            : Math.max(...keys.map((number) => parseInt(number))) + 1;
+        gameNumber = !keys.length ? 1 : parseInt(keys[keys.length - 1]) + 1;
         localStorage.setItem(
             `${gameNumber}`,
             JSON.stringify({
@@ -122,7 +118,7 @@ const Home = () => {
         updateStats(games);
         setTimeout(() => {
             setScoresActive(true);
-        }, 1500);
+        }, 3000);
     };
 
     const getSortedStorageKeys = () => {

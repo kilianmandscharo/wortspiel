@@ -27,7 +27,7 @@
 .won {
     border: 2px solid var(--green);
     animation-name: borderTransitionOnWin;
-    animation-duration: 1s;
+    animation-duration: 3s;
     animation-iteration-count: 1;
 }
 
@@ -43,7 +43,7 @@
 .lost {
     border: 2px solid var(--red);
     animation-name: borderTransitionOnLoss;
-    animation-duration: 1s;
+    animation-duration: 3s;
     animation-iteration-count: 1;
 }
 
