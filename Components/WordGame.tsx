@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "../styles/WordGame.module.css";
 import Keypad from "./Keypad";
-import data from "../core/words.json";
+import data from "../public/words.json";
 import BackButton from "./BackButton";
 
 const wordDict = data.data;
