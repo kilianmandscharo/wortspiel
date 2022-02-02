@@ -166,3 +166,38 @@
         scale: 90%;
     }
 }
+
+.lostMessage {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background-color: var(--level3);
+    position: absolute;
+    width: 50%;
+    height: 40%;
+    top: 25%;
+    left: 25%;
+    font-family: "Exo 2", sans-serif;
+    font-size: 1.5em;
+    color: var(--white);
+    text-align: center;
+    padding: 1em;
+    box-shadow: 2px 8px 10px 5px var(--level0);
+    animation-name: animateError;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+}
+
+.correctWord {
+    font-size: 150%;
+}
+
+.backDrop {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}

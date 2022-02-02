@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "../styles/WordGame.module.css";
 import Keypad from "./Keypad";
 import data from "../core/words.json";
+import BackButton from "./BackButton";
 
 const wordDict = data.data;
 
@@ -31,6 +32,7 @@ interface WordGameState {
     correctLetters: string[];
     guesses: LetterCell[][];
     wordNotInList: boolean;
+    showLossMessage: boolean;
 }
 
 interface WordGameProps {
@@ -59,6 +61,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                     new Array(5).fill(0).map((entry) => LetterCell("0"))
                 ),
             wordNotInList: false,
+            showLossMessage: false,
         };
     }
 
@@ -171,14 +174,18 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
             );
         }
         if (this.state.currentWord === 6 && !this.state.won) {
-            this.setState({ finished: true });
-            this.props.saveRound(
-                this.state.currentWord,
-                this.state.guesses,
-                WORD,
-                false
-            );
+            this.setState({ finished: true, showLossMessage: true });
         }
+    };
+
+    handleClickAfterLoss = () => {
+        this.setState({ showLossMessage: false });
+        this.props.saveRound(
+            this.state.currentWord,
+            this.state.guesses,
+            WORD,
+            false
+        );
     };
 
     updateLetterStates = () => {
@@ -401,6 +408,16 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                 {this.state.wordNotInList && (
                     <div className={styles.notInList}>
                         Wort nicht in der Liste enthalten
+                    </div>
+                )}
+                {this.state.showLossMessage && (
+                    <div
+                        className={styles.lostMessage}
+                        onClick={this.handleClickAfterLoss}
+                    >
+                        <BackButton />
+                        <div>Verloren. Das gesuchte Wort ist: </div>
+                        <div className={styles.correctWord}>{WORD}</div>
                     </div>
                 )}
             </div>
