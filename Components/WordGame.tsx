@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styles from "../styles/WordGame.module.css";
 import Keypad from "./Keypad";
-import * as wordDict from "../core/words.json";
+import data from "../core/words.json";
+
+const wordDict = data.data;
 
 export enum Status {
     neutral,
@@ -11,7 +13,7 @@ export enum Status {
 }
 
 const getRandomWordFromDict = () => {
-    const keys = Object.keys(wordDict).slice(0, 29);
+    const keys = Object.keys(wordDict);
     const randomKey = keys[Math.floor(Math.random() * keys.length)];
     const randomWords = wordDict[randomKey as keyof typeof wordDict];
     return randomWords[Math.floor(Math.random() * randomWords.length)];
