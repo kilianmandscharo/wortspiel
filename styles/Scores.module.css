@@ -13,7 +13,7 @@
     background-color: var(--level3);
     position: absolute;
     width: 90%;
-    height: 70%;
+    height: 85%;
     padding: 1em;
     border: 2px solid var(--level4);
     box-shadow: 2px 8px 10px 5px var(--level0);
@@ -73,11 +73,33 @@
     margin-top: 2em;
     display: grid;
     justify-content: center;
-    flex-wrap: wrap;
 }
 
 .statEntry {
+    display: flex;
+    align-items: center;
     margin-bottom: 0.5em;
     padding-bottom: 5px;
     border-bottom: solid 1px var(--orange);
+}
+
+@media (min-width: 800px) {
+    .scores {
+        width: 90%;
+        height: 90%;
+        padding: 2em;
+    }
+    .content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        justify-content: center;
+    }
+    .stats {
+        margin: 0;
+    }
+    .statEntry {
+        font-size: 1.3em;
+        margin: 0;
+        padding: 0;
+    }
 }

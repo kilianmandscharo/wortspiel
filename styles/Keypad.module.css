@@ -23,10 +23,9 @@
     background-color: var(--level4);
     width: 100%;
     min-width: 1em;
-    max-width: 2.4em;
     padding: 0.5em 0.2em;
     margin: 0.1em;
-    border: 1px solid var(--level5);
+    border: none;
     border-radius: 0.5em;
     font-family: "Exo 2", sans-serif;
     font-size: 20px;
@@ -44,6 +43,7 @@
 
 .false {
     background-color: var(--level0);
+    outline: 1px solid var(--level5);
 }
 
 .button {
@@ -54,7 +54,6 @@
     border-radius: 1em;
     padding: 0.5em;
     border-style: none;
-    outline: 1px solid var(--level5);
     font-family: "Exo 2", sans-serif;
     font-size: 15px;
     color: rgba(255, 255, 255, 0.9);
@@ -62,4 +61,15 @@
 
 .button:disabled {
     opacity: 0.3;
+}
+
+@media (min-width: 800px) {
+    .keypad {
+        margin-right: 1em;
+    }
+    .key {
+        min-width: 1.5em;
+        width: 3.5vw;
+        height: 4em;
+    }
 }
