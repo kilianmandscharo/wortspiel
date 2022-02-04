@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "../styles/WordGame.module.css";
 import Keypad from "./Keypad";
 import data from "../public/words.json";
@@ -55,11 +55,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
             falseLetters: [],
             correctPositions: [],
             correctLetters: [],
-            guesses: new Array(6)
-                .fill(0)
-                .map((row) =>
-                    new Array(5).fill(0).map((entry) => LetterCell("0"))
-                ),
+            guesses: this.newEmptyGuesses(),
             wordNotInList: false,
             showLossMessage: false,
         };
@@ -176,6 +172,19 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
         if (this.state.currentWord === 6 && !this.state.won) {
             this.setState({ finished: true, showLossMessage: true });
         }
+    };
+
+    playAgain = () => {
+        this.setState({
+            finished: false,
+            won: false,
+            currentLetter: 0,
+            currentWord: 0,
+            guesses: this.newEmptyGuesses(),
+            falseLetters: [],
+            correctLetters: [],
+            correctPositions: [],
+        });
     };
 
     handleClickAfterLoss = () => {
@@ -377,6 +386,12 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
         return `${styles.guesses}`;
     };
 
+    newEmptyGuesses = () => {
+        return new Array(6)
+            .fill(0)
+            .map((row) => new Array(5).fill(0).map((entry) => LetterCell("0")));
+    };
+
     render() {
         return (
             <div className={styles.wordGame}>
@@ -404,6 +419,8 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                     correctPositions={this.state.correctPositions}
                     correctLetters={this.state.correctLetters}
                     falseLetters={this.state.falseLetters}
+                    finished={this.state.finished}
+                    handlePlayAgain={this.playAgain}
                 />
                 {this.state.wordNotInList && (
                     <div className={styles.notInList}>
@@ -412,12 +429,17 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                 )}
                 {this.state.showLossMessage && (
                     <div
-                        className={styles.lostMessage}
+                        className={styles.backDrop}
                         onClick={this.handleClickAfterLoss}
                     >
-                        <BackButton />
-                        <div>Verloren. Das gesuchte Wort ist: </div>
-                        <div className={styles.correctWord}>{WORD}</div>
+                        <div
+                            className={styles.lostMessage}
+                            onClick={this.handleClickAfterLoss}
+                        >
+                            <BackButton />
+                            <div>Verloren. Das gesuchte Wort ist: </div>
+                            <div className={styles.correctWord}>{WORD}</div>
+                        </div>
                     </div>
                 )}
             </div>

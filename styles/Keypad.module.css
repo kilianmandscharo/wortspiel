@@ -11,9 +11,14 @@
     --green: rgb(27, 108, 27);
     --orange: rgb(230, 160, 29);
     --white: rgba(255, 255, 255, 0.9);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .row {
+    width: 100%;
     display: flex;
     justify-content: center;
 }
@@ -33,17 +38,33 @@
     color: rgba(255, 255, 255, 0.9);
 }
 
+.key:hover {
+    background-color: var(--level5);
+}
+
 .correctPosition {
     background-color: var(--green);
+}
+
+.correctPosition:hover {
+    background-color: rgb(50, 142, 50);
 }
 
 .correctLetter {
     background-color: var(--orange);
 }
 
+.correctLetter:hover {
+    background-color: rgb(238, 174, 53);
+}
+
 .false {
     background-color: var(--level0);
     outline: 1px solid var(--level5);
+}
+
+.false:hover {
+    background-color: var(--level0);
 }
 
 .button {
@@ -59,8 +80,16 @@
     color: rgba(255, 255, 255, 0.9);
 }
 
+.button:hover {
+    background-color: var(--level5);
+}
+
 .button:disabled {
     opacity: 0.3;
+}
+
+.button:disabled:hover {
+    background-color: var(--level4);
 }
 
 @media (min-width: 800px) {
@@ -72,4 +101,28 @@
         width: 3.5vw;
         height: 4em;
     }
+}
+
+.playAgain {
+    background-color: var(--level3);
+    width: 50%;
+    padding: 1em;
+    margin: 2em auto 0.5em auto;
+    border: none;
+    border-radius: 1.5em;
+    font-family: "Exo 2", sans-serif;
+    color: var(--white);
+    transition: all 0.5s ease;
+}
+
+.playAgain:hover {
+    background-color: var(--level5);
+}
+
+.playAgain:disabled {
+    opacity: 0.3;
+}
+
+.playAgain:disabled:hover {
+    background-color: var(--level3);
 }

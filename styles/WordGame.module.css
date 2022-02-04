@@ -198,6 +198,7 @@
 }
 
 .backDrop {
+    background-color: red;
     position: absolute;
     display: flex;
     justify-content: center;

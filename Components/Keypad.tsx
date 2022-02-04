@@ -16,6 +16,8 @@ interface KeypadProps {
     correctPositions: string[];
     correctLetters: string[];
     falseLetters: string[];
+    finished: boolean;
+    handlePlayAgain: () => void;
 }
 
 const Keypad = ({
@@ -26,6 +28,8 @@ const Keypad = ({
     correctPositions,
     correctLetters,
     falseLetters,
+    finished,
+    handlePlayAgain,
 }: KeypadProps) => {
     const [keys, setKeys] = useState(
         ALPHABET.map((row) => row.map((letter) => LetterCell(letter)))
@@ -145,6 +149,13 @@ const Keypad = ({
                     </svg>
                 </button>
             </div>
+            <button
+                className={styles.playAgain}
+                disabled={!finished}
+                onClick={handlePlayAgain}
+            >
+                Neues Spiel
+            </button>
         </div>
     );
 };
