@@ -6,6 +6,15 @@ import BackButton from "./BackButton";
 
 const wordDict = data.data;
 
+const messages = [
+    "Transzendental!",
+    "Unglaublich!",
+    "Sehr gut!",
+    "Par.",
+    "Solide.",
+    "Puh...",
+];
+
 export enum Status {
     neutral,
     false,
@@ -25,6 +34,7 @@ interface WordGameState {
     wordNotInList: boolean;
     showLossMessage: boolean;
     wordToGuess: string;
+    showWinMessage: boolean;
 }
 
 interface WordGameProps {
@@ -51,12 +61,14 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
             wordNotInList: false,
             showLossMessage: false,
             wordToGuess: "",
+            showWinMessage: false,
         };
     }
 
     componentDidMount() {
         window.addEventListener("keydown", this.handleKeyDown);
-        this.setState({ wordToGuess: this.getRandomWordFromDict() });
+        const word = this.getRandomWordFromDict();
+        this.setState({ wordToGuess: word });
     }
 
     componentWillUnmount() {
@@ -81,7 +93,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
         if (
             (val >= 65 && val <= 90) ||
             (val >= 97 && val <= 122) ||
-            val === 186 ||
+            val === 59 ||
             val === 219 ||
             val === 222
         ) {
@@ -156,19 +168,25 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
 
     checkForEndOfGame = () => {
         let word = "";
-        for (const letterCell of this.state.guesses[
-            this.state.currentWord - 1
-        ]) {
+        const currentWord = this.state.currentWord - 1;
+        for (const letterCell of this.state.guesses[currentWord]) {
             word += letterCell.letter;
         }
         if (word === this.state.wordToGuess) {
-            this.setState({ finished: true, won: true });
+            this.setState({
+                finished: true,
+                won: true,
+                showWinMessage: true,
+            });
             this.props.saveRound(
                 this.state.currentWord,
                 this.state.guesses,
                 this.state.wordToGuess,
                 true
             );
+            setTimeout(() => {
+                this.setState({ showWinMessage: false });
+            }, 2000);
         }
         if (this.state.currentWord === 6 && !this.state.won) {
             this.setState({ finished: true, showLossMessage: true });
@@ -425,7 +443,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                     handlePlayAgain={this.playAgain}
                 />
                 {this.state.wordNotInList && (
-                    <div className={styles.notInList}>
+                    <div className={styles.message}>
                         Wort nicht in der Liste enthalten
                     </div>
                 )}
@@ -435,7 +453,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                         onClick={this.handleClickAfterLoss}
                     >
                         <div
-                            className={styles.lostMessage}
+                            className={styles.lossMessage}
                             onClick={this.handleClickAfterLoss}
                         >
                             <BackButton />
@@ -444,6 +462,13 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                                 {this.state.wordToGuess}
                             </div>
                         </div>
+                    </div>
+                )}
+                {this.state.showWinMessage && (
+                    <div className={styles.message}>
+                        {this.state.currentWord
+                            ? messages[this.state.currentWord - 1]
+                            : messages[0]}
                     </div>
                 )}
             </div>

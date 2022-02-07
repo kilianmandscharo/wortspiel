@@ -94,6 +94,9 @@
         grid-template-columns: 1fr 1fr;
         justify-content: center;
     }
+    .stats {
+        margin-top: 1.7em;
+    }
     .statEntry {
         display: flex;
         justify-content: center;
