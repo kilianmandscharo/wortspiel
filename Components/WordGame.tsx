@@ -13,15 +13,6 @@ export enum Status {
     correctPositon,
 }
 
-const getRandomWordFromDict = () => {
-    const keys = Object.keys(wordDict);
-    const randomKey = keys[Math.floor(Math.random() * keys.length)];
-    const randomWords = wordDict[randomKey as keyof typeof wordDict];
-    return randomWords[Math.floor(Math.random() * randomWords.length)];
-};
-
-const WORD = getRandomWordFromDict();
-
 interface WordGameState {
     currentWord: number;
     currentLetter: number;
@@ -33,6 +24,7 @@ interface WordGameState {
     guesses: LetterCell[][];
     wordNotInList: boolean;
     showLossMessage: boolean;
+    wordToGuess: string;
 }
 
 interface WordGameProps {
@@ -58,16 +50,25 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
             guesses: this.newEmptyGuesses(),
             wordNotInList: false,
             showLossMessage: false,
+            wordToGuess: "",
         };
     }
 
     componentDidMount() {
         window.addEventListener("keydown", this.handleKeyDown);
+        this.setState({ wordToGuess: this.getRandomWordFromDict() });
     }
 
     componentWillUnmount() {
         window.removeEventListener("keydown", this.handleKeyDown);
     }
+
+    getRandomWordFromDict = () => {
+        const keys = Object.keys(wordDict);
+        const randomKey = keys[Math.floor(Math.random() * keys.length)];
+        const randomWords = wordDict[randomKey as keyof typeof wordDict];
+        return randomWords[Math.floor(Math.random() * randomWords.length)];
+    };
 
     handleKeyDown = (event: any) => {
         const val = event.keyCode;
@@ -160,12 +161,12 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
         ]) {
             word += letterCell.letter;
         }
-        if (word === WORD) {
+        if (word === this.state.wordToGuess) {
             this.setState({ finished: true, won: true });
             this.props.saveRound(
                 this.state.currentWord,
                 this.state.guesses,
-                WORD,
+                this.state.wordToGuess,
                 true
             );
         }
@@ -184,6 +185,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
             falseLetters: [],
             correctLetters: [],
             correctPositions: [],
+            wordToGuess: this.getRandomWordFromDict(),
         });
     };
 
@@ -192,7 +194,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
         this.props.saveRound(
             this.state.currentWord,
             this.state.guesses,
-            WORD,
+            this.state.wordToGuess,
             false
         );
     };
@@ -244,10 +246,10 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
         if (this.state.currentWord === 0) {
             return;
         }
-        const wordToGuess = WORD.split("");
+        const wordToGuess = this.state.wordToGuess.split("");
         const wordLevel = this.state.currentWord - 1;
 
-        const letterCounts = this.countLettersInWord(WORD);
+        const letterCounts = this.countLettersInWord(this.state.wordToGuess);
 
         const updatedGuesses: LetterCell[][] = [];
 
@@ -317,7 +319,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
         const letters: any = {};
         for (let i = 0; i < 5; i++) {
             const letter = guess[i].letter;
-            if (letter === WORD.split("")[i]) {
+            if (letter === this.state.wordToGuess.split("")[i]) {
                 if (!Object.keys(letters).includes(letter)) {
                     letters[letter] = 1;
                 } else {
@@ -438,7 +440,9 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                         >
                             <BackButton />
                             <div>Verloren. Das gesuchte Wort ist: </div>
-                            <div className={styles.correctWord}>{WORD}</div>
+                            <div className={styles.correctWord}>
+                                {this.state.wordToGuess}
+                            </div>
                         </div>
                     </div>
                 )}
