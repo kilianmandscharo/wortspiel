@@ -70,7 +70,7 @@
 }
 
 .stats {
-    margin-top: 2em;
+    margin-top: 3em;
     display: grid;
     justify-content: center;
 }
@@ -78,8 +78,8 @@
 .statEntry {
     display: flex;
     align-items: center;
-    margin-bottom: 0.5em;
-    padding-bottom: 5px;
+    margin-bottom: 1em;
+    padding: 0.2em;
     border-bottom: solid 1px var(--orange);
 }
 
@@ -94,12 +94,16 @@
         grid-template-columns: 1fr 1fr;
         justify-content: center;
     }
-    .stats {
-        margin: 0;
-    }
     .statEntry {
-        font-size: 1.3em;
-        margin: 0;
-        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--level4);
+        height: 50%;
+        padding: 1em 2em;
+        margin-right: 1em;
+        font-size: 1em;
+        border: none;
+        box-shadow: 2px 2px 2px 2px var(--level2);
     }
 }

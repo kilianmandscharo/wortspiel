@@ -67,3 +67,9 @@
 .correctLetter {
     background-color: var(--orange);
 }
+
+@media (min-width: 800px) {
+    .instructions {
+        margin-top: 3em;
+    }
+}

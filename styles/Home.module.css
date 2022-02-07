@@ -3,6 +3,7 @@
 .home {
     display: grid;
     justify-content: center;
+    align-items: center;
     max-width: 960px;
     max-height: 900px;
     margin: 0 auto;
