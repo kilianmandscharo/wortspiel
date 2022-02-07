@@ -8,6 +8,10 @@ const ALPHABET = [
     ["Y", "X", "C", "V", "B", "N", "M"],
 ];
 
+const newAlphabet = () => {
+    return ALPHABET.map((row) => row.map((letter) => LetterCell(letter)));
+};
+
 interface KeypadProps {
     handleLetterPress: (letter: string) => void;
     handleBackPress: () => void;
@@ -31,9 +35,7 @@ const Keypad = ({
     finished,
     handlePlayAgain,
 }: KeypadProps) => {
-    const [keys, setKeys] = useState(
-        ALPHABET.map((row) => row.map((letter) => LetterCell(letter)))
-    );
+    const [keys, setKeys] = useState(newAlphabet());
 
     useEffect(() => {
         //console.log(correctPositions);
@@ -79,6 +81,11 @@ const Keypad = ({
             );
         }
     }, [falseLetters]);
+
+    const playAgain = () => {
+        setKeys(newAlphabet);
+        handlePlayAgain();
+    };
 
     const determineClassName = (letterCell: LetterCell) => {
         if (letterCell.status === Status.correctPositon) {
@@ -152,7 +159,7 @@ const Keypad = ({
             <button
                 className={styles.playAgain}
                 disabled={!finished}
-                onClick={handlePlayAgain}
+                onClick={playAgain}
             >
                 Neues Spiel
             </button>
