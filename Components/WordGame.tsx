@@ -12,6 +12,8 @@ import {
     WordGameState,
 } from "../interfaces/interfaces";
 import checkIfAlreadyPlayedToday from "../functions/checkIfPlayed";
+import words from "../public/random_word_list.json";
+import startingDate from "../public/startingDate";
 
 const wordDict = data.data;
 
@@ -48,9 +50,8 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
         window.addEventListener("keydown", this.handleKeyDown);
         const games = getGamesFromStorage();
         if (!games.length) {
-            const word = getRandomWordFromDict();
+            const word = this.getWordForTheDay();
             this.setState({ wordToGuess: word });
-            console.log(word);
             return;
         }
         const alreadyPlayed = checkIfAlreadyPlayedToday(games);
@@ -75,7 +76,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                 );
             }
         } else {
-            const word = getRandomWordFromDict();
+            const word = this.getWordForTheDay();
             this.setState({ wordToGuess: word });
         }
     }
@@ -83,6 +84,17 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
     componentWillUnmount() {
         window.removeEventListener("keydown", this.handleKeyDown);
     }
+
+    getWordForTheDay = () => {
+        const now = new Date();
+        const start = new Date(startingDate);
+        const randomWords = words.words;
+        let differenceInDays =
+            Math.floor(
+                (now.getTime() - start.getTime()) / 1000 / 60 / 60 / 24
+            ) % randomWords.length;
+        return randomWords[differenceInDays];
+    };
 
     handleKeyDown = (event: any) => {
         const val = event.keyCode;
