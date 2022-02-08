@@ -13,6 +13,7 @@ import {
     getHighestWinStreak,
     getWinPercentage,
 } from "../functions/statFunctions";
+import { getGameNumber, getGamesFromStorage } from "../functions/getGames";
 
 const Home = () => {
     const [instructionsActive, setInstructionsActive] = useState(false);
@@ -42,6 +43,8 @@ const Home = () => {
     }, []);
 
     const updateStats = (games: Game[]) => {
+        // The win streak function need adjusting for the case, that a player
+        // misses a day.
         setGuesses(getNumberOfGuessesForEachNumber(games));
         setHighestStreak(getHighestWinStreak(games));
         setCurrentStreak(getCurrentWinStreak(games));
@@ -73,9 +76,7 @@ const Home = () => {
         word: string,
         won: boolean
     ) => {
-        const keys = getSortedStorageKeys();
-        let gameNumber;
-        gameNumber = !keys.length ? 1 : parseInt(keys[keys.length - 1]) + 1;
+        const gameNumber = getGameNumber();
         localStorage.setItem(
             `${gameNumber}`,
             JSON.stringify({
@@ -144,18 +145,6 @@ const Home = () => {
             </div>
         </div>
     );
-};
-
-const getSortedStorageKeys = () => {
-    return Object.keys(localStorage)
-        .filter((key) => Number.isInteger(parseInt(key)))
-        .sort((a: string, b: string) => parseInt(a) - parseInt(b));
-};
-
-export const getGamesFromStorage = () => {
-    const keys = getSortedStorageKeys();
-    const games: Game[] = keys.map((key) => JSON.parse(localStorage[key]));
-    return games;
 };
 
 export default Home;

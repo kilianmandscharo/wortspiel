@@ -3,7 +3,6 @@ import styles from "../styles/WordGame.module.css";
 import Keypad from "./Keypad";
 import data from "../public/words.json";
 import BackButton from "./BackButton";
-import { getGamesFromStorage } from "../pages";
 import {
     Game,
     LetterCell,
@@ -14,6 +13,7 @@ import {
 import checkIfAlreadyPlayedToday from "../functions/checkIfPlayed";
 import words from "../public/random_word_list.json";
 import startingDate from "../public/startingDate";
+import { getGamesFromStorage } from "../functions/getGames";
 
 const wordDict = data.data;
 
