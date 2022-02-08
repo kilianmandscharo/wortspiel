@@ -7,6 +7,8 @@ import styles from "../styles/Home.module.css";
 import Head from "next/head";
 import Scores from "../Components/Scores";
 import { Game, LetterCell } from "../interfaces/interfaces";
+import checkIfAlreadyPlayedToday from "../functions/checkIfPlayed";
+import Timer from "../Components/Timer";
 
 const Home = () => {
     const [instructionsActive, setInstructionsActive] = useState(false);
@@ -32,6 +34,7 @@ const Home = () => {
         }
         updateStats(games);
         console.log(games);
+        setAlreadyPlayed(checkIfAlreadyPlayedToday(games));
     }, []);
 
     const updateStats = (games: Game[]) => {
@@ -163,6 +166,7 @@ const Home = () => {
                         currentStreak={currentStreak}
                         winPercentage={winPercentage}
                         gamesPlayed={gamesPlayed}
+                        alreadyPlayed={alreadyPlayed}
                     />
                 )}
             </div>

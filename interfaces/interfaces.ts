@@ -56,3 +56,16 @@ export interface Game {
     word: string;
 }
 
+export interface ScoreProps {
+    guessesForEachNumber: any;
+    handleClick: () => void;
+    highestStreak: number;
+    currentStreak: number;
+    winPercentage: number;
+    gamesPlayed: number;
+    alreadyPlayed: boolean;
+}
+
+export interface InstructionProps {
+    handleClick: () => void;
+}

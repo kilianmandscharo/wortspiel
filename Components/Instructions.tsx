@@ -1,10 +1,6 @@
-import { Dispatch, SetStateAction } from "react";
+import { InstructionProps } from "../interfaces/interfaces";
 import styles from "../styles/Instructions.module.css";
 import BackButton from "./BackButton";
-
-interface InstructionProps {
-    handleClick: () => void;
-}
 
 const Instructions = ({ handleClick }: InstructionProps) => {
     return (

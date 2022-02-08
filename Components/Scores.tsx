@@ -1,14 +1,7 @@
+import { ScoreProps } from "../interfaces/interfaces";
 import styles from "../styles/Scores.module.css";
 import BackButton from "./BackButton";
-
-interface ScoreProps {
-    guessesForEachNumber: any;
-    handleClick: () => void;
-    highestStreak: number;
-    currentStreak: number;
-    winPercentage: number;
-    gamesPlayed: number;
-}
+import Timer from "./Timer";
 
 const Scores = ({
     guessesForEachNumber,
@@ -17,6 +10,7 @@ const Scores = ({
     currentStreak,
     winPercentage,
     gamesPlayed,
+    alreadyPlayed,
 }: ScoreProps) => {
     const highestNumberOfGuesses = Math.max(
         ...Object.values(guessesForEachNumber).map((num: any) => parseInt(num))
@@ -27,6 +21,7 @@ const Scores = ({
     return (
         <div className={styles.backDrop} onClick={handleClick}>
             <div className={styles.scores}>
+                {alreadyPlayed && <Timer />}
                 <div>
                     <BackButton />
                     <h1 className={styles.header}>Scores</h1>
