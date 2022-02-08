@@ -38,6 +38,14 @@
     color: rgba(255, 255, 255, 0.9);
 }
 
+.key:disabled {
+    opacity: 0.3;
+}
+
+.key:disabled:hover {
+    background-color: var(--level4);
+}
+
 .key:hover {
     background-color: var(--level5);
 }

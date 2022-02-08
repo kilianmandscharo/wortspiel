@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { LetterCell, Status } from "./WordGame";
 import styles from "../styles/Keypad.module.css";
+import { KeypadProps, LetterCell, Status } from "../interfaces/interfaces";
+import { makeLetterCell } from "./WordGame";
 
 const ALPHABET = [
     ["Q", "W", "E", "R", "T", "Z", "U", "I", "O", "P", "Ü"],
@@ -9,20 +10,8 @@ const ALPHABET = [
 ];
 
 const newAlphabet = () => {
-    return ALPHABET.map((row) => row.map((letter) => LetterCell(letter)));
+    return ALPHABET.map((row) => row.map((letter) => makeLetterCell(letter)));
 };
-
-interface KeypadProps {
-    handleLetterPress: (letter: string) => void;
-    handleBackPress: () => void;
-    handleSubmit: () => void;
-    letterPosition: number;
-    correctPositions: string[];
-    correctLetters: string[];
-    falseLetters: string[];
-    finished: boolean;
-    handlePlayAgain: () => void;
-}
 
 const Keypad = ({
     handleLetterPress,
@@ -34,11 +23,12 @@ const Keypad = ({
     falseLetters,
     finished,
     handlePlayAgain,
+    disabled,
 }: KeypadProps) => {
     const [keys, setKeys] = useState(newAlphabet());
 
     useEffect(() => {
-        //console.log(correctPositions);
+        // console.log("correct positions", correctPositions);
         for (const letter of correctPositions) {
             setKeys(
                 keys.map((row) =>
@@ -53,7 +43,7 @@ const Keypad = ({
     }, [correctPositions]);
 
     useEffect(() => {
-        //console.log(correctLetters);
+        // console.log("correct letters", correctLetters);
         for (const letter of correctLetters) {
             setKeys(
                 keys.map((row) =>
@@ -68,7 +58,7 @@ const Keypad = ({
     }, [correctLetters]);
 
     useEffect(() => {
-        //console.log(falseLetters);
+        // console.log("false letters", falseLetters);
         for (const letter of falseLetters) {
             setKeys(
                 keys.map((row) =>
@@ -108,6 +98,7 @@ const Keypad = ({
                         key={`0 ${i}`}
                         className={determineClassName(letterCell)}
                         onClick={() => handleLetterPress(letterCell.letter)}
+                        disabled={disabled}
                     >
                         {letterCell.letter}
                     </button>
@@ -119,6 +110,7 @@ const Keypad = ({
                         key={`1 ${i}`}
                         className={determineClassName(letterCell)}
                         onClick={() => handleLetterPress(letterCell.letter)}
+                        disabled={disabled}
                     >
                         {letterCell.letter}
                     </button>
@@ -126,7 +118,7 @@ const Keypad = ({
             </div>
             <div className={styles.row}>
                 <button
-                    disabled={letterPosition < 5}
+                    disabled={letterPosition < 5 || disabled}
                     className={styles.button}
                     onClick={handleSubmit}
                 >
@@ -137,11 +129,16 @@ const Keypad = ({
                         key={`2 ${i}`}
                         className={determineClassName(letterCell)}
                         onClick={() => handleLetterPress(letterCell.letter)}
+                        disabled={disabled}
                     >
                         {letterCell.letter}
                     </button>
                 ))}
-                <button className={styles.button} onClick={handleBackPress}>
+                <button
+                    className={styles.button}
+                    onClick={handleBackPress}
+                    disabled={disabled}
+                >
                     <svg
                         width="44"
                         height="16"
@@ -156,13 +153,13 @@ const Keypad = ({
                     </svg>
                 </button>
             </div>
-            <button
+            {/* <button
                 className={styles.playAgain}
                 disabled={!finished}
                 onClick={playAgain}
             >
                 Neues Spiel
-            </button>
+            </button> */}
         </div>
     );
 };

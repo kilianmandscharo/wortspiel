@@ -2,16 +2,11 @@ import { useEffect, useState } from "react";
 import InstructionButton from "../Components/InstructionButton";
 import Instructions from "../Components/Instructions";
 import ScoreButton from "../Components/ScoreButton";
-import WordGame, { LetterCell } from "../Components/WordGame";
+import WordGame from "../Components/WordGame";
 import styles from "../styles/Home.module.css";
 import Head from "next/head";
 import Scores from "../Components/Scores";
-
-interface Game {
-    round: number;
-    totalGuesses: number;
-    won: boolean;
-}
+import { Game, LetterCell } from "../interfaces/interfaces";
 
 const Home = () => {
     const [instructionsActive, setInstructionsActive] = useState(false);
@@ -28,6 +23,7 @@ const Home = () => {
     const [currentStreak, setCurrentStreak] = useState(0);
     const [winPercentage, setWinPercentage] = useState(0);
     const [gamesPlayed, setGamesPlayed] = useState(0);
+    const [alreadyPlayed, setAlreadyPlayed] = useState(false);
 
     useEffect(() => {
         const games = getGamesFromStorage();
@@ -35,6 +31,7 @@ const Home = () => {
             return;
         }
         updateStats(games);
+        console.log(games);
     }, []);
 
     const updateStats = (games: Game[]) => {
@@ -111,25 +108,16 @@ const Home = () => {
                 round: gameNumber,
                 totalGuesses,
                 won,
+                word,
+                date: new Date(),
             })
         );
+        localStorage.setItem("last", JSON.stringify(guesses));
         const games = getGamesFromStorage();
         updateStats(games);
         setTimeout(() => {
             setScoresActive(true);
         }, 3000);
-    };
-
-    const getSortedStorageKeys = () => {
-        return Object.keys(localStorage)
-            .filter((key) => Number.isInteger(parseInt(key)))
-            .sort((a: string, b: string) => parseInt(a) - parseInt(b));
-    };
-
-    const getGamesFromStorage = () => {
-        const keys = getSortedStorageKeys();
-        const games: Game[] = keys.map((key) => JSON.parse(localStorage[key]));
-        return games;
     };
 
     return (
@@ -180,6 +168,18 @@ const Home = () => {
             </div>
         </div>
     );
+};
+
+const getSortedStorageKeys = () => {
+    return Object.keys(localStorage)
+        .filter((key) => Number.isInteger(parseInt(key)))
+        .sort((a: string, b: string) => parseInt(a) - parseInt(b));
+};
+
+export const getGamesFromStorage = () => {
+    const keys = getSortedStorageKeys();
+    const games: Game[] = keys.map((key) => JSON.parse(localStorage[key]));
+    return games;
 };
 
 export default Home;

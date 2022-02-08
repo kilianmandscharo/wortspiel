@@ -3,6 +3,14 @@ import styles from "../styles/WordGame.module.css";
 import Keypad from "./Keypad";
 import data from "../public/words.json";
 import BackButton from "./BackButton";
+import { getGamesFromStorage } from "../pages";
+import {
+    Game,
+    LetterCell,
+    Status,
+    WordGameProps,
+    WordGameState,
+} from "../interfaces/interfaces";
 
 const wordDict = data.data;
 
@@ -14,37 +22,6 @@ const messages = [
     "Solide.",
     "Puh...",
 ];
-
-export enum Status {
-    neutral,
-    false,
-    correctLetter,
-    correctPositon,
-}
-
-interface WordGameState {
-    currentWord: number;
-    currentLetter: number;
-    finished: boolean;
-    won: boolean;
-    falseLetters: string[];
-    correctPositions: string[];
-    correctLetters: string[];
-    guesses: LetterCell[][];
-    wordNotInList: boolean;
-    showLossMessage: boolean;
-    wordToGuess: string;
-    showWinMessage: boolean;
-}
-
-interface WordGameProps {
-    saveRound: (
-        totalGuesses: number,
-        guesses: LetterCell[][],
-        word: string,
-        won: boolean
-    ) => void;
-}
 
 class WordGame extends React.Component<WordGameProps, WordGameState> {
     constructor(props: any) {
@@ -62,25 +39,49 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
             showLossMessage: false,
             wordToGuess: "",
             showWinMessage: false,
+            alreadyPlayed: false,
         };
     }
 
     componentDidMount() {
         window.addEventListener("keydown", this.handleKeyDown);
-        const word = this.getRandomWordFromDict();
-        this.setState({ wordToGuess: word });
+        const games = getGamesFromStorage();
+        if (!games.length) {
+            const word = getRandomWordFromDict();
+            this.setState({ wordToGuess: word });
+            console.log(word);
+            return;
+        }
+        const alreadyPlayed = checkIfAlreadyPlayedToday(games);
+        if (alreadyPlayed) {
+            const lastGame = games[games.length - 1];
+            const lastGameGuesses = localStorage.getItem("last");
+            if (lastGameGuesses) {
+                this.setState(
+                    {
+                        alreadyPlayed: true,
+                        guesses: JSON.parse(lastGameGuesses),
+                        won: lastGame.won,
+                        finished: true,
+                        wordToGuess: lastGame.word,
+                    },
+                    () => {
+                        if (!lastGame.won) {
+                            this.setState({ showLossMessage: true });
+                            // this.updateLetterStatesFromAllGuesses();
+                        }
+                    }
+                );
+            }
+        } else {
+            const word = getRandomWordFromDict();
+            this.setState({ wordToGuess: word });
+        }
     }
 
     componentWillUnmount() {
         window.removeEventListener("keydown", this.handleKeyDown);
     }
-
-    getRandomWordFromDict = () => {
-        const keys = Object.keys(wordDict);
-        const randomKey = keys[Math.floor(Math.random() * keys.length)];
-        const randomWords = wordDict[randomKey as keyof typeof wordDict];
-        return randomWords[Math.floor(Math.random() * randomWords.length)];
-    };
 
     handleKeyDown = (event: any) => {
         const val = event.keyCode;
@@ -144,26 +145,20 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
         const guess = this.state.guesses[this.state.currentWord]
             .map((letterCell) => letterCell.letter)
             .join("");
-        if (this.checkIfWordInDict(guess)) {
+        if (checkIfWordInDict(guess)) {
             this.setState((state) => ({
                 currentLetter: 0,
                 currentWord: state.currentWord + 1,
             }));
             this.updateGuesses();
             this.checkForEndOfGame();
-            this.updateLetterStates();
+            this.updateLetterStatesFromCurrentGuess();
         } else {
             this.setState({ wordNotInList: true });
             setTimeout(() => {
                 this.setState({ wordNotInList: false });
             }, 1000);
         }
-    };
-
-    checkIfWordInDict = (word: string) => {
-        const firstLetter = word.split("")[0];
-        const possibleWords = wordDict[firstLetter as keyof typeof wordDict];
-        return possibleWords.includes(word) ? true : false;
     };
 
     checkForEndOfGame = () => {
@@ -203,12 +198,15 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
             falseLetters: [],
             correctLetters: [],
             correctPositions: [],
-            wordToGuess: this.getRandomWordFromDict(),
+            wordToGuess: getRandomWordFromDict(),
         });
     };
 
     handleClickAfterLoss = () => {
         this.setState({ showLossMessage: false });
+        if (this.state.alreadyPlayed) {
+            return;
+        }
         this.props.saveRound(
             this.state.currentWord,
             this.state.guesses,
@@ -217,46 +215,64 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
         );
     };
 
-    updateLetterStates = () => {
+    updateLetterStatesFromAllGuesses = () => {
+        for (const guess of this.state.guesses) {
+            for (const letterCell of guess) {
+                this.updateFromSingleLetterCell(letterCell);
+            }
+        }
+    };
+
+    updateLetterStatesFromCurrentGuess = () => {
         if (this.state.currentWord === 0) {
             return;
         }
         for (const letterCell of this.state.guesses[
             this.state.currentWord - 1
         ]) {
-            if (
-                letterCell.status === Status.correctPositon &&
-                !this.state.correctPositions.includes(letterCell.letter)
-            ) {
-                this.setState((state) => ({
-                    correctPositions: [
-                        ...state.correctPositions,
-                        letterCell.letter,
-                    ],
-                }));
-            }
-            if (
-                letterCell.status === Status.correctLetter &&
-                !this.state.correctLetters.includes(letterCell.letter) &&
-                !this.state.correctPositions.includes(letterCell.letter)
-            ) {
-                this.setState((state) => ({
-                    correctLetters: [
-                        ...state.correctLetters,
-                        letterCell.letter,
-                    ],
-                }));
-            }
-            if (
-                letterCell.status === Status.false &&
-                !this.state.falseLetters.includes(letterCell.letter) &&
-                !this.state.correctPositions.includes(letterCell.letter) &&
-                !this.state.correctLetters.includes(letterCell.letter)
-            ) {
-                this.setState((state) => ({
-                    falseLetters: [...state.falseLetters, letterCell.letter],
-                }));
-            }
+            this.updateFromSingleLetterCell(letterCell);
+        }
+    };
+
+    updateFromSingleLetterCell = (letterCell: LetterCell) => {
+        if (
+            letterCell.status === Status.correctPositon &&
+            !this.state.correctPositions.includes(letterCell.letter)
+        ) {
+            this.setState((state) => ({
+                correctPositions: [
+                    ...state.correctPositions,
+                    letterCell.letter,
+                ],
+                // correctLetters: state.correctLetters.filter(
+                //     (letter) => letter !== letterCell.letter
+                // ),
+                // falseLetters: state.falseLetters.filter(
+                //     (letter) => letter !== letterCell.letter
+                // ),
+            }));
+        }
+        if (
+            letterCell.status === Status.correctLetter &&
+            !this.state.correctLetters.includes(letterCell.letter) &&
+            !this.state.correctPositions.includes(letterCell.letter)
+        ) {
+            this.setState((state) => ({
+                correctLetters: [...state.correctLetters, letterCell.letter],
+                // falseLetters: state.falseLetters.filter(
+                //     (letter) => letter !== letterCell.letter
+                // ),
+            }));
+        }
+        if (
+            letterCell.status === Status.false &&
+            !this.state.falseLetters.includes(letterCell.letter) &&
+            !this.state.correctPositions.includes(letterCell.letter) &&
+            !this.state.correctLetters.includes(letterCell.letter)
+        ) {
+            this.setState((state) => ({
+                falseLetters: [...state.falseLetters, letterCell.letter],
+            }));
         }
     };
 
@@ -288,7 +304,6 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                 this.getLettersInGuessWithoutDuplicates(oldGuess);
             const correctlyPositionedLetters =
                 this.getCorrectlyPositionedLetters(oldGuess);
-
             for (let j = 0; j < 5; j++) {
                 const letterCell = oldGuess[j];
                 const letter = letterCell.letter;
@@ -335,9 +350,10 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
 
     getCorrectlyPositionedLetters = (guess: LetterCell[]) => {
         const letters: any = {};
+        const word = this.state.wordToGuess.split("");
         for (let i = 0; i < 5; i++) {
             const letter = guess[i].letter;
-            if (letter === this.state.wordToGuess.split("")[i]) {
+            if (letter === word[i]) {
                 if (!Object.keys(letters).includes(letter)) {
                     letters[letter] = 1;
                 } else {
@@ -409,7 +425,9 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
     newEmptyGuesses = () => {
         return new Array(6)
             .fill(0)
-            .map((row) => new Array(5).fill(0).map((entry) => LetterCell("0")));
+            .map((row) =>
+                new Array(5).fill(0).map((entry) => makeLetterCell("0"))
+            );
     };
 
     render() {
@@ -441,6 +459,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                     falseLetters={this.state.falseLetters}
                     finished={this.state.finished}
                     handlePlayAgain={this.playAgain}
+                    disabled={this.state.alreadyPlayed ? true : false}
                 />
                 {this.state.wordNotInList && (
                     <div className={styles.message}>
@@ -452,10 +471,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                         className={styles.backDrop}
                         onClick={this.handleClickAfterLoss}
                     >
-                        <div
-                            className={styles.lossMessage}
-                            onClick={this.handleClickAfterLoss}
-                        >
+                        <div className={styles.lossMessage}>
                             <BackButton />
                             <div>Verloren. Das gesuchte Wort ist: </div>
                             <div className={styles.correctWord}>
@@ -476,15 +492,47 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
     }
 }
 
-export interface LetterCell {
-    letter: string;
-    status: Status;
-}
-
-export const LetterCell = (letter: string): LetterCell => {
+export const makeLetterCell = (letter: string): LetterCell => {
     return {
         letter,
         status: Status.neutral,
+    };
+};
+
+const getRandomWordFromDict = () => {
+    const keys = Object.keys(wordDict);
+    const randomKey = keys[Math.floor(Math.random() * keys.length)];
+    const randomWords = wordDict[randomKey as keyof typeof wordDict];
+    return randomWords[Math.floor(Math.random() * randomWords.length)];
+};
+
+const checkIfWordInDict = (word: string) => {
+    const firstLetter = word.split("")[0];
+    const possibleWords = wordDict[firstLetter as keyof typeof wordDict];
+    return possibleWords.includes(word) ? true : false;
+};
+
+const checkIfAlreadyPlayedToday = (games: Game[]) => {
+    const lastGamePlayed = games[games.length - 1];
+    const dateOfLastGame = new Date(lastGamePlayed.date);
+    const today = new Date();
+    return checkDatesForSameDay(today, dateOfLastGame);
+};
+
+const checkDatesForSameDay = (date1: Date, date2: Date) => {
+    const d1 = getDayMonthYearFromDate(date1);
+    const d2 = getDayMonthYearFromDate(date2);
+    return d1.day === d2.day && d1.month === d2.month && d1.year === d2.year
+        ? true
+        : false;
+};
+
+const getDayMonthYearFromDate = (date: Date) => {
+    const d = date.toDateString().split(" ");
+    return {
+        day: d[2],
+        month: d[1],
+        year: d[3],
     };
 };
 
