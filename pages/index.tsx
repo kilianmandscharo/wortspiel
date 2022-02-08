@@ -14,6 +14,7 @@ import {
     getWinPercentage,
 } from "../functions/statFunctions";
 import { getGameNumber, getGamesFromStorage } from "../functions/getGames";
+import { winStreakTest } from "../functions/winStreakTest";
 
 const Home = () => {
     const [instructionsActive, setInstructionsActive] = useState(false);
@@ -39,12 +40,9 @@ const Home = () => {
         }
         updateStats(games);
         setAlreadyPlayed(checkIfAlreadyPlayedToday(games));
-        console.log(games);
     }, []);
 
     const updateStats = (games: Game[]) => {
-        // The win streak function need adjusting for the case, that a player
-        // misses a day.
         setGuesses(getNumberOfGuessesForEachNumber(games));
         setHighestStreak(getHighestWinStreak(games));
         setCurrentStreak(getCurrentWinStreak(games));
