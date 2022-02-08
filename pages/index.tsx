@@ -8,7 +8,11 @@ import Head from "next/head";
 import Scores from "../Components/Scores";
 import { Game, LetterCell } from "../interfaces/interfaces";
 import checkIfAlreadyPlayedToday from "../functions/checkIfPlayed";
-import Timer from "../Components/Timer";
+import {
+    getCurrentWinStreak,
+    getHighestWinStreak,
+    getWinPercentage,
+} from "../functions/statFunctions";
 
 const Home = () => {
     const [instructionsActive, setInstructionsActive] = useState(false);
@@ -33,8 +37,8 @@ const Home = () => {
             return;
         }
         updateStats(games);
-        console.log(games);
         setAlreadyPlayed(checkIfAlreadyPlayedToday(games));
+        console.log(games);
     }, []);
 
     const updateStats = (games: Game[]) => {
@@ -63,39 +67,6 @@ const Home = () => {
         return guessesForEachNumber;
     };
 
-    const getWinPercentage = (games: Game[]) => {
-        const wins = games.filter((game) => game.won).length;
-        return Math.round((wins / games.length) * 100);
-    };
-
-    const getCurrentWinStreak = (games: Game[]) => {
-        let currentStreak = 0;
-        let gameNumber = games.length - 1;
-        while (gameNumber > 0) {
-            if (!games[gameNumber].won) {
-                break;
-            }
-            currentStreak++;
-            gameNumber--;
-        }
-        return currentStreak;
-    };
-
-    const getHighestWinStreak = (games: Game[]) => {
-        let streak = 0;
-        const winStreaks: number[] = [];
-        for (const game of games) {
-            if (game.won) {
-                streak += 1;
-            } else {
-                winStreaks.push(streak);
-                streak = 0;
-            }
-        }
-        winStreaks.push(streak);
-        return Math.max(...winStreaks);
-    };
-
     const saveRound = (
         totalGuesses: number,
         guesses: LetterCell[][],
@@ -117,6 +88,7 @@ const Home = () => {
         );
         localStorage.setItem("last", JSON.stringify(guesses));
         const games = getGamesFromStorage();
+        setAlreadyPlayed(true);
         updateStats(games);
         setTimeout(() => {
             setScoresActive(true);

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "../styles/Timer.module.css";
 
 const Timer = () => {
-    const [timeLeft, setTimeLeft] = useState(0);
+    const [timeLeft, setTimeLeft] = useState(1);
 
     useEffect(() => {
         const now = new Date();
@@ -15,7 +15,7 @@ const Timer = () => {
         setTimeLeft(differenceInSeconds);
 
         const timer = setInterval(() => {
-            setTimeLeft((prev) => prev - 1);
+            setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
         }, 1000);
 
         return () => {
@@ -28,7 +28,7 @@ const Timer = () => {
 };
 
 const parseTime = (time: number) => {
-    let seconds = time;
+    let seconds: number | string = time;
     let hours: number | string = Math.floor(seconds / 60 / 60);
     seconds -= hours * 3600;
     let minutes: number | string = Math.floor(seconds / 60);
@@ -36,6 +36,7 @@ const parseTime = (time: number) => {
 
     hours = hours < 10 ? `0${hours}` : `${hours}`;
     minutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
+    seconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
     return `${hours}:${minutes}:${seconds}`;
 };
 

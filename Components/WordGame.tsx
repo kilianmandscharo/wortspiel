@@ -197,7 +197,16 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
             }, 2000);
         }
         if (this.state.currentWord === 6 && !this.state.won) {
-            this.setState({ finished: true, showLossMessage: true });
+            this.setState({
+                finished: true,
+                showLossMessage: true,
+            });
+            this.props.saveRound(
+                this.state.currentWord,
+                this.state.guesses,
+                this.state.wordToGuess,
+                false
+            );
         }
     };
 
@@ -213,19 +222,6 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
             correctPositions: [],
             wordToGuess: getRandomWordFromDict(),
         });
-    };
-
-    handleClickAfterLoss = () => {
-        this.setState({ showLossMessage: false });
-        if (this.state.alreadyPlayed) {
-            return;
-        }
-        this.props.saveRound(
-            this.state.currentWord,
-            this.state.guesses,
-            this.state.wordToGuess,
-            false
-        );
     };
 
     updateLetterStatesFromAllGuesses = () => {
@@ -482,7 +478,9 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                 {this.state.showLossMessage && (
                     <div
                         className={styles.backDrop}
-                        onClick={this.handleClickAfterLoss}
+                        onClick={() =>
+                            this.setState({ showLossMessage: false })
+                        }
                     >
                         <div className={styles.lossMessage}>
                             <BackButton />
