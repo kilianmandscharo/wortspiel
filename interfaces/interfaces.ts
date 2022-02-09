@@ -43,7 +43,6 @@ export interface KeypadProps {
     correctPositions: string[];
     correctLetters: string[];
     falseLetters: string[];
-    finished: boolean;
     disabled: boolean;
 }
 

@@ -511,7 +511,6 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                     correctPositions={this.state.correctPositions}
                     correctLetters={this.state.correctLetters}
                     falseLetters={this.state.falseLetters}
-                    finished={this.state.finished}
                     disabled={this.state.alreadyPlayed ? true : false}
                 />
                 {this.state.wordNotInList && (

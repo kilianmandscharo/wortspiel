@@ -21,7 +21,6 @@ const Keypad = ({
     correctPositions,
     correctLetters,
     falseLetters,
-    finished,
     disabled,
 }: KeypadProps) => {
     const [keys, setKeys] = useState(newAlphabet());
