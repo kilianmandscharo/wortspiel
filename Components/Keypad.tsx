@@ -9,7 +9,7 @@ const ALPHABET = [
     ["Y", "X", "C", "V", "B", "N", "M"],
 ];
 
-const newAlphabet = () => {
+const createNewAlphabet = () => {
     return ALPHABET.map((row) => row.map((letter) => makeLetterCell(letter)));
 };
 
@@ -23,52 +23,40 @@ const Keypad = ({
     falseLetters,
     disabled,
 }: KeypadProps) => {
-    const [keys, setKeys] = useState(newAlphabet());
+    const [keys, setKeys] = useState(createNewAlphabet());
 
     useEffect(() => {
-        console.log("correct positions", correctPositions);
-        for (const letter of correctPositions) {
-            setKeys(
-                keys.map((row) =>
-                    row.map((letterCell) =>
-                        letterCell.letter === letter
-                            ? { ...letterCell, status: Status.correctPositon }
-                            : { ...letterCell }
-                    )
-                )
-            );
-        }
-    }, [correctPositions]);
+        // console.log(correctPositions, correctLetters, falseLetters);
+        let newAlphabet = createNewAlphabet();
+        updateAlphabet(correctPositions, Status.correctPositon, newAlphabet);
+        updateAlphabet(correctLetters, Status.correctLetter, newAlphabet);
+        updateAlphabet(falseLetters, Status.false, newAlphabet);
+        // console.log(newAlphabet);
+        setKeys(newAlphabet);
+    }, [correctPositions, correctLetters, falseLetters]);
 
-    useEffect(() => {
-        console.log("correct letters", correctLetters);
-        for (const letter of correctLetters) {
-            setKeys(
-                keys.map((row) =>
-                    row.map((letterCell) =>
-                        letterCell.letter === letter
-                            ? { ...letterCell, status: Status.correctLetter }
-                            : { ...letterCell }
-                    )
-                )
-            );
+    const updateAlphabet = (
+        letters: string[],
+        status: Status,
+        alphabet: LetterCell[][]
+    ) => {
+        for (const letter of letters) {
+            const letterCell = getLetterCell(letter, alphabet);
+            if (letterCell) {
+                letterCell.status = status;
+            }
         }
-    }, [correctLetters]);
+    };
 
-    useEffect(() => {
-        console.log("false letters", falseLetters);
-        for (const letter of falseLetters) {
-            setKeys(
-                keys.map((row) =>
-                    row.map((letterCell) =>
-                        letterCell.letter === letter
-                            ? { ...letterCell, status: Status.false }
-                            : { ...letterCell }
-                    )
-                )
-            );
+    const getLetterCell = (letter: string, alphabet: LetterCell[][]) => {
+        for (const row of alphabet) {
+            for (const letterCell of row) {
+                if (letterCell.letter === letter) {
+                    return letterCell;
+                }
+            }
         }
-    }, [falseLetters]);
+    };
 
     const determineClassName = (letterCell: LetterCell) => {
         if (letterCell.status === Status.correctPositon) {

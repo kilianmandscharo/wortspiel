@@ -231,12 +231,13 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
         let falseLetters = [...this.state.falseLetters];
         for (const guess of this.state.guesses) {
             for (const letterCell of guess) {
-                this.updateFromSingleLetterCell(
-                    letterCell,
-                    correctPositions,
-                    correctLetters,
-                    falseLetters
-                );
+                [correctPositions, correctLetters, falseLetters] =
+                    this.updateFromSingleLetterCell(
+                        letterCell,
+                        correctPositions,
+                        correctLetters,
+                        falseLetters
+                    );
             }
         }
         this.setState({ correctPositions, correctLetters, falseLetters });
@@ -252,12 +253,13 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
         for (const letterCell of this.state.guesses[
             this.state.currentWord - 1
         ]) {
-            this.updateFromSingleLetterCell(
-                letterCell,
-                correctPositions,
-                correctLetters,
-                falseLetters
-            );
+            [correctPositions, correctLetters, falseLetters] =
+                this.updateFromSingleLetterCell(
+                    letterCell,
+                    correctPositions,
+                    correctLetters,
+                    falseLetters
+                );
         }
         this.setState({ correctPositions, correctLetters, falseLetters });
     };
@@ -298,36 +300,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
         ) {
             falseLetters.push(letterCell.letter);
         }
-        // if (
-        //     letterCell.status === Status.correctPositon &&
-        //     !this.state.correctPositions.includes(letterCell.letter)
-        // ) {
-        //     this.setState((state) => ({
-        //         correctPositions: [
-        //             ...state.correctPositions,
-        //             letterCell.letter,
-        //         ],
-        //     }));
-        // }
-        // if (
-        //     letterCell.status === Status.correctLetter &&
-        //     !this.state.correctLetters.includes(letterCell.letter) &&
-        //     !this.state.correctPositions.includes(letterCell.letter)
-        // ) {
-        //     this.setState((state) => ({
-        //         correctLetters: [...state.correctLetters, letterCell.letter],
-        //     }));
-        // }
-        // if (
-        //     letterCell.status === Status.false &&
-        //     !this.state.falseLetters.includes(letterCell.letter) &&
-        //     !this.state.correctPositions.includes(letterCell.letter) &&
-        //     !this.state.correctLetters.includes(letterCell.letter)
-        // ) {
-        //     this.setState((state) => ({
-        //         falseLetters: [...state.falseLetters, letterCell.letter],
-        //     }));
-        // }
+        return [correctPositions, correctLetters, falseLetters];
     };
 
     updateGuesses = () => {

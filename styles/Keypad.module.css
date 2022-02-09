@@ -41,10 +41,7 @@
 
 .key:disabled {
     opacity: 0.3;
-}
-
-.key:disabled:hover {
-    background-color: var(--level4);
+    pointer-events: none;
 }
 
 .key:hover {
@@ -98,46 +95,17 @@
 }
 
 .button:disabled:hover {
-    background-color: var(--level4);
+    pointer-events: none;
 }
 
 @media (min-width: 800px) {
     .keypad {
         margin-right: 1em;
+        margin-bottom: 0;
     }
     .key {
         min-width: 1.5em;
         width: 3.5vw;
         height: 4em;
-    }
-}
-
-.playAgain {
-    background-color: var(--level3);
-    width: 50%;
-    padding: 1em;
-    margin: 2em auto 0.5em auto;
-    border: none;
-    border-radius: 1.5em;
-    font-family: "Exo 2", sans-serif;
-    color: var(--white);
-    transition: all 0.5s ease;
-}
-
-.playAgain:hover {
-    background-color: var(--level5);
-}
-
-.playAgain:disabled {
-    opacity: 0.3;
-}
-
-.playAgain:disabled:hover {
-    background-color: var(--level3);
-}
-
-@media (min-width: 800px) {
-    .keypad {
-        margin-bottom: 0;
     }
 }
