@@ -471,7 +471,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                     disabled={this.state.alreadyPlayed ? true : false}
                 />
                 {this.state.wordNotInList && (
-                    <div className={styles.message}>
+                    <div className={styles.errorMessage}>
                         Wort nicht in der Liste enthalten
                     </div>
                 )}
@@ -492,7 +492,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                     </div>
                 )}
                 {this.state.showWinMessage && (
-                    <div className={styles.message}>
+                    <div className={styles.winMessage}>
                         {this.state.currentWord
                             ? messages[this.state.currentWord - 1]
                             : messages[0]}

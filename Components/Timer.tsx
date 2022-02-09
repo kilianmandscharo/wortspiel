@@ -23,7 +23,9 @@ const Timer = () => {
         };
     }, []);
     return (
-        <div className={styles.timer}>New game in: {parseTime(timeLeft)}</div>
+        <div className={styles.timer}>
+            Neues Spiel in: {parseTime(timeLeft)}
+        </div>
     );
 };
 
