@@ -44,7 +44,6 @@ export interface KeypadProps {
     correctLetters: string[];
     falseLetters: string[];
     finished: boolean;
-    handlePlayAgain: () => void;
     disabled: boolean;
 }
 

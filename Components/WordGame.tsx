@@ -225,20 +225,6 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
         }
     };
 
-    playAgain = () => {
-        this.setState({
-            finished: false,
-            won: false,
-            currentLetter: 0,
-            currentWord: 0,
-            guesses: this.newEmptyGuesses(),
-            falseLetters: [],
-            correctLetters: [],
-            correctPositions: [],
-            wordToGuess: getRandomWordFromDict(),
-        });
-    };
-
     updateLetterStatesFromAllGuesses = () => {
         let correctPositions = [...this.state.correctPositions];
         let correctLetters = [...this.state.correctLetters];
@@ -526,7 +512,6 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                     correctLetters={this.state.correctLetters}
                     falseLetters={this.state.falseLetters}
                     finished={this.state.finished}
-                    handlePlayAgain={this.playAgain}
                     disabled={this.state.alreadyPlayed ? true : false}
                 />
                 {this.state.wordNotInList && (

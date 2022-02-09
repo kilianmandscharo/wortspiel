@@ -22,13 +22,12 @@ const Keypad = ({
     correctLetters,
     falseLetters,
     finished,
-    handlePlayAgain,
     disabled,
 }: KeypadProps) => {
     const [keys, setKeys] = useState(newAlphabet());
 
     useEffect(() => {
-        // console.log("correct positions", correctPositions);
+        console.log("correct positions", correctPositions);
         for (const letter of correctPositions) {
             setKeys(
                 keys.map((row) =>
@@ -43,7 +42,7 @@ const Keypad = ({
     }, [correctPositions]);
 
     useEffect(() => {
-        // console.log("correct letters", correctLetters);
+        console.log("correct letters", correctLetters);
         for (const letter of correctLetters) {
             setKeys(
                 keys.map((row) =>
@@ -58,7 +57,7 @@ const Keypad = ({
     }, [correctLetters]);
 
     useEffect(() => {
-        // console.log("false letters", falseLetters);
+        console.log("false letters", falseLetters);
         for (const letter of falseLetters) {
             setKeys(
                 keys.map((row) =>
@@ -71,11 +70,6 @@ const Keypad = ({
             );
         }
     }, [falseLetters]);
-
-    const playAgain = () => {
-        setKeys(newAlphabet);
-        handlePlayAgain();
-    };
 
     const determineClassName = (letterCell: LetterCell) => {
         if (letterCell.status === Status.correctPositon) {
