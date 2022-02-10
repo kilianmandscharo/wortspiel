@@ -154,75 +154,47 @@
     }
 }
 
-.winMessage {
+.message {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    background-color: var(--level3);
     position: absolute;
     width: 50%;
-    height: 20%;
-    top: 30%;
     left: 25%;
     font-family: "Exo 2", sans-serif;
     font-size: 1.5em;
     color: var(--white);
     text-align: center;
     padding: 1em;
-    animation-name: appear;
     animation-duration: 1s;
     animation-iteration-count: 1;
     box-shadow: 2px 8px 10px 5px var(--level0);
+}
+
+.winMessage {
+    background-color: rgb(30, 75, 30);
+    height: 20%;
+    top: 30%;
+    animation-name: appear;
 }
 
 .lossMessage {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    background-color: var(--level3);
-    position: absolute;
-    width: 50%;
+    background-color: rgb(101, 25, 25);
     height: 30%;
     top: 16%;
-    left: 22.25%;
-    font-family: "Exo 2", sans-serif;
-    font-size: 1.5em;
-    color: var(--white);
-    text-align: center;
-    padding: 1em;
     animation-name: appear;
-    animation-duration: 1s;
-    animation-iteration-count: 1;
-    box-shadow: 2px 8px 10px 5px var(--level0);
 }
 
 .errorMessage {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    background-color: var(--level3);
-    position: absolute;
-    width: 50%;
+    background-color: rgb(101, 25, 25);
     height: 20%;
     top: 30%;
-    left: 25%;
-    font-family: "Exo 2", sans-serif;
-    font-size: 1.5em;
-    color: var(--white);
-    text-align: center;
-    padding: 1em;
     animation-name: animateError;
-    animation-duration: 1s;
-    animation-iteration-count: 1;
-    box-shadow: 2px 8px 10px 5px var(--level0);
 }
 
 .correctWord {
     font-size: 150%;
-    color: var(--red);
 }
 
 .backDrop {
