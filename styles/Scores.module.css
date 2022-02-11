@@ -100,11 +100,11 @@
     font-size: 1.5em;
     border-radius: 5px;
     padding: 0.2em;
-    box-shadow: 2px 2px 2px 3px var(--level1);
+    box-shadow: 3px 3px 2px 3px var(--level2);
 }
 
 .shareButton:hover {
-    color: var(--level0);
+    color: var(--level2);
     transition: all ease 0.5s;
 }
 
@@ -112,6 +112,30 @@
     margin-top: 0.7em;
     border-top: solid 1px var(--level5);
     padding-top: 0.3em;
+}
+
+.copiedMessage {
+    position: absolute;
+    background-color: var(--green);
+    padding: 1em;
+    top: 30%;
+    width: 80%;
+    left: 10%;
+    animation-name: appear;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    font-size: 1.5em;
+    text-align: center;
+    box-shadow: 3px 3px 5px 2px var(--level1);
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 @media (min-width: 800px) {
@@ -158,5 +182,10 @@
     .shareButton {
         width: 4em;
         margin-right: 1em;
+    }
+    .copiedMessage {
+        width: 50%;
+        top: 50%;
+        left: 25%;
     }
 }

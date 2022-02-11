@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { ScoreProps } from "../interfaces/interfaces";
 import styles from "../styles/Scores.module.css";
 import BackButton from "./BackButton";
@@ -14,6 +15,8 @@ const Scores = ({
     alreadyPlayed,
     message,
 }: ScoreProps) => {
+    const [copied, setCopied] = useState(false);
+
     const highestNumberOfGuesses = Math.max(
         ...Object.values(guessesForEachNumber).map((num: any) => parseInt(num))
     );
@@ -23,9 +26,14 @@ const Scores = ({
     return (
         <div className={styles.backDrop} onClick={handleClick}>
             <div className={styles.scores}>
+                {copied && (
+                    <div className={styles.copiedMessage}>
+                        Wortspiel in die Zwischenablage kopiert!
+                    </div>
+                )}
                 {alreadyPlayed && (
                     <div className={styles.timerShareSection}>
-                        <ShareButton message={message} />
+                        <ShareButton message={message} setCopied={setCopied} />
                         <Timer />
                     </div>
                 )}

@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export interface WordGameState {
     currentWord: number;
     currentLetter: number;
@@ -64,6 +66,7 @@ export interface InstructionProps {
 
 export interface ShareButtonProps {
     message: string;
+    setCopied: Dispatch<SetStateAction<boolean>>;
 }
 
 export interface Game {
