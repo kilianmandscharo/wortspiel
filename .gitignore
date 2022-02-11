@@ -37,4 +37,4 @@ yarn-error.log*
 *.tsbuildinfo
 
 # secret word list 
-/public/random_word_list.json
+/public/final_choices.json

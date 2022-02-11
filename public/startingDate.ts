@@ -1,2 +1,2 @@
-const startingDate = "Tue Feb 08 2022";
+const startingDate = "Sat Feb 12 2022";
 export default startingDate;

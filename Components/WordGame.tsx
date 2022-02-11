@@ -117,7 +117,6 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
 
     setWordForTheDay = () => {
         const randomWords = words.words;
-        console.log(randomWords);
         const word = randomWords[this.getIndexForTodaysWord()];
         this.setState({ wordToGuess: word });
     };
