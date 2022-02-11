@@ -1,6 +1,7 @@
 import { ScoreProps } from "../interfaces/interfaces";
 import styles from "../styles/Scores.module.css";
 import BackButton from "./BackButton";
+import ShareButton from "./ShareButton";
 import Timer from "./Timer";
 
 const Scores = ({
@@ -11,6 +12,7 @@ const Scores = ({
     winPercentage,
     gamesPlayed,
     alreadyPlayed,
+    message,
 }: ScoreProps) => {
     const highestNumberOfGuesses = Math.max(
         ...Object.values(guessesForEachNumber).map((num: any) => parseInt(num))
@@ -21,7 +23,12 @@ const Scores = ({
     return (
         <div className={styles.backDrop} onClick={handleClick}>
             <div className={styles.scores}>
-                {alreadyPlayed && <Timer />}
+                {alreadyPlayed && (
+                    <div className={styles.timerShareSection}>
+                        <ShareButton message={message} />
+                        <Timer />
+                    </div>
+                )}
                 <div>
                     <BackButton />
                     <h1 className={styles.header}>Scores</h1>

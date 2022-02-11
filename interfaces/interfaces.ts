@@ -19,7 +19,8 @@ export interface WordGameProps {
         totalGuesses: number,
         guesses: LetterCell[][],
         word: string,
-        won: boolean
+        won: boolean,
+        wortspielNumber: number
     ) => void;
 }
 
@@ -46,14 +47,6 @@ export interface KeypadProps {
     disabled: boolean;
 }
 
-export interface Game {
-    round: number;
-    totalGuesses: number;
-    won: boolean;
-    date: Date;
-    word: string;
-}
-
 export interface ScoreProps {
     guessesForEachNumber: any;
     handleClick: () => void;
@@ -62,8 +55,26 @@ export interface ScoreProps {
     winPercentage: number;
     gamesPlayed: number;
     alreadyPlayed: boolean;
+    message: string;
 }
 
 export interface InstructionProps {
     handleClick: () => void;
+}
+
+export interface ShareButtonProps {
+    message: string;
+}
+
+export interface Game {
+    round: number;
+    totalGuesses: number;
+    won: boolean;
+    date: Date;
+    word: string;
+    wortspielNumber: number;
+}
+
+export interface LastGame extends Game {
+    guesses: LetterCell[][];
 }

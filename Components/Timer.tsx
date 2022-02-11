@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import styles from "../styles/Timer.module.css";
+import styles from "../styles/Scores.module.css";
 
 const Timer = () => {
     const [timeLeft, setTimeLeft] = useState(1);

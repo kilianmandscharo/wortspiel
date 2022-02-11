@@ -6,7 +6,7 @@ import WordGame from "../Components/WordGame";
 import styles from "../styles/Home.module.css";
 import Head from "next/head";
 import Scores from "../Components/Scores";
-import { Game, LetterCell } from "../interfaces/interfaces";
+import { Game, LastGame, LetterCell, Status } from "../interfaces/interfaces";
 import checkIfAlreadyPlayedToday from "../functions/checkIfPlayed";
 import {
     getCurrentWinStreak,
@@ -32,6 +32,7 @@ const Home = () => {
     const [winPercentage, setWinPercentage] = useState(0);
     const [gamesPlayed, setGamesPlayed] = useState(0);
     const [alreadyPlayed, setAlreadyPlayed] = useState(false);
+    const [shareMessage, setShareMessage] = useState("");
 
     useEffect(() => {
         const games = getGamesFromStorage();
@@ -40,6 +41,7 @@ const Home = () => {
         }
         updateStats(games);
         setAlreadyPlayed(checkIfAlreadyPlayedToday(games));
+        updateShareMessage();
     }, []);
 
     const updateStats = (games: Game[]) => {
@@ -72,26 +74,63 @@ const Home = () => {
         totalGuesses: number,
         guesses: LetterCell[][],
         word: string,
-        won: boolean
+        won: boolean,
+        wortspielNumber: number
     ) => {
         const gameNumber = getGameNumber();
+        const gameWithoutGuesses: Game = {
+            round: gameNumber,
+            totalGuesses,
+            won,
+            word,
+            date: new Date(),
+            wortspielNumber,
+        };
         localStorage.setItem(
             `${gameNumber}`,
-            JSON.stringify({
-                round: gameNumber,
-                totalGuesses,
-                won,
-                word,
-                date: new Date(),
-            })
+            JSON.stringify(gameWithoutGuesses)
         );
-        localStorage.setItem("last", JSON.stringify(guesses));
+        localStorage.setItem(
+            "last",
+            JSON.stringify({ ...gameWithoutGuesses, guesses })
+        );
         const games = getGamesFromStorage();
         setAlreadyPlayed(true);
         updateStats(games);
+        updateShareMessage();
         setTimeout(() => {
             setScoresActive(true);
         }, 3000);
+    };
+
+    const updateShareMessage = () => {
+        const lastString = localStorage.getItem("last");
+        if (lastString) {
+            const last: LastGame = JSON.parse(lastString);
+            const { won, totalGuesses, guesses, wortspielNumber } = last;
+            let message = `Wortspiel ${wortspielNumber} ${
+                won ? totalGuesses : "X"
+            }/6\n`;
+            for (const guess of guesses) {
+                const colors = guess
+                    .map((letterCell) => getColor(letterCell.status))
+                    .join("");
+                message += `${colors}\n`;
+            }
+            setShareMessage(message);
+        }
+    };
+
+    const getColor = (status: Status) => {
+        if (status === Status.false) {
+            return "⬛️";
+        }
+        if (status === Status.correctPositon) {
+            return "🟩​";
+        }
+        if (status === Status.correctLetter) {
+            return "🟨​";
+        }
     };
 
     return (
@@ -138,6 +177,7 @@ const Home = () => {
                         winPercentage={winPercentage}
                         gamesPlayed={gamesPlayed}
                         alreadyPlayed={alreadyPlayed}
+                        message={shareMessage}
                     />
                 )}
             </div>
