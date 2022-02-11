@@ -71,5 +71,6 @@
 @media (min-width: 800px) {
     .instructions {
         margin-top: 3em;
+        border-radius: 1em;
     }
 }

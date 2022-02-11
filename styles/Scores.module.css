@@ -7,6 +7,7 @@
     --level5: #434343;
     --red: rgb(176, 1, 1);
     --green: rgb(27, 108, 27);
+    --dark-green: rgb(30, 75, 30);
     --orange: rgb(230, 160, 29);
     --white: rgba(255, 255, 255, 0.9);
 
@@ -94,7 +95,7 @@
 }
 
 .shareButton {
-    background-color: var(--green);
+    background-color: var(--dark-green);
     border: none;
     color: var(--white);
     font-size: 1.5em;
@@ -116,7 +117,7 @@
 
 .copiedMessage {
     position: absolute;
-    background-color: var(--green);
+    background-color: var(--dark-green);
     padding: 1em;
     top: 30%;
     width: 80%;
@@ -127,6 +128,7 @@
     font-size: 1.5em;
     text-align: center;
     box-shadow: 3px 3px 5px 2px var(--level1);
+    border-radius: 10px;
 }
 
 @keyframes appear {
@@ -143,6 +145,7 @@
         width: 90%;
         height: 90%;
         padding: 2em;
+        border-radius: 1em;
     }
     .content {
         display: grid;
@@ -185,7 +188,7 @@
     }
     .copiedMessage {
         width: 50%;
-        top: 50%;
+        top: 40%;
         left: 25%;
     }
 }

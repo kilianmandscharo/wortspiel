@@ -9,6 +9,7 @@
     --level5: #434343;
     --red: rgb(176, 1, 1);
     --green: rgb(27, 108, 27);
+    --dark-green: rgb(30, 75, 30);
     --orange: rgb(230, 160, 29);
     --white: rgba(255, 255, 255, 0.9);
 
@@ -170,10 +171,11 @@
     animation-duration: 1s;
     animation-iteration-count: 1;
     box-shadow: 2px 8px 10px 5px var(--level0);
+    border-radius: 10px;
 }
 
 .winMessage {
-    background-color: rgb(30, 75, 30);
+    background-color: var(--dark-green);
     height: 20%;
     top: 30%;
     animation-name: appear;
