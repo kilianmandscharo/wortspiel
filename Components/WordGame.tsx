@@ -232,7 +232,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
             this.saveRound(true);
             setTimeout(() => {
                 this.setState({ showWinMessage: false });
-            }, 3000);
+            }, 3500);
         }
         if (this.state.currentWord === 6 && !this.state.won) {
             this.setState({

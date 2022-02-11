@@ -21,7 +21,7 @@
     font-family: "Exo 2", sans-serif;
     color: var(--white);
     animation-name: appear;
-    animation-duration: 0.7s;
+    animation-duration: 0.4s;
     animation-iteration-count: 1;
 }
 
