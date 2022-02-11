@@ -66,8 +66,8 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
 
     handleIfNoGamesInStorage = (games: Game[]) => {
         if (!games.length) {
-            const word = this.getWordForTheDay();
-            this.setState({ wordToGuess: word });
+            this.setWordForTheDay();
+            this.handleIfActiveGuesses();
             return false;
         }
         return true;
@@ -95,12 +95,26 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                 );
             }
         } else {
-            const word = this.getWordForTheDay();
-            this.setState({ wordToGuess: word });
+            this.setWordForTheDay();
+            this.handleIfActiveGuesses();
         }
     };
 
-    getWordForTheDay = () => {
+    handleIfActiveGuesses = () => {
+        const lastSaveAsString = localStorage.getItem("activeGuesses");
+        if (lastSaveAsString) {
+            const lastSave = JSON.parse(lastSaveAsString);
+            const guesses: LetterCell[][] = lastSave.guesses;
+            this.setState(
+                { guesses: guesses, currentWord: lastSave.currentWord },
+                () => {
+                    this.updateLetterStatesFromAllGuesses();
+                }
+            );
+        }
+    };
+
+    setWordForTheDay = () => {
         const now = new Date();
         const start = new Date(startingDate);
         const randomWords = words.words;
@@ -108,7 +122,8 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
             Math.floor(
                 (now.getTime() - start.getTime()) / 1000 / 60 / 60 / 24
             ) % randomWords.length;
-        return randomWords[differenceInDays];
+        const word = randomWords[differenceInDays];
+        this.setState({ wordToGuess: word });
     };
 
     handleKeyDown = (event: any) => {
@@ -179,6 +194,13 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                 currentWord: state.currentWord + 1,
             }));
             this.updateGuesses();
+            localStorage.setItem(
+                "activeGuesses",
+                JSON.stringify({
+                    guesses: this.state.guesses,
+                    currentWord: this.state.currentWord,
+                })
+            );
             this.checkForEndOfGame();
             this.updateLetterStatesFromCurrentGuess();
         } else {
@@ -201,28 +223,28 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                 won: true,
                 showWinMessage: true,
             });
-            this.props.saveRound(
-                this.state.currentWord,
-                this.state.guesses,
-                this.state.wordToGuess,
-                true
-            );
+            this.saveRound();
             setTimeout(() => {
                 this.setState({ showWinMessage: false });
-            }, 2000);
+            }, 3000);
         }
         if (this.state.currentWord === 6 && !this.state.won) {
             this.setState({
                 finished: true,
                 showLossMessage: true,
             });
-            this.props.saveRound(
-                this.state.currentWord,
-                this.state.guesses,
-                this.state.wordToGuess,
-                false
-            );
+            this.saveRound();
         }
+    };
+
+    saveRound = () => {
+        localStorage.setItem("activeGuesses", "");
+        this.props.saveRound(
+            this.state.currentWord,
+            this.state.guesses,
+            this.state.wordToGuess,
+            false
+        );
     };
 
     updateLetterStatesFromAllGuesses = () => {
