@@ -108,7 +108,7 @@ const Home = () => {
         if (lastString) {
             const last: LastGame = JSON.parse(lastString);
             const { won, totalGuesses, guesses, wortspielNumber } = last;
-            let message = `Wortspiel ${wortspielNumber} ${
+            let message = `Wortspiel ${wortspielNumber + 1} ${
                 won ? totalGuesses : "X"
             }/6\n`;
             for (const guess of guesses) {
