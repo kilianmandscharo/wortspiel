@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "../styles/WordGame.module.css";
 import Keypad from "./Keypad";
-import data from "../public/words.json";
 import BackButton from "./BackButton";
 import {
     Game,
@@ -12,7 +11,8 @@ import {
     WordGameState,
 } from "../interfaces/interfaces";
 import checkIfAlreadyPlayedToday from "../functions/checkIfPlayed";
-import words from "../public/random_word_list.json";
+import words from "../public/final_choices.json";
+import data from "../public/words.json";
 import startingDate from "../public/startingDate";
 import { getGamesFromStorage } from "../functions/getGames";
 
@@ -117,6 +117,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
 
     setWordForTheDay = () => {
         const randomWords = words.words;
+        console.log(randomWords);
         const word = randomWords[this.getIndexForTodaysWord()];
         this.setState({ wordToGuess: word });
     };
