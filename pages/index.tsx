@@ -112,6 +112,9 @@ const Home = () => {
                 won ? totalGuesses : "X"
             }/6\n`;
             for (const guess of guesses) {
+                if (guess[0].letter === "0") {
+                    continue;
+                }
                 const colors = guess
                     .map((letterCell) => getColor(letterCell.status))
                     .join("");
