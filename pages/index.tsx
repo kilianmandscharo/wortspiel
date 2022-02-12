@@ -126,7 +126,7 @@ const Home = () => {
 
     const getColor = (status: Status) => {
         if (status === Status.false) {
-            return "⬛️";
+            return "⬜️";
         }
         if (status === Status.correctPositon) {
             return "🟩​";
