@@ -127,13 +127,22 @@
     top: 30%;
     width: 80%;
     left: 10%;
-    animation-name: appear;
-    animation-duration: 1s;
+    animation-name: appear-share-message;
+    animation-duration: 0.8s;
     animation-iteration-count: 1;
     font-size: 1.5em;
     text-align: center;
     box-shadow: 3px 3px 5px 2px var(--level1);
     border-radius: 10px;
+}
+
+@keyframes appear-share-message {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 @media (min-width: 800px) {

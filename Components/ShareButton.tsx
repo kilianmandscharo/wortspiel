@@ -11,7 +11,7 @@ const ShareButton = ({ message, setCopied }: ShareButtonProps) => {
         setCopied(true);
         setTimeout(() => {
             setCopied(false);
-        }, 1500);
+        }, 1000);
     };
     return (
         <button className={styles.shareButton} onClick={handleClick}>
