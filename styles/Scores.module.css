@@ -14,7 +14,7 @@
     background-color: var(--level3);
     position: absolute;
     top: 3em;
-    width: 90%;
+    width: 340px;
     height: 90%;
     padding: 1em;
     border: 2px solid var(--level4);
@@ -48,13 +48,26 @@
     height: 100%;
 }
 
+.close {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+}
+
 .header {
+    margin-top: 0;
     padding-bottom: 0.5em;
     border-bottom: 2px solid var(--orange);
+    font-size: 1.5em;
+}
+
+.content {
+    display: grid;
+    justify-content: center;
 }
 
 .barChart {
-    margin: 2em 1em 1em 1.5em;
+    margin: 1em 1em 1em 1.5em;
 }
 
 .bar {
@@ -75,36 +88,47 @@
 }
 
 .stats {
-    margin-top: 3em;
     display: grid;
+    grid-template-columns: 1fr 1fr;
     justify-content: center;
+    align-items: center;
+    width: 300px;
+    margin-bottom: 2em;
 }
 
 .statEntry {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    margin-bottom: 1em;
+    margin-top: 0.5em;
     padding: 0.2em;
-    border-bottom: solid 1px var(--orange);
+}
+
+.statName {
+    font-size: 0.7em;
+    text-align: center;
+}
+
+.statValue {
+    font-size: 1.3em;
 }
 
 .timerShareSection {
     display: flex;
-    justify-content: center;
-    flex-direction: column;
-    position: absolute;
-    right: 1em;
-    top: 1.6em;
-    width: 11em;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    width: 300px;
+    margin: 1em auto;
 }
 
 .shareButton {
     background-color: var(--dark-green);
     border: none;
     color: var(--white);
-    font-size: 1.5em;
+    font-size: 1.2em;
     border-radius: 5px;
-    padding: 0.2em;
+    padding: 0.4em 1em;
     box-shadow: 3px 3px 2px 3px var(--level2);
     font-family: "Exo 2", sans-serif;
 }
@@ -115,9 +139,13 @@
 }
 
 .timer {
-    margin-top: 0.7em;
-    border-top: solid 1px var(--level5);
-    padding-top: 0.3em;
+    display: flex;
+    align-items: center;
+    border-left: solid 1px var(--level5);
+    padding-left: 0.9em;
+    width: 180px;
+    height: 2.5em;
+    font-size: 0.9em;
 }
 
 .copiedMessage {
@@ -146,44 +174,22 @@
 }
 
 @media (min-width: 800px) {
+    .scores {
+        width: 750px;
+    }
     .content {
-        display: grid;
         grid-template-columns: 1fr 1fr;
-        justify-content: center;
+        margin-top: 3em;
+    }
+    .barChart {
+        margin: 0 0 0 3em;
     }
     .stats {
-        margin-top: 1.7em;
-    }
-    .statEntry {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: var(--level4);
-        height: 50%;
-        padding: 1em 2em;
-        margin-right: 1em;
-        font-size: 1em;
-        border: none;
-        box-shadow: 2px 2px 2px 2px var(--level2);
+        margin: 0 0 0 1.5em;
     }
     .timerShareSection {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
-        top: 3em;
-        width: 23em;
-    }
-    .timer {
-        margin: 0;
-        width: 14em;
-        border-left: solid 2px var(--level5);
-        border-top: none;
-        padding: 1em;
-    }
-    .shareButton {
-        width: 6em;
-        margin-right: 1em;
+        grid-column: -1 / 1;
+        margin-top: 2em;
     }
     .copiedMessage {
         width: 50%;

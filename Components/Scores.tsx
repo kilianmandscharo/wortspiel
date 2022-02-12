@@ -31,15 +31,11 @@ const Scores = ({
                         Wortspiel in die Zwischenablage kopiert!
                     </div>
                 )}
-                {alreadyPlayed && (
-                    <div className={styles.timerShareSection}>
-                        <ShareButton message={message} setCopied={setCopied} />
-                        <Timer />
-                    </div>
-                )}
                 <div>
-                    <BackButton />
                     <h1 className={styles.header}>Statistiken</h1>
+                    <div className={styles.close}>
+                        <BackButton />
+                    </div>
                 </div>
                 <div className={styles.content}>
                     <div className={styles.barChart}>
@@ -60,18 +56,47 @@ const Scores = ({
                     </div>
                     <div className={styles.stats}>
                         <div className={styles.statEntry}>
-                            Spiele: {gamesPlayed}
+                            <div className={styles.statName}>Spiele:</div>
+                            <div className={styles.statValue}>
+                                {gamesPlayed}
+                            </div>
                         </div>
                         <div className={styles.statEntry}>
-                            Höchste Gewinnserie: {highestStreak}
+                            <div className={styles.statName}>Gewinnanteil:</div>
+                            <div className={styles.statValue}>
+                                {winPercentage}
+                            </div>
                         </div>
                         <div className={styles.statEntry}>
-                            Aktuelle Gewinnserie: {currentStreak}
+                            <div className={styles.statName}>
+                                Höchste
+                                <br />
+                                Gewinnserie:
+                            </div>
+                            <div className={styles.statValue}>
+                                {highestStreak}
+                            </div>
                         </div>
                         <div className={styles.statEntry}>
-                            Gewinnanteil: {winPercentage}%
+                            <div className={styles.statName}>
+                                Aktuelle
+                                <br />
+                                Gewinnserie:
+                            </div>
+                            <div className={styles.statValue}>
+                                {currentStreak}
+                            </div>
                         </div>
                     </div>
+                    {alreadyPlayed && (
+                        <div className={styles.timerShareSection}>
+                            <ShareButton
+                                message={message}
+                                setCopied={setCopied}
+                            />
+                            <Timer />
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
