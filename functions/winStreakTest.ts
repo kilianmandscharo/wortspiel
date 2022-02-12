@@ -17,6 +17,7 @@ export const winStreakTest = (
             won: true,
             word: "tests",
             date: date,
+            wortspielNumber: i + 1,
         });
     }
     games.splice(firstBreak, 1);
