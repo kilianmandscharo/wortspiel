@@ -13,10 +13,12 @@
 
     background-color: var(--level3);
     position: absolute;
+    top: 3em;
     width: 90%;
     height: 90%;
     padding: 1em;
     border: 2px solid var(--level4);
+    border-radius: 1em;
     box-shadow: 2px 8px 10px 5px var(--level0);
     font-family: "Exo 2", sans-serif;
     color: var(--white);
@@ -37,7 +39,7 @@
 }
 
 .backDrop {
-    background-color: var(--level3);
+    background-color: var(--white);
     position: absolute;
     display: flex;
     justify-content: center;
@@ -135,12 +137,6 @@
 }
 
 @media (min-width: 800px) {
-    .scores {
-        width: 90%;
-        height: 90%;
-        padding: 2em;
-        border-radius: 1em;
-    }
     .content {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -167,7 +163,7 @@
         justify-content: space-around;
         align-items: center;
         top: 3em;
-        width: 40%;
+        width: 23em;
     }
     .timer {
         margin: 0;
@@ -177,7 +173,7 @@
         padding: 1em;
     }
     .shareButton {
-        width: 4em;
+        width: 6em;
         margin-right: 1em;
     }
     .copiedMessage {
