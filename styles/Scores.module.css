@@ -15,7 +15,6 @@
     position: absolute;
     top: 3em;
     width: 340px;
-    height: 90%;
     padding: 1em;
     border: 2px solid var(--level4);
     border-radius: 1em;
@@ -39,7 +38,6 @@
 }
 
 .backDrop {
-    background-color: var(--white);
     position: absolute;
     display: flex;
     justify-content: center;
@@ -185,7 +183,7 @@
         margin: 0 0 0 3em;
     }
     .stats {
-        margin: 0 0 0 1.5em;
+        margin: -1em 0 0 1.5em;
     }
     .timerShareSection {
         grid-column: -1 / 1;

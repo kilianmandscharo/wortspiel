@@ -530,7 +530,9 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                         <div
                             className={`${styles.lossMessage} ${styles.message}`}
                         >
-                            <BackButton />
+                            <div className={styles.close}>
+                                <BackButton />
+                            </div>
                             <div>Verloren. Das gesuchte Wort ist: </div>
                             <div className={styles.correctWord}>
                                 {this.state.wordToGuess}
