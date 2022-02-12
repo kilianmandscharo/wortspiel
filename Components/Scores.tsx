@@ -39,7 +39,7 @@ const Scores = ({
                 )}
                 <div>
                     <BackButton />
-                    <h1 className={styles.header}>Scores</h1>
+                    <h1 className={styles.header}>Statistiken</h1>
                 </div>
                 <div className={styles.content}>
                     <div className={styles.barChart}>
