@@ -3,7 +3,6 @@ import { Dispatch, SetStateAction } from "react";
 export interface WordGameState {
     currentWord: number;
     currentLetter: number;
-    finished: boolean;
     won: boolean;
     falseLetters: string[];
     correctPositions: string[];

@@ -34,7 +34,6 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
             currentWord: 0,
             currentLetter: 0,
             won: false,
-            finished: false,
             falseLetters: [],
             correctPositions: [],
             correctLetters: [],
@@ -84,7 +83,6 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                         alreadyPlayed: true,
                         guesses: lastGame.guesses,
                         won: lastGame.won,
-                        finished: true,
                         wordToGuess: lastGame.word,
                     },
                     () => {
@@ -152,7 +150,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
     };
 
     handleLetterPress = (letter: string) => {
-        if (this.state.finished) {
+        if (this.state.alreadyPlayed) {
             return;
         }
         this.setState((state) => ({
@@ -227,7 +225,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
     checkForEndOfGame = (guess: string) => {
         if (guess === this.state.wordToGuess) {
             this.setState({
-                finished: true,
+                alreadyPlayed: true,
                 won: true,
                 showWinMessage: true,
             });
@@ -239,7 +237,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
         }
         if (this.state.currentWord === 5 && !this.state.won) {
             this.setState({
-                finished: true,
+                alreadyPlayed: true,
                 showLossMessage: true,
             });
             this.saveRound(false);
@@ -432,10 +430,10 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
     };
 
     determineBorderColor = () => {
-        if (this.state.finished && this.state.won) {
+        if (this.state.alreadyPlayed && this.state.won) {
             return `${styles.guesses} ${styles.won}`;
         }
-        if (this.state.finished && !this.state.won) {
+        if (this.state.alreadyPlayed && !this.state.won) {
             return `${styles.guesses} ${styles.lost}`;
         }
         return `${styles.guesses}`;
