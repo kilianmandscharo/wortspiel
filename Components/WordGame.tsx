@@ -11,7 +11,7 @@ import {
     WordGameState,
 } from "../interfaces/interfaces";
 import checkIfAlreadyPlayedToday from "../functions/checkIfPlayed";
-import words from "../public/final_choices.json";
+import words from "../public/words_to_guess.json";
 import data from "../public/words.json";
 import startingDate from "../public/startingDate";
 import { getGamesFromStorage } from "../functions/getGames";
