@@ -161,9 +161,10 @@
     align-items: center;
     position: absolute;
     width: 50%;
+    min-width: 180px;
     left: 25%;
     font-family: "Exo 2", sans-serif;
-    font-size: 1.5em;
+    font-size: 1em;
     color: var(--white);
     text-align: center;
     padding: 1em;
@@ -175,16 +176,16 @@
 
 .winMessage {
     background-color: var(--dark-green);
-    height: 20%;
+    height: 80px;
     top: 30%;
     animation-name: appear;
 }
 
 .lossMessage {
     background-color: rgb(101, 25, 25);
-    height: 30%;
+    height: 130px;
     top: 16%;
-    padding-top: 1em;
+    padding-top: 2em;
     animation-name: appear;
 }
 
@@ -196,13 +197,13 @@
 
 .errorMessage {
     background-color: rgb(101, 25, 25);
-    height: 20%;
+    height: 80px;
     top: 30%;
     animation-name: animateError;
 }
 
 .correctWord {
-    font-size: 150%;
+    font-size: 1.5em;
 }
 
 .backDrop {
