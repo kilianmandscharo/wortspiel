@@ -162,6 +162,8 @@
     position: absolute;
     width: 50%;
     min-width: 180px;
+    height: 80px;
+    top: 30%;
     left: 25%;
     font-family: "Exo 2", sans-serif;
     font-size: 1em;
@@ -176,29 +178,16 @@
 
 .winMessage {
     background-color: var(--dark-green);
-    height: 80px;
-    top: 30%;
     animation-name: appear;
 }
 
 .lossMessage {
     background-color: rgb(101, 25, 25);
-    height: 130px;
-    top: 16%;
-    padding-top: 2em;
     animation-name: appear;
-}
-
-.close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
 }
 
 .errorMessage {
     background-color: rgb(101, 25, 25);
-    height: 80px;
-    top: 30%;
     animation-name: animateError;
 }
 
@@ -224,11 +213,9 @@
         margin: 0;
     }
     .winMessage,
+    .lossMessage,
     .errorMessage {
         top: 45%;
-    }
-    .lossMessage {
-        top: 35%;
     }
     .backDrop {
         width: 100%;

@@ -89,6 +89,9 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                         this.updateLetterStatesFromAllGuesses();
                         if (!lastGame.won) {
                             this.setState({ showLossMessage: true });
+                            setTimeout(() => {
+                                this.setState({ showLossMessage: false });
+                            }, 2000);
                         }
                     }
                 );
@@ -238,12 +241,17 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
             }, 2000);
         }
         if (this.state.currentWord === 5 && guess !== this.state.wordToGuess) {
-            this.setState({
-                alreadyPlayed: true,
-                showLossMessage: true,
-            });
-            this.saveRound(false);
-            return false;
+            setTimeout(() => {
+                this.setState({
+                    alreadyPlayed: true,
+                    showLossMessage: true,
+                });
+                this.saveRound(false);
+                setTimeout(() => {
+                    this.setState({ showWinMessage: false });
+                }, 4000);
+                return false;
+            }, 2000);
         }
         return false;
     };
@@ -484,22 +492,10 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                     </div>
                 )}
                 {this.state.showLossMessage && (
-                    <div
-                        className={styles.backDrop}
-                        onClick={() =>
-                            this.setState({ showLossMessage: false })
-                        }
-                    >
-                        <div
-                            className={`${styles.lossMessage} ${styles.message}`}
-                        >
-                            <div className={styles.close}>
-                                <BackButton />
-                            </div>
-                            <div>Verloren. Das gesuchte Wort ist: </div>
-                            <div className={styles.correctWord}>
-                                {this.state.wordToGuess}
-                            </div>
+                    <div className={`${styles.lossMessage} ${styles.message}`}>
+                        <div>Verloren. Das gesuchte Wort ist: </div>
+                        <div className={styles.correctWord}>
+                            {this.state.wordToGuess}
                         </div>
                     </div>
                 )}
