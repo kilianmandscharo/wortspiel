@@ -233,7 +233,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                 this.saveRound(true);
                 setTimeout(() => {
                     this.setState({ showWinMessage: false });
-                }, 3000);
+                }, 2000);
                 return true;
             }, 2000);
         }
