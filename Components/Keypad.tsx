@@ -64,6 +64,9 @@ const Keypad = ({
         row: number,
         col: number
     ) => {
+        if (row === keyPressed[0] && col === keyPressed[1]) {
+            return `${styles.key} ${styles.pressed}`;
+        }
         if (letterCell.status === Status.correctPositon) {
             return `${styles.key} ${styles.correctPosition}`;
         }
@@ -72,9 +75,6 @@ const Keypad = ({
         }
         if (letterCell.status === Status.false) {
             return `${styles.key} ${styles.false}`;
-        }
-        if (row === keyPressed[0] && col === keyPressed[1]) {
-            return `${styles.key} ${styles.pressed}`;
         }
         return `${styles.key}`;
     };
