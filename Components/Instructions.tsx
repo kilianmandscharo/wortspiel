@@ -43,7 +43,7 @@ const Instructions = ({ handleClick }: InstructionProps) => {
                         {letter}
                     </div>
                 ))}
-                <div className={styles.text}>
+                <div className={styles.text} style={{ marginBottom: "-0.4em" }}>
                     Grün bedeutet, dass L richtig im Wort positioniert wurde.
                     Die dunkel hinterlegten Felder markieren in beiden
                     Beispielen die Buchstaben, die nicht im gesuchten Wort

@@ -27,6 +27,7 @@
     display: inline-block;
     background-color: var(--level4);
     width: 100%;
+    height: 51px;
     min-width: 1em;
     padding: 0.5em 0.2em;
     margin: 0.1em;
