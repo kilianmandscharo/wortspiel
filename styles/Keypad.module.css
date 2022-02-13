@@ -45,24 +45,12 @@
     pointer-events: none;
 }
 
-.key:hover {
-    background-color: var(--level5);
-}
-
 .correctPosition {
     background-color: var(--green);
 }
 
-.correctPosition:hover {
-    background-color: rgb(50, 142, 50);
-}
-
 .correctLetter {
     background-color: var(--orange);
-}
-
-.correctLetter:hover {
-    background-color: rgb(238, 174, 53);
 }
 
 .false {
@@ -70,12 +58,7 @@
     outline: 1px solid var(--level5);
 }
 
-.false:hover {
-    background-color: var(--level0);
-}
-
-.pressed,
-.pressed:hover {
+.pressed {
     background-color: rgb(152, 152, 152);
 }
 
@@ -92,12 +75,7 @@
     color: rgba(255, 255, 255, 0.9);
 }
 
-.button:hover {
-    background-color: var(--level5);
-}
-
-.buttonPressed,
-.buttonPressed:hover {
+.buttonPressed {
     background-color: rgb(152, 152, 152);
 }
 
@@ -119,5 +97,26 @@
         min-width: 1.5em;
         width: 3.5vw;
         height: 4em;
+    }
+    .key:hover {
+        background-color: var(--level5);
+    }
+    .correctPosition:hover {
+        background-color: rgb(50, 142, 50);
+    }
+    .correctLetter:hover {
+        background-color: rgb(238, 174, 53);
+    }
+    .false:hover {
+        background-color: var(--level0);
+    }
+    .pressed:hover {
+        background-color: rgb(152, 152, 152);
+    }
+    .button:hover {
+        background-color: var(--level5);
+    }
+    .buttonPressed:hover {
+        background-color: rgb(152, 152, 152);
     }
 }
