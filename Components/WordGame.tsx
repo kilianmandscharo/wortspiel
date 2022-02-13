@@ -224,18 +224,20 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
 
     checkForEndOfGame = (guess: string) => {
         if (guess === this.state.wordToGuess) {
-            this.setState({
-                alreadyPlayed: true,
-                won: true,
-                showWinMessage: true,
-            });
-            this.saveRound(true);
             setTimeout(() => {
-                this.setState({ showWinMessage: false });
-            }, 3000);
-            return true;
+                this.setState({
+                    alreadyPlayed: true,
+                    won: true,
+                    showWinMessage: true,
+                });
+                this.saveRound(true);
+                setTimeout(() => {
+                    this.setState({ showWinMessage: false });
+                }, 3000);
+                return true;
+            }, 2000);
         }
-        if (this.state.currentWord === 5 && !this.state.won) {
+        if (this.state.currentWord === 5 && guess !== this.state.wordToGuess) {
             this.setState({
                 alreadyPlayed: true,
                 showLossMessage: true,
@@ -249,7 +251,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
     saveRound = (won: boolean) => {
         localStorage.setItem("activeGuesses", "");
         this.props.saveRound(
-            this.state.currentWord + 1,
+            this.state.currentWord,
             this.state.guesses,
             this.state.wordToGuess,
             won,
