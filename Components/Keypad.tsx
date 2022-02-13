@@ -24,6 +24,9 @@ const Keypad = ({
     disabled,
 }: KeypadProps) => {
     const [keys, setKeys] = useState(createNewAlphabet());
+    const [keyPressed, setKeyPressed] = useState([-1, -1]);
+    const [submitPressed, setSubmitPressed] = useState(false);
+    const [backPressed, setBackPressed] = useState(false);
 
     useEffect(() => {
         let newAlphabet = createNewAlphabet();
@@ -56,7 +59,11 @@ const Keypad = ({
         }
     };
 
-    const determineClassName = (letterCell: LetterCell) => {
+    const determineClassName = (
+        letterCell: LetterCell,
+        row: number,
+        col: number
+    ) => {
         if (letterCell.status === Status.correctPositon) {
             return `${styles.key} ${styles.correctPosition}`;
         }
@@ -65,6 +72,9 @@ const Keypad = ({
         }
         if (letterCell.status === Status.false) {
             return `${styles.key} ${styles.false}`;
+        }
+        if (row === keyPressed[0] && col === keyPressed[1]) {
+            return `${styles.key} ${styles.pressed}`;
         }
         return `${styles.key}`;
     };
@@ -75,8 +85,10 @@ const Keypad = ({
                 {keys[0].map((letterCell, i) => (
                     <button
                         key={`0 ${i}`}
-                        className={determineClassName(letterCell)}
+                        className={determineClassName(letterCell, 0, i)}
                         onClick={() => handleLetterPress(letterCell.letter)}
+                        onPointerDown={() => setKeyPressed([0, i])}
+                        onPointerUp={() => setKeyPressed([-1, -1])}
                         disabled={disabled}
                     >
                         {letterCell.letter}
@@ -87,8 +99,10 @@ const Keypad = ({
                 {keys[1].map((letterCell, i) => (
                     <button
                         key={`1 ${i}`}
-                        className={determineClassName(letterCell)}
+                        className={determineClassName(letterCell, 1, i)}
                         onClick={() => handleLetterPress(letterCell.letter)}
+                        onPointerDown={() => setKeyPressed([1, i])}
+                        onPointerUp={() => setKeyPressed([-1, -1])}
                         disabled={disabled}
                     >
                         {letterCell.letter}
@@ -97,26 +111,40 @@ const Keypad = ({
             </div>
             <div className={styles.row}>
                 <button
-                    disabled={letterPosition < 5 || disabled}
-                    className={styles.button}
+                    className={
+                        submitPressed
+                            ? `${styles.button} ${styles.buttonPressed}`
+                            : styles.button
+                    }
                     onClick={handleSubmit}
+                    disabled={letterPosition < 5 || disabled}
+                    onPointerDown={() => setSubmitPressed(true)}
+                    onPointerUp={() => setSubmitPressed(false)}
                 >
                     Submit
                 </button>
                 {keys[2].map((letterCell, i) => (
                     <button
                         key={`2 ${i}`}
-                        className={determineClassName(letterCell)}
+                        className={determineClassName(letterCell, 2, i)}
                         onClick={() => handleLetterPress(letterCell.letter)}
+                        onPointerDown={() => setKeyPressed([2, i])}
+                        onPointerUp={() => setKeyPressed([-1, -1])}
                         disabled={disabled}
                     >
                         {letterCell.letter}
                     </button>
                 ))}
                 <button
-                    className={styles.button}
+                    className={
+                        backPressed
+                            ? `${styles.button} ${styles.buttonPressed}`
+                            : styles.button
+                    }
                     onClick={handleBackPress}
                     disabled={disabled}
+                    onPointerDown={() => setBackPressed(true)}
+                    onPointerUp={() => setBackPressed(false)}
                 >
                     <svg
                         width="44"
@@ -132,13 +160,6 @@ const Keypad = ({
                     </svg>
                 </button>
             </div>
-            {/* <button
-                className={styles.playAgain}
-                disabled={!finished}
-                onClick={playAgain}
-            >
-                Neues Spiel
-            </button> */}
         </div>
     );
 };
