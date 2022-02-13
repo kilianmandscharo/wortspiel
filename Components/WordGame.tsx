@@ -191,24 +191,29 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
         if (this.state.currentLetter < 5) {
             return;
         }
-        const guess = this.state.guesses[this.state.currentWord]
+        const guess = this.state.guesses[this.state.currentWord];
+        const guessString = guess
             .map((letterCell) => letterCell.letter)
             .join("");
-        if (checkIfWordInDict(guess)) {
-            this.setState((state) => ({
-                currentLetter: 0,
-                currentWord: state.currentWord + 1,
-            }));
-            this.updateGuesses();
-            localStorage.setItem(
-                "activeGuesses",
-                JSON.stringify({
-                    guesses: this.state.guesses,
-                    currentWord: this.state.currentWord,
-                })
+        if (checkIfWordInDict(guessString)) {
+            this.setState(
+                (state) => ({
+                    currentLetter: 0,
+                    currentWord: state.currentWord + 1,
+                }),
+                () => {
+                    this.updateCurrentGuess();
+                    localStorage.setItem(
+                        "activeGuesses",
+                        JSON.stringify({
+                            guesses: this.state.guesses,
+                            currentWord: this.state.currentWord,
+                        })
+                    );
+                    this.checkForEndOfGame(guessString);
+                    this.updateLetterStatesFromCurrentGuess();
+                }
             );
-            this.checkForEndOfGame();
-            this.updateLetterStatesFromCurrentGuess();
         } else {
             this.setState({ wordNotInList: true });
             setTimeout(() => {
@@ -217,13 +222,8 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
         }
     };
 
-    checkForEndOfGame = () => {
-        let word = "";
-        const currentWord = this.state.currentWord - 1;
-        for (const letterCell of this.state.guesses[currentWord]) {
-            word += letterCell.letter;
-        }
-        if (word === this.state.wordToGuess) {
+    checkForEndOfGame = (guess: string) => {
+        if (guess === this.state.wordToGuess) {
             this.setState({
                 finished: true,
                 won: true,
@@ -332,7 +332,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
         return [correctPositions, correctLetters, falseLetters];
     };
 
-    updateGuesses = () => {
+    updateCurrentGuess = () => {
         if (this.state.currentWord === 0) {
             return;
         }
