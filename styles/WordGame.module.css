@@ -166,7 +166,7 @@
     top: 30%;
     left: 25%;
     font-family: "Exo 2", sans-serif;
-    font-size: 1em;
+    font-size: 1.2em;
     color: var(--white);
     text-align: center;
     padding: 1em;
@@ -183,6 +183,7 @@
 
 .lossMessage {
     background-color: rgb(101, 25, 25);
+    height: 100px;
     animation-name: appear;
 }
 

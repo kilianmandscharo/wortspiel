@@ -49,6 +49,7 @@
     background-color: var(--level5);
 }
 
+.pressed,
 .pressed:hover {
     background-color: rgb(152, 152, 152);
 }
@@ -95,6 +96,7 @@
     background-color: var(--level5);
 }
 
+.buttonPressed,
 .buttonPressed:hover {
     background-color: rgb(152, 152, 152);
 }
