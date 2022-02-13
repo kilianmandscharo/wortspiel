@@ -196,24 +196,26 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
             .map((letterCell) => letterCell.letter)
             .join("");
         if (checkIfWordInDict(guessString)) {
-            this.setState(
-                (state) => ({
-                    currentLetter: 0,
-                    currentWord: state.currentWord + 1,
-                }),
-                () => {
-                    this.updateCurrentGuess();
-                    localStorage.setItem(
-                        "activeGuesses",
-                        JSON.stringify({
-                            guesses: this.state.guesses,
-                            currentWord: this.state.currentWord,
-                        })
-                    );
-                    this.checkForEndOfGame(guessString);
-                    this.updateLetterStatesFromCurrentGuess();
-                }
-            );
+            const updatedGuess = this.updateAndSetCurrentGuess(guess);
+            this.updateLetterStatesFromCurrentGuess(updatedGuess);
+            const won = this.checkForEndOfGame(guessString);
+            if (!won) {
+                this.setState(
+                    (state) => ({
+                        currentLetter: 0,
+                        currentWord: state.currentWord + 1,
+                    }),
+                    () => {
+                        localStorage.setItem(
+                            "activeGuesses",
+                            JSON.stringify({
+                                guesses: this.state.guesses,
+                                currentWord: this.state.currentWord,
+                            })
+                        );
+                    }
+                );
+            }
         } else {
             this.setState({ wordNotInList: true });
             setTimeout(() => {
@@ -232,21 +234,24 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
             this.saveRound(true);
             setTimeout(() => {
                 this.setState({ showWinMessage: false });
-            }, 3500);
+            }, 3000);
+            return true;
         }
-        if (this.state.currentWord === 6 && !this.state.won) {
+        if (this.state.currentWord === 5 && !this.state.won) {
             this.setState({
                 finished: true,
                 showLossMessage: true,
             });
             this.saveRound(false);
+            return false;
         }
+        return false;
     };
 
     saveRound = (won: boolean) => {
         localStorage.setItem("activeGuesses", "");
         this.props.saveRound(
-            this.state.currentWord,
+            this.state.currentWord + 1,
             this.state.guesses,
             this.state.wordToGuess,
             won,
@@ -272,16 +277,11 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
         this.setState({ correctPositions, correctLetters, falseLetters });
     };
 
-    updateLetterStatesFromCurrentGuess = () => {
+    updateLetterStatesFromCurrentGuess = (guess: LetterCell[]) => {
         let correctPositions = [...this.state.correctPositions];
         let correctLetters = [...this.state.correctLetters];
         let falseLetters = [...this.state.falseLetters];
-        if (this.state.currentWord === 0) {
-            return;
-        }
-        for (const letterCell of this.state.guesses[
-            this.state.currentWord - 1
-        ]) {
+        for (const letterCell of guess) {
             [correctPositions, correctLetters, falseLetters] =
                 this.updateFromSingleLetterCell(
                     letterCell,
@@ -332,76 +332,39 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
         return [correctPositions, correctLetters, falseLetters];
     };
 
-    updateCurrentGuess = () => {
-        if (this.state.currentWord === 0) {
-            return;
-        }
-        const wordToGuess = this.state.wordToGuess.split("");
-        const wordLevel = this.state.currentWord - 1;
-
+    updateAndSetCurrentGuess = (currentGuess: LetterCell[]) => {
+        const newGuesses: LetterCell[][] = this.state.guesses.map((row) =>
+            row.map((letterCell) => ({ ...letterCell }))
+        );
         const letterCounts = this.countLettersInWord(this.state.wordToGuess);
-
-        const updatedGuesses: LetterCell[][] = [];
-
-        for (let i = 0; i < 6; i++) {
-            const oldGuess = this.state.guesses[i];
-            const updatedGuess: LetterCell[] = [];
-
-            // These objects are needed later to limit the number of
-            // letters marked correctLetter, for example: The word to
-            // guess is HELLO, and the guess, for the sake of argument,
-            // is LLLLL, then the third and fourth L should be marked
-            // as correctPositon, the other Ls as false and not as
-            // correctLetter, even thoug they are contained in the correct
-            // word; in the same vein, if the guess is LLXXL, only the first
-            // two Ls should be marked as correctLetter, the third L in
-            // the fifth position as false
-            const lettersGuessed =
-                this.getLettersInGuessWithoutDuplicates(oldGuess);
-            const correctlyPositionedLetters =
-                this.getCorrectlyPositionedLetters(oldGuess);
-            for (let j = 0; j < 5; j++) {
-                const letterCell = oldGuess[j];
-                const letter = letterCell.letter;
-                if (i !== wordLevel) {
-                    updatedGuess.push({ ...letterCell });
-                } else if (letter === wordToGuess[j]) {
-                    updatedGuess.push({
-                        ...letterCell,
-                        status: Status.correctPositon,
-                    });
-                } else if (wordToGuess.includes(letter)) {
-                    // Here the aforementioned ceck comes into play:
-                    // if a letter is contained in the correct word,
-                    // it is only marked as correctLetter, if the number
-                    // of times, that the letter is in the correct
-                    // position in the guess, plus the number of already
-                    // as correctLetter marked instances of the letter
-                    // in the guess is less than the instances of the
-                    // letter in the correct word, else it is marked false
-                    if (
-                        lettersGuessed[letter] +
-                            correctlyPositionedLetters[letter] <
-                        letterCounts[letter]
-                    ) {
-                        updatedGuess.push({
-                            ...letterCell,
-                            status: Status.correctLetter,
-                        });
-                    } else {
-                        updatedGuess.push({
-                            ...letterCell,
-                            status: Status.false,
-                        });
-                    }
+        const lettersGuessed =
+            this.getLettersInGuessWithoutDuplicates(currentGuess);
+        const correctlyPositionedLetters =
+            this.getCorrectlyPositionedLetters(currentGuess);
+        const wordToGuess = this.state.wordToGuess.split("");
+        const updatedGuess = currentGuess.map((letterCell, i) => {
+            const letter = letterCell.letter;
+            if (letter === wordToGuess[i]) {
+                return { ...letterCell, status: Status.correctPositon };
+            }
+            if (wordToGuess.includes(letter)) {
+                if (
+                    lettersGuessed[letter] +
+                        correctlyPositionedLetters[letter] <
+                    letterCounts[letter]
+                ) {
                     lettersGuessed[letter] += 1;
+                    return { ...letterCell, status: Status.correctLetter };
                 } else {
-                    updatedGuess.push({ ...letterCell, status: Status.false });
+                    lettersGuessed[letter] += 1;
+                    return { ...letterCell, status: Status.false };
                 }
             }
-            updatedGuesses.push(updatedGuess);
-        }
-        this.setState({ guesses: updatedGuesses });
+            return { ...letterCell, status: Status.false };
+        });
+        newGuesses[this.state.currentWord] = updatedGuess;
+        this.setState({ guesses: newGuesses });
+        return updatedGuess;
     };
 
     getCorrectlyPositionedLetters = (guess: LetterCell[]) => {
