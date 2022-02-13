@@ -144,7 +144,7 @@ const Home = () => {
                 <meta name="author" content="KilianMandscharo" />
                 <meta
                     name="description"
-                    content="Deutsche Version des Spiels WORDLE. Errate das gesuchte Wort in sechs Versuchen."
+                    content="Deutsche Version des Spiels WORDLE."
                 />
                 <meta name="keywords" content="wordle, deutsch, wortspiel" />
                 <link rel="shortcut icon" href="favicon.ico" />

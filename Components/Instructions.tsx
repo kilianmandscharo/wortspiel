@@ -49,6 +49,24 @@ const Instructions = ({ handleClick }: InstructionProps) => {
                     Beispielen die Buchstaben, die nicht im gesuchten Wort
                     enthalten sind.
                 </div>
+                <footer className={styles.footer}>
+                    Code by{" "}
+                    <a
+                        href="https://github.com/kilianmandscharo"
+                        target="blank"
+                        className={styles.a}
+                    >
+                        Dominik Heller
+                    </a>
+                    , based on the idea for WORDLE by{" "}
+                    <a
+                        href="https://twitter.com/powerlanguish"
+                        target="blank"
+                        className={styles.a}
+                    >
+                        Josh Wardle.
+                    </a>
+                </footer>
             </div>
         </div>
     );
