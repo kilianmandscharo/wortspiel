@@ -29,3 +29,9 @@
     align-items: center;
     margin-top: 5px;
 }
+
+@media (min-width: 800px) {
+    .headerSection {
+        margin-bottom: 2em;
+    }
+}

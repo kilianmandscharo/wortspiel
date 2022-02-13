@@ -100,7 +100,7 @@ const Home = () => {
         updateShareMessage();
         setTimeout(() => {
             setScoresActive(true);
-        }, 3000);
+        }, 5000);
     };
 
     const updateShareMessage = () => {

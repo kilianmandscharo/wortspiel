@@ -26,12 +26,10 @@ const Keypad = ({
     const [keys, setKeys] = useState(createNewAlphabet());
 
     useEffect(() => {
-        // console.log(correctPositions, correctLetters, falseLetters);
         let newAlphabet = createNewAlphabet();
         updateAlphabet(correctPositions, Status.correctPositon, newAlphabet);
         updateAlphabet(correctLetters, Status.correctLetter, newAlphabet);
         updateAlphabet(falseLetters, Status.false, newAlphabet);
-        // console.log(newAlphabet);
         setKeys(newAlphabet);
     }, [correctPositions, correctLetters, falseLetters]);
 

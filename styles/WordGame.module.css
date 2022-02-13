@@ -215,7 +215,7 @@
     .winMessage,
     .lossMessage,
     .errorMessage {
-        top: 45%;
+        top: 50%;
     }
     .backDrop {
         width: 100%;

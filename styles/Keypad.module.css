@@ -103,9 +103,7 @@
     .keypad {
         margin-right: 1em;
         margin-bottom: 0;
-        height: 42vh;
-        max-height: 70%;
-        min-height: 255px;
+        height: 255px;
     }
     .key {
         min-width: 1.5em;

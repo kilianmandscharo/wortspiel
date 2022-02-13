@@ -91,7 +91,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                             this.setState({ showLossMessage: true });
                             setTimeout(() => {
                                 this.setState({ showLossMessage: false });
-                            }, 2000);
+                            }, 4000);
                         }
                     }
                 );
@@ -248,7 +248,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                 });
                 this.saveRound(false);
                 setTimeout(() => {
-                    this.setState({ showWinMessage: false });
+                    this.setState({ showLossMessage: false });
                 }, 4000);
                 return false;
             }, 2000);
