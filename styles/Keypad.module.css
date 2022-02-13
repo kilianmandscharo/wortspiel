@@ -49,11 +49,6 @@
     background-color: var(--level5);
 }
 
-.pressed,
-.pressed:hover {
-    background-color: rgb(152, 152, 152);
-}
-
 .correctPosition {
     background-color: var(--green);
 }
@@ -77,6 +72,11 @@
 
 .false:hover {
     background-color: var(--level0);
+}
+
+.pressed,
+.pressed:hover {
+    background-color: rgb(152, 152, 152);
 }
 
 .button {
