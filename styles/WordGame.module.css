@@ -31,6 +31,10 @@
     animation-iteration-count: 1;
 }
 
+.wonWithoutAnim {
+    border: 2px solid var(--green);
+}
+
 @keyframes borderTransitionOnWin {
     from {
         border: 2px solid var(--orange);
@@ -45,6 +49,10 @@
     animation-name: borderTransitionOnLoss;
     animation-duration: 3s;
     animation-iteration-count: 1;
+}
+
+.lostWithoutAnim {
+    border: 2px solid var(--red);
 }
 
 @keyframes borderTransitionOnLoss {

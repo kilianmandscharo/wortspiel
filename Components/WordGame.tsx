@@ -44,6 +44,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
             showWinMessage: false,
             alreadyPlayed: false,
             animationRowNumber: -1,
+            borderAnimation: false,
         };
     }
 
@@ -229,6 +230,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
 
     checkForEndOfGame = (guess: string) => {
         if (guess === this.state.wordToGuess) {
+            this.setState({ borderAnimation: true });
             setTimeout(() => {
                 this.setState({
                     alreadyPlayed: true,
@@ -238,11 +240,12 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                 this.saveRound(true);
                 setTimeout(() => {
                     this.setState({ showWinMessage: false });
-                }, 2000);
+                }, 3000);
                 return true;
             }, 3500);
         }
         if (this.state.currentWord === 5 && guess !== this.state.wordToGuess) {
+            this.setState({ borderAnimation: true });
             setTimeout(() => {
                 this.setState({
                     alreadyPlayed: true,
@@ -422,10 +425,14 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
 
     determineBorderColor = () => {
         if (this.state.alreadyPlayed && this.state.won) {
-            return `${styles.guesses} ${styles.won}`;
+            return !this.state.borderAnimation
+                ? `${styles.guesses} ${styles.wonWithoutAnim}`
+                : `${styles.guesses} ${styles.won}`;
         }
         if (this.state.alreadyPlayed && !this.state.won) {
-            return `${styles.guesses} ${styles.lost}`;
+            return !this.state.borderAnimation
+                ? `${styles.guesses} ${styles.lostWithoutAnim}`
+                : `${styles.guesses} ${styles.lost}`;
         }
         return `${styles.guesses}`;
     };
