@@ -15,6 +15,7 @@ import words from "../public/words_to_guess.json";
 import data from "../public/words.json";
 import startingDate from "../public/startingDate";
 import { getGamesFromStorage } from "../functions/getGames";
+import determineClassForLetter from "../functions/determineClassForLetter";
 
 const wordDict = data.data;
 
@@ -43,6 +44,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
             wordToGuess: "",
             showWinMessage: false,
             alreadyPlayed: false,
+            animationRowNumber: -1,
         };
     }
 
@@ -200,6 +202,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
             const updatedGuess = this.updateAndSetCurrentGuess(guess);
             this.updateLetterStatesFromCurrentGuess(updatedGuess);
             const won = this.checkForEndOfGame(guessString);
+            this.setState((prev) => ({ animationRowNumber: prev.currentWord }));
             if (!won) {
                 this.setState(
                     (state) => ({
@@ -251,7 +254,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                     this.setState({ showLossMessage: false });
                 }, 4000);
                 return false;
-            }, 2000);
+            }, 4000);
         }
         return false;
     };
@@ -418,27 +421,6 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
         return letterCounts;
     };
 
-    determineClassName = (letterCell: LetterCell) => {
-        if (letterCell.letter === "0") {
-            return `${styles.letter} ${styles.empty}`;
-        }
-        if (letterCell.status === Status.neutral) {
-            return `${styles.letter} ${styles.neutral}`;
-        }
-        if (letterCell.status === Status.correctPositon) {
-            return `${styles.letter} ${styles.correctPosition}`;
-        }
-        if (letterCell.status === Status.correctLetter) {
-            return `${styles.letter} ${styles.correctLetter}`;
-        }
-        if (letterCell.status === Status.false) {
-            return `${styles.letter} ${styles.false}`;
-        }
-        if (letterCell.status === Status.neutral) {
-            return `${styles.letter}`;
-        }
-    };
-
     determineBorderColor = () => {
         if (this.state.alreadyPlayed && this.state.won) {
             return `${styles.guesses} ${styles.won}`;
@@ -466,8 +448,11 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                             {guess.map((letterCell, j) => (
                                 <div
                                     key={`${i}${j}`}
-                                    className={this.determineClassName(
-                                        letterCell
+                                    className={determineClassForLetter(
+                                        letterCell,
+                                        i,
+                                        j,
+                                        this.state.animationRowNumber
                                     )}
                                 >
                                     {letterCell.letter}

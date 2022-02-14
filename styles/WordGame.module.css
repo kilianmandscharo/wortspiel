@@ -76,36 +76,192 @@
     user-select: none;
 }
 
-.correctLetter {
-    background-color: var(--orange);
-    animation-name: changeColorOrange;
-    animation-duration: 3s;
-    outline: none;
+.zeroGreen {
+    animation-name: flipGreen;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-delay: 0s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
 }
 
-@keyframes changeColorOrange {
+.oneGreen {
+    animation-name: flipGreen;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-delay: 0.5s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
+.twoGreen {
+    animation-name: flipGreen;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-delay: 1s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
+.threeGreen {
+    animation-name: flipGreen;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-delay: 1.5s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
+.fourGreen {
+    animation-name: flipGreen;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-delay: 2s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
+.zeroOrange {
+    animation-name: flipOrange;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-delay: 0s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
+.oneOrange {
+    animation-name: flipOrange;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-delay: 0.5s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
+.twoOrange {
+    animation-name: flipOrange;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-delay: 1s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
+.threeOrange {
+    animation-name: flipOrange;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-delay: 1.5s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
+.fourOrange {
+    animation-name: flipOrange;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-delay: 2s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
+.zeroBlack {
+    animation-name: flipBlack;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-delay: 0s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
+.oneBlack {
+    animation-name: flipBlack;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-delay: 0.5s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
+.twoBlack {
+    animation-name: flipBlack;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-delay: 1s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
+.threeBlack {
+    animation-name: flipBlack;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-delay: 1.5s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
+.fourBlack {
+    animation-name: flipBlack;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-delay: 2s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
+@keyframes flipGreen {
     from {
+        opacity: 0;
+        transform: rotateY(-90deg);
         background-color: var(--level1);
+        outline: 2px solid var(--level3);
     }
     to {
+        opacity: 1;
+        transform: rotateY(0);
+        background-color: var(--green);
+        outline: 2px solid var(--green);
+    }
+}
+
+@keyframes flipOrange {
+    from {
+        opacity: 0;
+        transform: rotateY(-90deg);
+        background-color: var(--level1);
+        outline: 2px solid var(--level3);
+    }
+    to {
+        opacity: 1;
+        transform: rotateY(0);
         background-color: var(--orange);
+        outline: 2px solid var(--orange);
+    }
+}
+
+@keyframes flipBlack {
+    from {
+        opacity: 0;
+        transform: rotateY(-90deg);
+        outline: 2px solid var(--level3);
+    }
+    to {
+        opacity: 1;
+        transform: rotateY(0);
+        outline: 2px solid var(--level1);
     }
 }
 
 .correctPosition {
     background-color: var(--green);
-    animation-name: changeColorGreen;
-    animation-duration: 3s;
     outline: none;
 }
 
-@keyframes changeColorGreen {
-    from {
-        background-color: var(--level1);
-    }
-    to {
-        background-color: var(--green);
-    }
+.correctLetter {
+    background-color: var(--orange);
+    outline: none;
 }
 
 .false {
@@ -130,27 +286,6 @@
     }
     100% {
         scale: 1;
-    }
-}
-
-@keyframes animateError {
-    0% {
-        scale: 90%;
-    }
-    50% {
-        scale: 100%;
-    }
-    100% {
-        scale: 90%;
-    }
-}
-
-@keyframes appear {
-    from {
-        opacity: 0.2;
-    }
-    to {
-        opacity: 1;
     }
 }
 
@@ -194,6 +329,27 @@
 
 .correctWord {
     font-size: 1.3em;
+}
+
+@keyframes animateError {
+    0% {
+        scale: 90%;
+    }
+    50% {
+        scale: 100%;
+    }
+    100% {
+        scale: 90%;
+    }
+}
+
+@keyframes appear {
+    from {
+        opacity: 0.2;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .backDrop {

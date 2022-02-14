@@ -13,6 +13,7 @@ export interface WordGameState {
     wordToGuess: string;
     showWinMessage: boolean;
     alreadyPlayed: boolean;
+    animationRowNumber: number;
 }
 
 export interface WordGameProps {
