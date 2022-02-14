@@ -240,7 +240,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                     this.setState({ showWinMessage: false });
                 }, 2000);
                 return true;
-            }, 2000);
+            }, 3500);
         }
         if (this.state.currentWord === 5 && guess !== this.state.wordToGuess) {
             setTimeout(() => {
