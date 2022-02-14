@@ -68,7 +68,7 @@
     height: 1.4em;
     margin: 5px;
     border-radius: 5px;
-    outline: 2px solid var(--level3);
+    border: 2px solid var(--level3);
     font-family: "Exo 2", sans-serif;
     font-size: 40px;
     color: var(--white);
@@ -119,13 +119,13 @@
         opacity: 0;
         transform: rotateY(-90deg);
         background-color: var(--level1);
-        outline: 2px solid var(--level3);
+        border: solid 2px var(--level3);
     }
     to {
         opacity: 1;
         transform: rotateY(0);
         background-color: var(--green);
-        outline: 2px solid var(--green);
+        border: solid 2px var(--green);
     }
 }
 
@@ -134,13 +134,13 @@
         opacity: 0;
         transform: rotateY(-90deg);
         background-color: var(--level1);
-        outline: 2px solid var(--level3);
+        border: solid 2px var(--level3);
     }
     to {
         opacity: 1;
         transform: rotateY(0);
         background-color: var(--orange);
-        outline: 2px solid var(--orange);
+        border: solid 2px var(--orange);
     }
 }
 
@@ -148,30 +148,31 @@
     from {
         opacity: 0;
         transform: rotateY(-90deg);
-        outline: 2px solid var(--level3);
+        border: solid 2px var(--level3);
     }
     to {
         opacity: 1;
         transform: rotateY(0);
-        outline: 2px solid var(--level1);
+        border: solid 2px var(--level1);
     }
 }
 
 .correctPosition {
     background-color: var(--green);
-    outline: none;
+    border: 2px solid var(--green);
 }
 
 .correctLetter {
     background-color: var(--orange);
-    outline: none;
+    border: 2px solid var(--orange);
 }
 
 .false {
-    outline: none;
+    border: 2px solid var(--level1);
 }
 
 .empty {
+    border: 2px solid var(--level3);
     color: var(--level1);
 }
 
