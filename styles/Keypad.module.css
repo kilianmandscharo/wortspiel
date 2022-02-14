@@ -40,6 +40,54 @@
     color: rgba(255, 255, 255, 0.9);
 }
 
+.greyToGreen {
+    animation-name: greyToGreen;
+    animation-delay: 2.5s;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes greyToGreen {
+    from {
+        background-color: var(--level4);
+    }
+    to {
+        background-color: var(--green);
+    }
+}
+
+.orangeToGreen {
+    animation-name: orangeToGreen;
+    animation-delay: 2.5s;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes orangeToGreen {
+    from {
+        background-color: var(--orange);
+    }
+    to {
+        background-color: var(--green);
+    }
+}
+
+.greyToOrange {
+    animation-name: greyToOrange;
+    animation-delay: 2.5s;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes greyToOrange {
+    from {
+        background-color: var(--level4);
+    }
+    to {
+        background-color: var(--orange);
+    }
+}
+
 .key:disabled {
     opacity: 0.3;
     pointer-events: none;

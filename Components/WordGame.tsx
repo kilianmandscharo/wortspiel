@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "../styles/WordGame.module.css";
 import Keypad from "./Keypad";
-import BackButton from "./BackButton";
 import {
     Game,
     LastGame,
