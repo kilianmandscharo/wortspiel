@@ -27,13 +27,22 @@ const Keypad = ({
     const [keyPressed, setKeyPressed] = useState([-1, -1]);
     const [submitPressed, setSubmitPressed] = useState(false);
     const [backPressed, setBackPressed] = useState(false);
+    const [newPageLoad, setNewPageLoad] = useState(true);
 
     useEffect(() => {
-        let newAlphabet = createNewAlphabet();
-        updateAlphabet(correctPositions, Status.correctPositon, newAlphabet);
-        updateAlphabet(correctLetters, Status.correctLetter, newAlphabet);
-        updateAlphabet(falseLetters, Status.false, newAlphabet);
-        setKeys(newAlphabet);
+        const timeOutDuration = newPageLoad ? 0 : 2500;
+        setTimeout(() => {
+            let newAlphabet = createNewAlphabet();
+            updateAlphabet(
+                correctPositions,
+                Status.correctPositon,
+                newAlphabet
+            );
+            updateAlphabet(correctLetters, Status.correctLetter, newAlphabet);
+            updateAlphabet(falseLetters, Status.false, newAlphabet);
+            setKeys(newAlphabet);
+            setNewPageLoad(false);
+        }, timeOutDuration);
     }, [correctPositions, correctLetters, falseLetters]);
 
     const updateAlphabet = (
