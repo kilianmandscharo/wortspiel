@@ -76,139 +76,42 @@
     user-select: none;
 }
 
-.zeroGreen {
+.greenAnimation {
     animation-name: flipGreen;
-    animation-duration: 0.5s;
-    animation-iteration-count: 1;
+    animation-duration: 0.6s;
+    animation-fill-mode: forwards;
+}
+
+.orangeAnimation {
+    animation-name: flipOrange;
+    animation-duration: 0.6s;
+    animation-fill-mode: forwards;
+}
+
+.blackAnimation {
+    animation-name: flipBlack;
+    animation-duration: 0.6s;
+    animation-fill-mode: forwards;
+}
+
+.zero {
     animation-delay: 0s;
-    animation-timing-function: ease;
-    animation-fill-mode: forwards;
 }
 
-.oneGreen {
-    animation-name: flipGreen;
-    animation-duration: 0.5s;
-    animation-iteration-count: 1;
+.one {
     animation-delay: 0.5s;
-    animation-timing-function: ease;
-    animation-fill-mode: forwards;
 }
 
-.twoGreen {
-    animation-name: flipGreen;
-    animation-duration: 0.5s;
-    animation-iteration-count: 1;
+.two {
     animation-delay: 1s;
-    animation-timing-function: ease;
-    animation-fill-mode: forwards;
 }
 
-.threeGreen {
-    animation-name: flipGreen;
-    animation-duration: 0.5s;
-    animation-iteration-count: 1;
+.three {
     animation-delay: 1.5s;
-    animation-timing-function: ease;
-    animation-fill-mode: forwards;
 }
 
-.fourGreen {
-    animation-name: flipGreen;
-    animation-duration: 0.5s;
-    animation-iteration-count: 1;
+.four {
     animation-delay: 2s;
-    animation-timing-function: ease;
-    animation-fill-mode: forwards;
-}
-
-.zeroOrange {
-    animation-name: flipOrange;
-    animation-duration: 0.5s;
-    animation-iteration-count: 1;
-    animation-delay: 0s;
-    animation-timing-function: ease;
-    animation-fill-mode: forwards;
-}
-
-.oneOrange {
-    animation-name: flipOrange;
-    animation-duration: 0.5s;
-    animation-iteration-count: 1;
-    animation-delay: 0.5s;
-    animation-timing-function: ease;
-    animation-fill-mode: forwards;
-}
-
-.twoOrange {
-    animation-name: flipOrange;
-    animation-duration: 0.5s;
-    animation-iteration-count: 1;
-    animation-delay: 1s;
-    animation-timing-function: ease;
-    animation-fill-mode: forwards;
-}
-
-.threeOrange {
-    animation-name: flipOrange;
-    animation-duration: 0.5s;
-    animation-iteration-count: 1;
-    animation-delay: 1.5s;
-    animation-timing-function: ease;
-    animation-fill-mode: forwards;
-}
-
-.fourOrange {
-    animation-name: flipOrange;
-    animation-duration: 0.5s;
-    animation-iteration-count: 1;
-    animation-delay: 2s;
-    animation-timing-function: ease;
-    animation-fill-mode: forwards;
-}
-
-.zeroBlack {
-    animation-name: flipBlack;
-    animation-duration: 0.5s;
-    animation-iteration-count: 1;
-    animation-delay: 0s;
-    animation-timing-function: ease;
-    animation-fill-mode: forwards;
-}
-
-.oneBlack {
-    animation-name: flipBlack;
-    animation-duration: 0.5s;
-    animation-iteration-count: 1;
-    animation-delay: 0.5s;
-    animation-timing-function: ease;
-    animation-fill-mode: forwards;
-}
-
-.twoBlack {
-    animation-name: flipBlack;
-    animation-duration: 0.5s;
-    animation-iteration-count: 1;
-    animation-delay: 1s;
-    animation-timing-function: ease;
-    animation-fill-mode: forwards;
-}
-
-.threeBlack {
-    animation-name: flipBlack;
-    animation-duration: 0.5s;
-    animation-iteration-count: 1;
-    animation-delay: 1.5s;
-    animation-timing-function: ease;
-    animation-fill-mode: forwards;
-}
-
-.fourBlack {
-    animation-name: flipBlack;
-    animation-duration: 0.5s;
-    animation-iteration-count: 1;
-    animation-delay: 2s;
-    animation-timing-function: ease;
-    animation-fill-mode: forwards;
 }
 
 @keyframes flipGreen {
