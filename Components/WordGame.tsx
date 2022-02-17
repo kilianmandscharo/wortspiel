@@ -9,7 +9,9 @@ import {
     WordGameProps,
     WordGameState,
 } from "../interfaces/interfaces";
-import checkIfAlreadyPlayedToday from "../functions/checkIfPlayed";
+import checkIfAlreadyPlayedToday, {
+    checkDatesForSameDay,
+} from "../functions/checkIfPlayed";
 import words from "../public/words_to_guess.json";
 import data from "../public/words.json";
 import startingDate from "../public/startingDate";
@@ -109,12 +111,16 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
         if (lastSaveAsString) {
             const lastSave = JSON.parse(lastSaveAsString);
             const guesses: LetterCell[][] = lastSave.guesses;
-            this.setState(
-                { guesses: guesses, currentWord: lastSave.currentWord },
-                () => {
-                    this.updateLetterStatesFromAllGuesses();
-                }
-            );
+            const dateOfLastSave = new Date(lastSave.date);
+            const today = new Date();
+            if (checkDatesForSameDay(dateOfLastSave, today)) {
+                this.setState(
+                    { guesses: guesses, currentWord: lastSave.currentWord },
+                    () => {
+                        this.updateLetterStatesFromAllGuesses();
+                    }
+                );
+            }
         }
     };
 
@@ -215,6 +221,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                             JSON.stringify({
                                 guesses: this.state.guesses,
                                 currentWord: this.state.currentWord,
+                                date: new Date(),
                             })
                         );
                     }
