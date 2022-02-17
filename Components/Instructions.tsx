@@ -50,7 +50,7 @@ const Instructions = ({ handleClick }: InstructionProps) => {
                     enthalten sind.
                 </div>
                 <footer className={styles.footer}>
-                    Code by{" "}
+                    This is a private project. Code by{" "}
                     <a
                         href="https://github.com/kilianmandscharo"
                         target="blank"
