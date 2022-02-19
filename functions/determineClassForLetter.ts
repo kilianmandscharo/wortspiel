@@ -30,57 +30,30 @@ const determineClassForLetter = (
     }
 };
 
+const stylesDict = {
+    0: styles.zero,
+    1: styles.one,
+    2: styles.two,
+    3: styles.three,
+    4: styles.four,
+    5: styles.five,
+};
+
 const determineAnimationClassByColumn = (col: number, status: Status) => {
     if (status === Status.correctPositon) {
-        if (col === 0) {
-            return `${styles.letter} ${styles.greenAnimation} ${styles.zero}`;
-        }
-        if (col === 1) {
-            return `${styles.letter} ${styles.greenAnimation} ${styles.one}`;
-        }
-        if (col === 2) {
-            return `${styles.letter} ${styles.greenAnimation} ${styles.two}`;
-        }
-        if (col === 3) {
-            return `${styles.letter} ${styles.greenAnimation} ${styles.three}`;
-        }
-        if (col === 4) {
-            return `${styles.letter} ${styles.greenAnimation} ${styles.four}`;
-        }
+        return `${styles.letter} ${styles.greenAnimation} ${
+            stylesDict[col as keyof typeof stylesDict]
+        }`;
     }
     if (status === Status.correctLetter) {
-        if (col === 0) {
-            return `${styles.letter} ${styles.orangeAnimation} ${styles.zero}`;
-        }
-        if (col === 1) {
-            return `${styles.letter} ${styles.orangeAnimation} ${styles.one}`;
-        }
-        if (col === 2) {
-            return `${styles.letter} ${styles.orangeAnimation} ${styles.two}`;
-        }
-        if (col === 3) {
-            return `${styles.letter} ${styles.orangeAnimation} ${styles.three}`;
-        }
-        if (col === 4) {
-            return `${styles.letter} ${styles.orangeAnimation} ${styles.four}`;
-        }
+        return `${styles.letter} ${styles.orangeAnimation} ${
+            stylesDict[col as keyof typeof stylesDict]
+        }`;
     }
     if (status === Status.false) {
-        if (col === 0) {
-            return `${styles.letter} ${styles.blackAnimation} ${styles.zero}`;
-        }
-        if (col === 1) {
-            return `${styles.letter} ${styles.blackAnimation} ${styles.one}`;
-        }
-        if (col === 2) {
-            return `${styles.letter} ${styles.blackAnimation} ${styles.two}`;
-        }
-        if (col === 3) {
-            return `${styles.letter} ${styles.blackAnimation} ${styles.three}`;
-        }
-        if (col === 4) {
-            return `${styles.letter} ${styles.blackAnimation} ${styles.four}`;
-        }
+        return `${styles.letter} ${styles.blackAnimation} ${
+            stylesDict[col as keyof typeof stylesDict]
+        }`;
     }
 };
 
