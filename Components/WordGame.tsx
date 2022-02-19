@@ -47,6 +47,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
             alreadyPlayed: false,
             animationRowNumber: -1,
             borderAnimation: false,
+            animateOnReload: false,
         };
     }
 
@@ -88,8 +89,12 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                         guesses: lastGame.guesses,
                         won: lastGame.won,
                         wordToGuess: lastGame.word,
+                        animateOnReload: true,
                     },
                     () => {
+                        setTimeout(() => {
+                            this.setState({ animateOnReload: false });
+                        }, 2600);
                         this.updateLetterStatesFromAllGuesses();
                         if (!lastGame.won) {
                             this.setState({ showLossMessage: true });
@@ -465,7 +470,8 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                                         letterCell,
                                         i,
                                         j,
-                                        this.state.animationRowNumber
+                                        this.state.animationRowNumber,
+                                        this.state.animateOnReload
                                     )}
                                 >
                                     {letterCell.letter}

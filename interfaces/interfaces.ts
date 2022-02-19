@@ -15,6 +15,7 @@ export interface WordGameState {
     alreadyPlayed: boolean;
     animationRowNumber: number;
     borderAnimation: boolean;
+    animateOnReload: boolean;
 }
 
 export interface WordGameProps {
