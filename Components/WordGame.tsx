@@ -48,6 +48,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
             animationRowNumber: -1,
             borderAnimation: false,
             animateOnReload: false,
+            keysLocked: false,
         };
     }
 
@@ -147,6 +148,9 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
     };
 
     handleKeyDown = (event: any) => {
+        if (this.state.alreadyPlayed || this.state.keysLocked) {
+            return;
+        }
         const val = event.keyCode;
         if (val === 8) {
             this.handleBackPress();
@@ -213,7 +217,10 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
             const updatedGuess = this.updateAndSetCurrentGuess(guess);
             this.updateLetterStatesFromCurrentGuess(updatedGuess);
             const won = this.checkForEndOfGame(guessString);
-            this.setState((prev) => ({ animationRowNumber: prev.currentWord }));
+            this.setState((prev) => ({
+                animationRowNumber: prev.currentWord,
+                keysLocked: true,
+            }));
             if (!won) {
                 this.setState(
                     (state) => ({
@@ -221,6 +228,9 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                         currentWord: state.currentWord + 1,
                     }),
                     () => {
+                        setTimeout(() => {
+                            this.setState({ keysLocked: false });
+                        }, 2600);
                         localStorage.setItem(
                             "activeGuesses",
                             JSON.stringify({
@@ -242,7 +252,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
 
     checkForEndOfGame = (guess: string) => {
         if (guess === this.state.wordToGuess) {
-            this.setState({ borderAnimation: true });
+            this.setState({ borderAnimation: true, keysLocked: true });
             setTimeout(() => {
                 this.setState({
                     alreadyPlayed: true,
@@ -253,8 +263,8 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                 setTimeout(() => {
                     this.setState({ showWinMessage: false });
                 }, 3000);
-                return true;
             }, 3500);
+            return true;
         }
         if (this.state.currentWord === 5 && guess !== this.state.wordToGuess) {
             this.setState({ borderAnimation: true });

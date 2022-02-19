@@ -16,6 +16,7 @@ export interface WordGameState {
     animationRowNumber: number;
     borderAnimation: boolean;
     animateOnReload: boolean;
+    keysLocked: boolean;
 }
 
 export interface WordGameProps {
