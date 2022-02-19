@@ -286,7 +286,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
     saveRound = (won: boolean) => {
         localStorage.setItem("activeGuesses", "");
         this.props.saveRound(
-            this.state.currentWord,
+            this.state.currentWord + 1,
             this.state.guesses,
             this.state.wordToGuess,
             won,
@@ -516,7 +516,7 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
                 {this.state.showWinMessage && (
                     <div className={`${styles.winMessage} ${styles.message}`}>
                         {this.state.currentWord
-                            ? messages[this.state.currentWord - 1]
+                            ? messages[this.state.currentWord]
                             : messages[0]}
                     </div>
                 )}
