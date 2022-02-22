@@ -18,7 +18,7 @@ import startingDate from "../public/startingDate";
 import { getGamesFromStorage } from "../functions/getGames";
 import determineClassForLetter from "../functions/determineClassForLetter";
 
-const wordDict = data.data;
+const wordDict = data.words;
 
 const messages = [
     "Transzendental!",
@@ -542,6 +542,7 @@ const getRandomWordFromDict = () => {
 const checkIfWordInDict = (word: string) => {
     const firstLetter = word.split("")[0];
     const possibleWords = wordDict[firstLetter as keyof typeof wordDict];
+    console.log(possibleWords);
     return possibleWords.includes(word) ? true : false;
 };
 
