@@ -542,7 +542,6 @@ const getRandomWordFromDict = () => {
 const checkIfWordInDict = (word: string) => {
     const firstLetter = word.split("")[0];
     const possibleWords = wordDict[firstLetter as keyof typeof wordDict];
-    console.log(possibleWords);
     return possibleWords.includes(word) ? true : false;
 };
 
