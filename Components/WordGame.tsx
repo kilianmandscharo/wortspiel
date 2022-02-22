@@ -17,17 +17,10 @@ import data from "../public/words.json";
 import startingDate from "../public/startingDate";
 import { getGamesFromStorage } from "../functions/getGames";
 import determineClassForLetter from "../functions/determineClassForLetter";
+import messages from "../constants/messages";
+import letters from "../constants/letters";
 
 const wordDict = data.words;
-
-const messages = [
-    "Transzendental!",
-    "Unglaublich!",
-    "Sehr gut!",
-    "Par.",
-    "Solide.",
-    "Puh...",
-];
 
 class WordGame extends React.Component<WordGameProps, WordGameState> {
     constructor(props: any) {
@@ -152,20 +145,15 @@ class WordGame extends React.Component<WordGameProps, WordGameState> {
             return;
         }
         const val = event.keyCode;
+        const letter = event.key;
         if (val === 8) {
             this.handleBackPress();
         }
         if (val === 13) {
             this.handleSubmit();
         }
-        if (
-            (val >= 65 && val <= 90) ||
-            (val >= 97 && val <= 122) ||
-            val === 59 ||
-            val === 219 ||
-            val === 222
-        ) {
-            this.handleLetterPress(event.key.toUpperCase());
+        if (letters.includes(letter)) {
+            this.handleLetterPress(letter.toUpperCase());
         }
     };
 
