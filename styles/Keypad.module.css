@@ -30,6 +30,7 @@
     background-color: var(--level4);
     width: 100%;
     min-width: 1em;
+    max-width: 2.3em;
     padding: 0.5em 0.2em;
     margin: 0.1em;
     border: none;

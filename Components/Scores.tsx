@@ -64,7 +64,7 @@ const Scores = ({
                         <div className={styles.statEntry}>
                             <div className={styles.statName}>Gewinnanteil:</div>
                             <div className={styles.statValue}>
-                                {winPercentage}
+                                {winPercentage}%
                             </div>
                         </div>
                         <div className={styles.statEntry}>
