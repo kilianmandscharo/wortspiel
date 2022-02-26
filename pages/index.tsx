@@ -15,7 +15,7 @@ import {
 } from "../functions/statFunctions";
 import { getGameNumber, getGamesFromStorage } from "../functions/getGames";
 
-const Home = () => {
+export default function Home() {
     const [instructionsActive, setInstructionsActive] = useState(false);
     const [scoresActive, setScoresActive] = useState(false);
     const [guesses, setGuesses] = useState({
@@ -185,6 +185,4 @@ const Home = () => {
             </div>
         </div>
     );
-};
-
-export default Home;
+}
