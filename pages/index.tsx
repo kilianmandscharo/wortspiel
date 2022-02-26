@@ -14,7 +14,6 @@ import {
     getWinPercentage,
 } from "../functions/statFunctions";
 import { getGameNumber, getGamesFromStorage } from "../functions/getGames";
-import { winStreakTest } from "../functions/winStreakTest";
 
 const Home = () => {
     const [instructionsActive, setInstructionsActive] = useState(false);
