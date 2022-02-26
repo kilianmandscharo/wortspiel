@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import InstructionButton from "../components/InstructionButton";
-import Instructions from "../components/Instructions";
-import ScoreButton from "../components/ScoreButton";
-import WordGame from "../components/WordGame";
+import InstructionButton from "../Components/InstructionButton";
+import Instructions from "../Components/Instructions";
+import ScoreButton from "../Components/ScoreButton";
+import WordGame from "../Components/WordGame";
 import styles from "../styles/Home.module.css";
 import Head from "next/head";
-import Scores from "../components/Scores";
+import Scores from "../Components/Scores";
 import { Game, LastGame, LetterCell, Status } from "../interfaces/interfaces";
 import checkIfAlreadyPlayedToday from "../functions/checkIfPlayed";
 import {
