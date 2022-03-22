@@ -130,7 +130,7 @@ const Keypad = ({
                     onPointerDown={() => setSubmitPressed(true)}
                     onPointerUp={() => setSubmitPressed(false)}
                 >
-                    Submit
+                    Eingabe
                 </button>
                 {keys[2].map((letterCell, i) => (
                     <button
