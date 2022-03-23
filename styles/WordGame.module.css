@@ -221,7 +221,7 @@
     animation-iteration-count: 1;
     box-shadow: 2px 8px 10px 5px var(--level0);
     border-radius: 10px;
-    border: solid 1px var(--white);
+    outline: solid 1px var(--white);
 }
 
 .winMessage {

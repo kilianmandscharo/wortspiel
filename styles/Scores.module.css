@@ -160,6 +160,7 @@
     text-align: center;
     box-shadow: 3px 3px 5px 2px var(--level1);
     border-radius: 10px;
+    outline: solid 1px var(--white);
 }
 
 @keyframes appear-share-message {
