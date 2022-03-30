@@ -52,3 +52,44 @@ export const getHighestWinStreak = (games: Game[]) => {
     winStreaks.push(streak);
     return Math.max(...winStreaks);
 };
+
+// Two new functions that that ensure that no day was without a game
+// by checking the wortspielNumber instead of making date calculations
+
+export const currentWinStreak = (games: Game[]) => {
+    let streak = 0;
+    for (let i = games.length - 1; i >= 0; i--) {
+        if (!games[i].won) {
+            break;
+        }
+        streak++;
+        if (i > 0) {
+            if (games[i].wortspielNumber - 1 !== games[i - 1].wortspielNumber) {
+                break;
+            }
+        }
+    }
+    return streak;
+};
+
+export const hightestWinStreak = (games: Game[]) => {
+    let streak = 0;
+    const winStreaks: number[] = [];
+    for (let i = 0; i < games.length; i++) {
+        const game = games[i];
+        if (game.won) {
+            streak++;
+        } else {
+            winStreaks.push(streak);
+            streak = 0;
+        }
+        if (i < games.length - 1) {
+            if (game.wortspielNumber + 1 !== games[i + 1].wortspielNumber) {
+                winStreaks.push(streak);
+                streak = 0;
+            }
+        }
+    }
+    winStreaks.push(streak);
+    return Math.max(...winStreaks);
+};

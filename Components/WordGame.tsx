@@ -19,6 +19,8 @@ import { getGamesFromStorage } from "../functions/getGames";
 import determineClassForLetter from "../functions/determineClassForLetter";
 import messages from "../constants/messages";
 import letters from "../constants/letters";
+import { newStreakFunctionTest } from "../functions/winStreakTest";
+import indexForTodayTest from "../indexForTodayTest";
 
 const wordDict = data.words;
 
